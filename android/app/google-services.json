@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "358374471892",
+    "project_id": "oima-690a2",
+    "storage_bucket": "oima-690a2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:358374471892:android:9d86958170c46cdd4a6341",
+        "android_client_info": {
+          "package_name": "com.oim.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "358374471892-0pmcvu6jfjeuhjrloti73068pm4ubh2v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5ftx5Aof6prIZwNOROZUs-P9yDE0okwE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "358374471892-0pmcvu6jfjeuhjrloti73068pm4ubh2v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
