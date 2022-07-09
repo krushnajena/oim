@@ -1,9 +1,12 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:oim/constants/constant.dart';
 import 'package:oim/constants/urls.dart';
+import 'package:oim/provider/location_provider.dart';
 import 'package:oim/screens/user/all_category_by_select_screen.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -46,6 +49,7 @@ class _SearchScreenState extends State<SearchScreen> {
     });
   }
 
+  bool show = false;
   @override
   void initState() {
     // TODO: implement initState
@@ -55,6 +59,8 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final locationData = Provider.of<LocationProvider>(context);
+
     return Scaffold(
       backgroundColor: scaffoldBgColor,
       appBar: AppBar(
@@ -68,7 +74,18 @@ class _SearchScreenState extends State<SearchScreen> {
             child: Container(
               height: 42,
               child: TextField(
-                onChanged: (value) {},
+                onChanged: (value) {
+                  if (value == "") {
+                    setState(() {
+                      show = false;
+                    });
+                  } else {
+                    setState(() {
+                      show = true;
+                    });
+                  }
+                  locationData.searchProdcut(value);
+                },
                 decoration: InputDecoration(
                     hintText: "Search from Product...",
                     hintStyle: TextStyle(color: Colors.grey, fontSize: 16),
@@ -88,100 +105,118 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
             )),
       ),
-      body: CustomScrollView(
-        slivers: [
-          SliverGrid(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                return categories[index]["label"] != "Restaurant"
-                    ? InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      AllCategofyBySelectScreen(
-                                          categories[index]["value"],
-                                          categories[index]["label"])));
-                        },
-                        child: SizedBox(
-                          height: 150,
-                          width: 170,
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  height: 100,
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: NetworkImage(
-                                          baseUrl + categories[index]["icon"],
-                                        )),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(8.0)),
-                                    color: Colors.redAccent,
-                                  ),
+      body: locationData.psearchResults != null &&
+              locationData.psearchResults!.length != 0 &&
+              show == true
+          ? ListView.builder(
+              itemCount: locationData.psearchResults!.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(
+                    locationData.psearchResults![index].productname.toString(),
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  onTap: () async {
+                    exit(0);
+                  },
+                );
+              })
+          : CustomScrollView(
+              slivers: [
+                SliverGrid(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      return categories[index]["label"] != "Restaurant"
+                          ? InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            AllCategofyBySelectScreen(
+                                                categories[index]["value"],
+                                                categories[index]["label"])));
+                              },
+                              child: SizedBox(
+                                height: 150,
+                                width: 170,
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        height: 100,
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: NetworkImage(
+                                                baseUrl +
+                                                    categories[index]["icon"],
+                                              )),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(8.0)),
+                                          color: Colors.redAccent,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      categories[index]["label"],
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    )
+                                  ],
                                 ),
                               ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                categories[index]["label"],
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
-                              )
-                            ],
-                          ),
-                        ),
-                      )
-                    : InkWell(
-                        onTap: () {},
-                        child: SizedBox(
-                          height: 150,
-                          width: 170,
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  height: 130,
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: AssetImage(
-                                          "images/restaurant.png",
-                                        )),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(8.0)),
-                                    color: Colors.redAccent,
-                                  ),
+                            )
+                          : InkWell(
+                              onTap: () {},
+                              child: SizedBox(
+                                height: 150,
+                                width: 170,
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        height: 130,
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: AssetImage(
+                                                "images/restaurant.png",
+                                              )),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(8.0)),
+                                          color: Colors.redAccent,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(categories[index]["label"])
+                                  ],
                                 ),
                               ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(categories[index]["label"])
-                            ],
-                          ),
-                        ),
-                      );
-              },
-              childCount: categories.length,
+                            );
+                    },
+                    childCount: categories.length,
+                  ),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 2,
+                    mainAxisSpacing: 2,
+                    mainAxisExtent: 153,
+                  ),
+                ),
+              ],
             ),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              crossAxisSpacing: 2,
-              mainAxisSpacing: 2,
-              mainAxisExtent: 153,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

@@ -8,6 +8,7 @@ import 'package:oim/constants/constant.dart';
 import 'package:oim/constants/urls.dart';
 import 'package:oim/screens/seller/products_list_screen.dart';
 import 'package:oim/screens/user/product_details_screen.dart';
+import 'package:oim/screens/user/restrurentomagesscreen.dart';
 import 'package:oim/screens/user/storerattingscreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -677,206 +678,83 @@ class _ResturentDetailsScreenState extends State<ResturentDetailsScreen> {
                     ))),
             SliverPersistentHeader(
                 delegate: SliverAppBarDelegate(
-                    minHeight: 30,
-                    maxHeight: 30,
+                    minHeight: 50,
+                    maxHeight: 50,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        InkWell(
-                            onTap: () {
-                              setState(() {
-                                selectedItem = "food";
-                              });
-                            },
-                            child: Column(
-                              children: [
-                                Text("Food"),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                selectedItem == "food" ||
-                                        selectedItem == "banner"
-                                    ? Container(
-                                        height: 5,
-                                        color: Colors.red,
-                                        width: 50,
-                                      )
-                                    : SizedBox()
-                              ],
-                            )),
-                        InkWell(
-                            onTap: () {
-                              setState(() {
-                                selectedItem = "ambience";
-                              });
-                            },
-                            child: Column(
-                              children: [
-                                Text("Ambience"),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                selectedItem == "ambience"
-                                    ? Container(
-                                        height: 5,
-                                        color: Colors.red,
-                                        width: 50,
-                                      )
-                                    : SizedBox()
-                              ],
-                            )),
-                        InkWell(
-                            onTap: () {
-                              setState(() {
-                                selectedItem = "menu";
-                              });
-                            },
-                            child: Column(
-                              children: [
-                                Text("Menu"),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                selectedItem == "menu"
-                                    ? Container(
-                                        height: 5,
-                                        color: Colors.red,
-                                        width: 50,
-                                      )
-                                    : SizedBox()
-                              ],
-                            ))
+                        Column(
+                          children: [
+                            RaisedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ResturentImagesScreen(
+                                                widget.userid)));
+                              },
+                              child:
+                                  Text("Food (" + food.length.toString() + ")"),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            RaisedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ResturentImagesScreen(
+                                                widget.userid)));
+                              },
+                              child: Text(
+                                  "Ambience (" + amb.length.toString() + ")"),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            RaisedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ResturentImagesScreen(
+                                                widget.userid)));
+                              },
+                              child:
+                                  Text("Menu (" + img.length.toString() + ")"),
+                            ),
+                          ],
+                        ),
                       ],
                     ))),
-            selectedItem == "food" || selectedItem == "banner"
-                ? SliverGrid(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        return InkWell(
-                          onTap: () {},
-                          child: SizedBox(
-                            height: 150,
-                            width: 170,
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    height: 150,
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: NetworkImage(
-                                            baseUrl + food[index],
-                                          )),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(8.0)),
-                                      color: Colors.redAccent,
-                                    ),
-                                  ),
-                                ),
-                              ],
+            SliverPersistentHeader(
+                delegate: SliverAppBarDelegate(
+                    minHeight: 150,
+                    maxHeight: 150,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "About Restaurant",
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
                             ),
-                          ),
-                        );
-                      },
-                      childCount: food.length,
-                    ),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 2,
-                      mainAxisSpacing: 3,
-                      mainAxisExtent: 170,
-                    ),
-                  )
-                : selectedItem == "ambience"
-                    ? SliverGrid(
-                        delegate: SliverChildBuilderDelegate(
-                          (context, index) {
-                            return InkWell(
-                              onTap: () {},
-                              child: SizedBox(
-                                height: 150,
-                                width: 170,
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                        height: 150,
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                              fit: BoxFit.cover,
-                                              image: NetworkImage(
-                                                baseUrl + amb[index],
-                                              )),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(8.0)),
-                                          color: Colors.redAccent,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                          childCount: amb.length,
+                          ],
                         ),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          crossAxisSpacing: 2,
-                          mainAxisSpacing: 3,
-                          mainAxisExtent: 170,
-                        ),
-                      )
-                    : SliverGrid(
-                        delegate: SliverChildBuilderDelegate(
-                          (context, index) {
-                            return InkWell(
-                              onTap: () {},
-                              child: SizedBox(
-                                height: 150,
-                                width: 170,
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                        height: 150,
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                              fit: BoxFit.cover,
-                                              image: NetworkImage(
-                                                baseUrl + img[index],
-                                              )),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(8.0)),
-                                          color: Colors.redAccent,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                          childCount: img.length,
-                        ),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          crossAxisSpacing: 2,
-                          mainAxisSpacing: 3,
-                          mainAxisExtent: 170,
-                        ),
-                      )
+                      ],
+                    ))),
           ],
         ),
       ),

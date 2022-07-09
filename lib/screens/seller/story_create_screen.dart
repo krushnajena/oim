@@ -21,6 +21,7 @@ class _StoryCreateScreenState extends State<StoryCreateScreen> {
   List<File> images = [];
   File? _pickedImage1;
   TextEditingController txt_text = new TextEditingController();
+
   void _pickImage1(String from) async {
     if (from == "gallery") {
       final pickedImageFile =
@@ -47,70 +48,79 @@ class _StoryCreateScreenState extends State<StoryCreateScreen> {
   }
 
   void postStory() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return Dialog(
-          elevation: 0.0,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-          child: Wrap(
-            children: [
-              Container(
-                padding: EdgeInsets.all(20.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const <Widget>[
-                    SpinKitRing(
-                      color: primaryColor,
-                      size: 40.0,
-                      lineWidth: 1.2,
+    if (txt_text.text != "") {
+      if (images.length > 0) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            // return object of type Dialog
+            return Dialog(
+              elevation: 0.0,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0)),
+              child: Wrap(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(20.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: const <Widget>[
+                        SpinKitRing(
+                          color: primaryColor,
+                          size: 40.0,
+                          lineWidth: 1.2,
+                        ),
+                        SizedBox(height: 25.0),
+                        Text(
+                          'Please Wait..',
+                          style: grey14MediumTextStyle,
+                        ),
+                      ],
                     ),
-                    SizedBox(height: 25.0),
-                    Text(
-                      'Please Wait..',
-                      style: grey14MediumTextStyle,
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         );
-      },
-    );
 
-    for (int i = 0; i < images.length; i++) {
-      String? userid = preferences.getString("userid");
-      final mimeTypeData =
-          lookupMimeType(images[i].path.toString(), headerBytes: [0xFF, 0xD8])!
+        for (int i = 0; i < images.length; i++) {
+          String? userid = preferences.getString("userid");
+          final mimeTypeData = lookupMimeType(images[i].path.toString(),
+                  headerBytes: [0xFF, 0xD8])!
               .split('/');
-      final imageUploadRequest =
-          http.MultipartRequest('POST', Uri.parse(post_story_create));
-      final file = await http.MultipartFile.fromPath('image', images[i].path,
-          contentType: MediaType(mimeTypeData[0], mimeTypeData[1]));
-      imageUploadRequest.files.add(file);
-      imageUploadRequest.fields['userid'] = userid.toString();
-      imageUploadRequest.fields['text'] = txt_text.text;
+          final imageUploadRequest =
+              http.MultipartRequest('POST', Uri.parse(post_story_create));
+          final file = await http.MultipartFile.fromPath(
+              'image', images[i].path,
+              contentType: MediaType(mimeTypeData[0], mimeTypeData[1]));
+          imageUploadRequest.files.add(file);
+          imageUploadRequest.fields['userid'] = userid.toString();
+          imageUploadRequest.fields['text'] = txt_text.text;
 
-      try {
-        final streamedResponse = await imageUploadRequest.send();
-        final response = await http.Response.fromStream(streamedResponse);
-        print(response.statusCode);
+          try {
+            final streamedResponse = await imageUploadRequest.send();
+            final response = await http.Response.fromStream(streamedResponse);
+            print(response.statusCode);
 
-        if (response.statusCode == 200) {}
-      } catch (e) {
-        print(e);
+            if (response.statusCode == 200) {}
+          } catch (e) {
+            print(e);
+          }
+        }
+        showInSnackBar("Your Story Posted Successfully");
+
+        Navigator.of(context).pop();
+        Navigator.of(context).pop();
+      } else {
+        showInSnackBar("Please Select An Image");
       }
+    } else {
+      showInSnackBar("Please Enter A Caption");
     }
-    showInSnackBar("Your Story Posted Successfully");
-
-    Navigator.of(context).pop();
-    Navigator.of(context).pop();
   }
 
   @override

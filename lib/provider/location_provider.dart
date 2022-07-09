@@ -4,6 +4,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:oim/constants/constant.dart';
+import 'package:oim/models/ProductModel.dart';
 import 'package:oim/models/place.dart';
 import 'package:oim/models/place_search.dart';
 import 'package:oim/services/places_service.dart';
@@ -16,6 +17,7 @@ class LocationProvider with ChangeNotifier {
   bool permissionAllowed = false;
   Placemark? selectedAddress;
   List<NewPlaceSearch>? searchResults;
+  List<NewProductSearch>? psearchResults;
 
   Future<void> getCurrentPosition() async {
     LocationPermission permission;
@@ -86,6 +88,12 @@ class LocationProvider with ChangeNotifier {
   searchPlaces(String searchTerm) async {
     final placesService = PlacesService();
     searchResults = await placesService.getAutocomplete(searchTerm);
+    notifyListeners();
+  }
+
+  searchProdcut(String searchTerm) async {
+    final placesService = PlacesService();
+    psearchResults = await placesService.getAutocompleteProduct(searchTerm);
     notifyListeners();
   }
 

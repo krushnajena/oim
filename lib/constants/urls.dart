@@ -58,3 +58,4 @@ const getRestaurentImageBySellerId = baseUrl + "getRestaurentImageBySellerId/";
 const getSubcategoriesByCatelogid = baseUrl + "getSubcategoriesByCatelogid/";
 
 const getDeleteStory = baseUrl + "getDeleteStory/";
+const getproductsearch = baseUrl + "getproductsearch/";

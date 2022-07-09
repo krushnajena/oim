@@ -1,6 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'package:oim/constants/constant.dart';
 import 'package:oim/constants/urls.dart';
+import 'package:oim/models/ProductModel.dart';
 import 'package:oim/models/place.dart';
 
 import 'dart:convert' as convert;
@@ -17,6 +18,17 @@ class PlacesService {
     var jsonResults = json["data"]['areas'] as List;
     print(jsonResults);
     return jsonResults.map((place) => NewPlaceSearch.fromJson(place)).toList();
+  }
+
+  Future<List<NewProductSearch>> getAutocompleteProduct(String search) async {
+    var url = Uri.parse(getproductsearch + '$search');
+    var response = await http.get(url);
+    var json = convert.jsonDecode(response.body);
+    var jsonResults = json["data"]['products'] as List;
+    print(jsonResults);
+    return jsonResults
+        .map((place) => NewProductSearch.fromJson(place))
+        .toList();
   }
 
   Future<Place> getPlace(String placeId) async {

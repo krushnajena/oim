@@ -39,6 +39,12 @@ class _MyQrScreenState extends State<MyQrScreen> {
     });
   }
 
+  void showInSnackBar(String value) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(value.toString()),
+    ));
+  }
+
   ScreenshotController screenshotController = ScreenshotController();
   late File customFile;
   Future<void> downloadQr(
@@ -52,6 +58,7 @@ class _MyQrScreenState extends State<MyQrScreen> {
     print("7377483873827382987392");
     customFile = await File(path).writeAsBytes(capturedImage);
     final result = await ImageGallerySaver.saveFile(path);
+    showInSnackBar("QR Saved To Your Galler.");
     //final imagePath = await File('${tempDir.path}/image.png').create();
     //await imagePath.writeAsBytes(capturedImage);
 
