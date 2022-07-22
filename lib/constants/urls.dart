@@ -59,3 +59,10 @@ const getSubcategoriesByCatelogid = baseUrl + "getSubcategoriesByCatelogid/";
 
 const getDeleteStory = baseUrl + "getDeleteStory/";
 const getproductsearch = baseUrl + "getproductsearch/";
+
+const postcus = baseUrl + "postcus";
+const getcusinesbyuserid = baseUrl + "getcusinesbyuserid/";
+const getproductsearchseller = baseUrl + "getproductsearchseller/";
+
+const postview = baseUrl + "postview";
+const getlifetimeviews = baseUrl + "getlifetimeviews/";

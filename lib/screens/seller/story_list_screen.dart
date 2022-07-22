@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:oim/constants/urls.dart';
+import 'package:oim/screens/seller/seller_story_details_screen.dart';
 import 'package:oim/screens/seller/story_create_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -54,6 +55,8 @@ class _StoryListScreenState extends State<StoryListScreen> {
                   mnjson["data"]["storybyeuserid"][i]["publishedon"].toString())
               .add(Duration(hours: 24))
               .isAfter(DateTime.now())) {
+            print("89890809****************))))))))))))");
+            print(mnjson["data"]["storybyeuserid"][i]);
             setState(() {
               story.add(mnjson["data"]["storybyeuserid"][i]);
             });
@@ -132,55 +135,64 @@ class _StoryListScreenState extends State<StoryListScreen> {
                     (context, index) {
                       return Stack(
                         children: [
-                          Card(
-                            color: Colors.transparent,
-                            elevation: 10,
-                            child: Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    image: DecorationImage(
-                                        image: NetworkImage(
-                                            baseUrl + story[index]["image"]),
-                                        fit: BoxFit.cover)),
-                                child: Stack(
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          gradient: LinearGradient(
-                                              begin: Alignment.bottomRight,
-                                              stops: [
-                                                0.1,
-                                                1
-                                              ],
-                                              colors: [
-                                                Colors.black.withOpacity(.8),
-                                                Colors.black.withOpacity(.1)
-                                              ])),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 8, right: 8, top: 160),
-                                      child: Row(
-                                        children: [
-                                          Icon(
-                                            Icons.remove_red_eye_outlined,
-                                            color: Colors.white,
-                                            size: 18,
-                                          ),
-                                          Text(
-                                            " Views : 0",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 13,
-                                                color: Colors.white),
-                                          ),
-                                        ],
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          SellerStoryDetailsScreen()));
+                            },
+                            child: Card(
+                              color: Colors.transparent,
+                              elevation: 10,
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      image: DecorationImage(
+                                          image: NetworkImage(
+                                              baseUrl + story[index]["image"]),
+                                          fit: BoxFit.cover)),
+                                  child: Stack(
+                                    children: [
+                                      Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            gradient: LinearGradient(
+                                                begin: Alignment.bottomRight,
+                                                stops: [
+                                                  0.1,
+                                                  1
+                                                ],
+                                                colors: [
+                                                  Colors.black.withOpacity(.8),
+                                                  Colors.black.withOpacity(.1)
+                                                ])),
                                       ),
-                                    ),
-                                  ],
-                                )),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 8, right: 8, top: 160),
+                                        child: Row(
+                                          children: [
+                                            Icon(
+                                              Icons.remove_red_eye_outlined,
+                                              color: Colors.white,
+                                              size: 18,
+                                            ),
+                                            Text(
+                                              " Views : 0",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 13,
+                                                  color: Colors.white),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  )),
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 10, top: 10),
@@ -214,7 +226,7 @@ class _StoryListScreenState extends State<StoryListScreen> {
                     childCount: story.length,
                   ),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
+                    crossAxisCount: 3,
                     crossAxisSpacing: 2,
                     mainAxisSpacing: 2,
                     mainAxisExtent: 220,

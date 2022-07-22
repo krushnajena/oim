@@ -11,6 +11,7 @@ import 'package:oim/screens/seller/add_new_product_screen.dart';
 import 'package:oim/screens/seller/product_edit_screen.dart';
 import 'package:oim/screens/seller/promote_your_business_screen.dart';
 import 'package:oim/screens/seller/seller_bottom_appbar.dart';
+import 'package:oim/screens/seller/seller_product_search_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math' as math;
 
@@ -167,7 +168,15 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
             actions: [
               Padding(
                 padding: const EdgeInsets.all(.0),
-                child: Icon(Icons.search),
+                child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  SellerProductSearchScreen()));
+                    },
+                    child: Icon(Icons.search)),
               )
             ]),
         floatingActionButton: FloatingActionButton.extended(
@@ -252,305 +261,323 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                       child: Container(),
                     ),
                   ),
-                  SliverPersistentHeader(
-                    pinned: true,
-                    delegate: SliverAppBarDelegate(
-                      minHeight: 50.0,
-                      maxHeight: 50.0,
-                      child: Container(
-                        color: Colors.white,
-                        height: 50,
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 8, right: 8),
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                              labelText: "Search Product",
-                              fillColor: Colors.white,
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: Colors.white, width: 2.0),
-                                borderRadius: BorderRadius.circular(25.0),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SliverGrid(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        double disount =
-                            double.parse(products[index]["mrp"].toString()) -
-                                double.parse(products[index]["sellingprice"]
-                                    .toString()
-                                    .toString());
-                        double discountPercentage = (disount /
-                                double.parse(
-                                    products[index]["mrp"].toString())) *
-                            100;
-                        return Container(
-                          height: 300,
-                          child: Card(
-                            child: Container(
-                              height: 300,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Stack(children: [
-                                    Container(
-                                        margin: EdgeInsets.all(3),
-                                        height: 100,
-                                        width:
-                                            (MediaQuery.of(context).size.width -
-                                                    16) /
-                                                2,
-                                        child: Image.network(
-                                          baseUrl +
-                                              products[index]["image"][0]
-                                                  ["filename"],
-                                          fit: BoxFit.fill,
-                                        )),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          right: 15, top: 4),
-                                      child: Card(
-                                          elevation: 2,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(150),
-                                          ),
-                                          child: Container(
-                                            width: 30,
-                                            height: 30,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                            ),
-                                            child: Icon(
-                                              Icons.share,
-                                              color: Colors.grey[400],
-                                            ),
-                                          )),
-                                    ),
-                                  ]),
-                                  SizedBox(
-                                    height: 8,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            products[index]["productname"],
-                                            maxLines: 2,
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                        ),
-                                        PopupMenuButton(
-                                            onSelected: (newValue) {
-                                              if (newValue == 1) {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            ProductEditScreen(
-                                                                products[index]
-                                                                    ["_id"])));
-                                              }
-                                            },
-                                            itemBuilder: (context) => [
-                                                  PopupMenuItem(
-                                                    child: Text("Edit Product"),
-                                                    value: 1,
-                                                  ),
-                                                  PopupMenuItem(
-                                                    child:
-                                                        Text("Remove Product"),
-                                                    value: 2,
-                                                    onTap: () {
-                                                      showDialog(
-                                                          context: context,
-                                                          builder: (BuildContext
-                                                                  context) =>
-                                                              CupertinoAlertDialog(
-                                                                title: new Text(
-                                                                    "Confirmation"),
-                                                                content: new Text(
-                                                                    "Do you want to delete '" +
-                                                                        products[index]
-                                                                            [
-                                                                            "productname"] +
-                                                                        "' "),
-                                                                actions: <
-                                                                    Widget>[
-                                                                  CupertinoDialogAction(
-                                                                    isDefaultAction:
-                                                                        true,
-                                                                    child: Text(
-                                                                        "Delete Product"),
-                                                                    onPressed:
-                                                                        () async {
-                                                                      deleteProduct(
-                                                                          products[index]
-                                                                              [
-                                                                              "_id"]);
-                                                                    },
-                                                                  ),
-                                                                  CupertinoDialogAction(
-                                                                    child: Text(
-                                                                        "Exit"),
-                                                                    onPressed:
-                                                                        () {
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                    },
-                                                                  )
-                                                                ],
-                                                              ));
-
-                                                      //getRemoveItem(products[index]["_id"]
-                                                      //    .toString());
-                                                    },
-                                                  )
-                                                ]),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 8.0, top: 10),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                            "₹" +
-                                                products[index]["mrp"]
-                                                    .toString(),
-                                            style: TextStyle(
-                                                fontSize: 10,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.grey,
-                                                decoration: TextDecoration
-                                                    .lineThrough)),
-                                        SizedBox(width: 5),
-                                        Text(
-                                            "₹" +
-                                                products[index]["sellingprice"]
-                                                    .toString(),
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w500)),
-                                        SizedBox(width: 5),
-                                        Text(
-                                          discountPercentage
-                                                  .toStringAsFixed(2) +
-                                              "%",
-                                          style: TextStyle(
-                                            color: Colors.green,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 8.0),
-                                        child: Text(
-                                          products[index]["instock"]
-                                              ? "In Stock"
-                                              : "Stock Out",
-                                          style: TextStyle(
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w500,
-                                              color: products[index]["instock"]
-                                                  ? Colors.green
-                                                  : Colors.red),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 28,
-                                        child: Switch(
-                                          value: products[index]["instock"],
-                                          onChanged: (value) {
-                                            updateStock(products[index]["_id"],
-                                                value, index);
-                                          },
-                                          activeTrackColor:
-                                              Colors.lightGreenAccent,
-                                          activeColor: Colors.green,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
+                  products.length > 0
+                      ? SliverGrid(
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) {
+                              double disount = double.parse(
+                                      products[index]["mrp"].toString()) -
+                                  double.parse(products[index]["sellingprice"]
+                                      .toString()
+                                      .toString());
+                              double discountPercentage = (disount /
+                                      double.parse(
+                                          products[index]["mrp"].toString())) *
+                                  100;
+                              return Container(
+                                height: 300,
+                                child: Card(
+                                  child: Container(
+                                    height: 300,
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
+                                        Stack(children: [
+                                          Container(
+                                              margin: EdgeInsets.all(3),
+                                              height: 100,
+                                              width: (MediaQuery.of(context)
+                                                          .size
+                                                          .width -
+                                                      16) /
+                                                  2,
+                                              child: Image.network(
+                                                baseUrl +
+                                                    products[index]["image"][0]
+                                                        ["filename"],
+                                                fit: BoxFit.fill,
+                                              )),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 15, top: 4),
+                                            child: Card(
+                                                elevation: 2,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          150),
+                                                ),
+                                                child: Container(
+                                                  width: 30,
+                                                  height: 30,
+                                                  decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                  ),
+                                                  child: Icon(
+                                                    Icons.share,
+                                                    color: Colors.grey[400],
+                                                  ),
+                                                )),
+                                          ),
+                                        ]),
+                                        SizedBox(
+                                          height: 8,
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 8.0),
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  products[index]
+                                                      ["productname"],
+                                                  maxLines: 2,
+                                                  style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
+                                              ),
+                                              PopupMenuButton(
+                                                  onSelected: (newValue) {
+                                                    if (newValue == 1) {
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  ProductEditScreen(
+                                                                      products[
+                                                                              index]
+                                                                          [
+                                                                          "_id"])));
+                                                    }
+                                                  },
+                                                  itemBuilder: (context) => [
+                                                        PopupMenuItem(
+                                                          child: Text(
+                                                              "Edit Product"),
+                                                          value: 1,
+                                                        ),
+                                                        PopupMenuItem(
+                                                          child: Text(
+                                                              "Remove Product"),
+                                                          value: 2,
+                                                          onTap: () {
+                                                            showDialog(
+                                                                context:
+                                                                    context,
+                                                                builder: (BuildContext
+                                                                        context) =>
+                                                                    CupertinoAlertDialog(
+                                                                      title: new Text(
+                                                                          "Confirmation"),
+                                                                      content: new Text("Do you want to delete '" +
+                                                                          products[index]
+                                                                              [
+                                                                              "productname"] +
+                                                                          "' "),
+                                                                      actions: <
+                                                                          Widget>[
+                                                                        CupertinoDialogAction(
+                                                                          isDefaultAction:
+                                                                              true,
+                                                                          child:
+                                                                              Text("Delete Product"),
+                                                                          onPressed:
+                                                                              () async {
+                                                                            deleteProduct(products[index]["_id"]);
+                                                                          },
+                                                                        ),
+                                                                        CupertinoDialogAction(
+                                                                          child:
+                                                                              Text("Exit"),
+                                                                          onPressed:
+                                                                              () {
+                                                                            Navigator.pop(context);
+                                                                          },
+                                                                        )
+                                                                      ],
+                                                                    ));
+
+                                                            //getRemoveItem(products[index]["_id"]
+                                                            //    .toString());
+                                                          },
+                                                        )
+                                                      ]),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 8.0, top: 10),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                  "₹" +
+                                                      products[index]["mrp"]
+                                                          .toString(),
+                                                  style: TextStyle(
+                                                      fontSize: 10,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color: Colors.grey,
+                                                      decoration: TextDecoration
+                                                          .lineThrough)),
+                                              SizedBox(width: 5),
+                                              Text(
+                                                  "₹" +
+                                                      products[index]
+                                                              ["sellingprice"]
+                                                          .toString(),
+                                                  style: TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w500)),
+                                              SizedBox(width: 5),
+                                              Text(
+                                                discountPercentage
+                                                        .toStringAsFixed(2) +
+                                                    "%",
+                                                style: TextStyle(
+                                                  color: Colors.green,
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
                                         Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
-                                            const Icon(
-                                              Icons.remove_red_eye_outlined,
-                                              size: 10,
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 8.0),
+                                              child: Text(
+                                                products[index]["instock"]
+                                                    ? "In Stock"
+                                                    : "Stock Out",
+                                                style: TextStyle(
+                                                    fontSize: 10,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: products[index]
+                                                            ["instock"]
+                                                        ? Colors.green
+                                                        : Colors.red),
+                                              ),
                                             ),
-                                            Text(
-                                                "  Views : " +
-                                                    products[index]["views"]
-                                                        .toString(),
-                                                style: const TextStyle(
-                                                    fontSize: 12,
-                                                    fontWeight:
-                                                        FontWeight.w500)),
+                                            SizedBox(
+                                              height: 28,
+                                              child: Switch(
+                                                value: products[index]
+                                                    ["instock"],
+                                                onChanged: (value) {
+                                                  updateStock(
+                                                      products[index]["_id"],
+                                                      value,
+                                                      index);
+                                                },
+                                                activeTrackColor:
+                                                    Colors.lightGreenAccent,
+                                                activeColor: Colors.green,
+                                              ),
+                                            ),
                                           ],
                                         ),
-                                        const SizedBox(
-                                          height: 5,
+                                        SizedBox(
+                                          height: 10,
                                         ),
-                                        Center(
-                                          child: OutlineButton(
-                                              onPressed: () {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            PromoteYourBusinessScreen()));
-                                              },
-                                              child: const Text(
-                                                  "Sell Faster Now",
-                                                  style:
-                                                      TextStyle(fontSize: 12))),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 8.0),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  const Icon(
+                                                    Icons
+                                                        .remove_red_eye_outlined,
+                                                    size: 10,
+                                                  ),
+                                                  Text(
+                                                      "  Views : " +
+                                                          products[index]
+                                                                  ["views"]
+                                                              .toString(),
+                                                      style: const TextStyle(
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.w500)),
+                                                ],
+                                              ),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              Center(
+                                                child: OutlineButton(
+                                                    onPressed: () {
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  PromoteYourBusinessScreen()));
+                                                    },
+                                                    child: const Text(
+                                                        "Sell Faster Now",
+                                                        style: TextStyle(
+                                                            fontSize: 12))),
+                                              )
+                                            ],
+                                          ),
                                         )
                                       ],
                                     ),
-                                  )
-                                ],
-                              ),
+                                  ),
+                                ),
+                              );
+                            },
+                            childCount: products.length,
+                          ),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 2,
+                            mainAxisSpacing: 2,
+                            mainAxisExtent: 303,
+                          ),
+                        )
+                      : SliverPersistentHeader(
+                          pinned: true,
+                          delegate: SliverAppBarDelegate(
+                            minHeight: 100.0,
+                            maxHeight: 300.0,
+                            child: Column(
+                              children: [
+                                Container(
+                                    height: 250,
+                                    color: Colors.white,
+                                    child: Center(
+                                      child: Image.asset(
+                                          "images/productlist.jpeg"),
+                                    )),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  "There is no product to show",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                )
+                              ],
                             ),
                           ),
-                        );
-                      },
-                      childCount: products.length,
-                    ),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 2,
-                      mainAxisSpacing: 2,
-                      mainAxisExtent: 303,
-                    ),
-                  ),
+                        ),
                   SliverGrid.extent(
                     maxCrossAxisExtent: 250,
                     mainAxisSpacing: 20.0,

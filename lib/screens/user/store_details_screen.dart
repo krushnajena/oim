@@ -223,6 +223,20 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
     ));
   }
 
+  void addView() {
+    var nencoded = Uri.parse(postview);
+    print("sssssssssssssssssssssssssssssssssssssssssssssssssssssssssss");
+    http.post(nencoded, body: {
+      "cid": widget.userid,
+      "userid": widget.userid,
+      "type": "store"
+    }).then((value) {
+      print("-----------------------------");
+      print(value.statusCode);
+      if (value.statusCode == 200) {}
+    });
+  }
+
   void Follow() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     var nencoded = Uri.parse(
@@ -295,6 +309,7 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
     getNoOfFollers();
     getFollowedOrNot();
     getRattings();
+    addView();
   }
 
   @override

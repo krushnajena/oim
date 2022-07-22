@@ -14,6 +14,7 @@ class StoryScreen extends StatefulWidget {
 
 class _StoryScreenState extends State<StoryScreen> {
   List stores = [];
+
   void getStories() async {
     var nencoded = Uri.parse(get_stories_seller);
 
@@ -21,9 +22,15 @@ class _StoryScreenState extends State<StoryScreen> {
       if (resp.statusCode == 200) {
         Map mnjson;
         mnjson = json.decode(resp.body);
-        setState(() {
-          stores = mnjson["data"]["seller"];
-        });
+
+        for (int i = 0; i < mnjson["data"]["seller"].length; i++) {
+          if (mnjson["data"]["seller"][i]["stories"].length > 0) {
+            setState(() {
+              stores.add(mnjson["data"]["seller"][i]);
+            });
+            print(stores);
+          }
+        }
       }
     });
   }
@@ -66,8 +73,8 @@ class _StoryScreenState extends State<StoryScreen> {
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
                                   image: DecorationImage(
-                                      image: NetworkImage(
-                                          baseUrl + stores[index]["photo"]),
+                                      image: NetworkImage(baseUrl +
+                                          stores[index]["stories"][0]["image"]),
                                       fit: BoxFit.cover)),
                               child: Stack(
                                 children: [
@@ -105,7 +112,7 @@ class _StoryScreenState extends State<StoryScreen> {
               childCount: stores.length,
             ),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
+              crossAxisCount: 3,
               crossAxisSpacing: 2,
               mainAxisSpacing: 2,
               mainAxisExtent: 200,

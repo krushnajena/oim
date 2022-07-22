@@ -314,6 +314,16 @@ class _SellerProductDetailsScreenState
               ),
             ),
             Padding(
+              padding: const EdgeInsets.only(left: 5, top: 15),
+              child: Text(
+                "Product Id:- " + widget.productid,
+                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+              ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Padding(
               padding: const EdgeInsets.only(left: 5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,

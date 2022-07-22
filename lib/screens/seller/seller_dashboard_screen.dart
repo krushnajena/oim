@@ -27,6 +27,154 @@ class Seller_DashBoardScreenState extends State<SellerDashBoardScreen> {
     super.initState();
     getStoreDetails();
     getSellerDetails();
+    noofViewsProductLifetime();
+    noofrattingslifetime();
+    noofViewsStoreLifetime();
+    getProducts();
+    getNoOfFollers();
+  }
+
+  int nooffollwers = 0;
+  void getNoOfFollers() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? userId = preferences.getString("userid");
+    var nencoded = Uri.parse(get_follwers_by_sellerid + userId!);
+    print("%%%%%%%%%%%%%%%%%%%%%%%%%");
+    print(get_follwers_by_sellerid + userId!);
+    http.get(nencoded).then((resp) {
+      if (resp.statusCode == 200) {
+        Map mnjson;
+        mnjson = json.decode(resp.body);
+        setState(() {
+          nooffollwers = mnjson["data"]["followers"].length;
+        });
+      }
+    });
+  }
+
+  List products = [];
+  void getProducts() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? userId = preferences.getString("userid");
+    var nencoded = Uri.parse(get_products_byuserid + userId!);
+    http.get(nencoded).then((resp) {
+      if (resp.statusCode == 200) {
+        Map mnjson;
+        mnjson = json.decode(resp.body);
+        setState(() {
+          products = mnjson["data"]["product"];
+        });
+      }
+    });
+  }
+
+  int noofproductview = 0;
+  void noofViewsProductLifetime() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    var nencoded = Uri.parse(getlifetimeviews +
+        preferences.getString("userid").toString() +
+        "/product");
+    print(getlifetimeviews +
+        preferences.getString("userid").toString() +
+        "/product");
+    http.get(nencoded).then((resp) {
+      if (resp.statusCode == 200) {
+        Map mnjson;
+        mnjson = json.decode(resp.body);
+
+        print(mnjson);
+        if (mnjson["data"]["views"].length > 0) {
+          setState(() {
+            noofproductview = mnjson["data"]["views"].length;
+          });
+        }
+      }
+    });
+  }
+
+  int noofstorview = 0;
+  void noofViewsStoreLifetime() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    var nencoded = Uri.parse(getlifetimeviews +
+        preferences.getString("userid").toString() +
+        "/story");
+    print(getlifetimeviews +
+        preferences.getString("userid").toString() +
+        "/store");
+    http.get(nencoded).then((resp) {
+      if (resp.statusCode == 200) {
+        Map mnjson;
+        mnjson = json.decode(resp.body);
+
+        print(mnjson);
+        if (mnjson["data"]["views"].length > 0) {
+          setState(() {
+            noofstorview = mnjson["data"]["views"].length;
+          });
+        }
+      }
+    });
+  }
+
+  double ratting = 0;
+  int noofrattings = 0;
+  double appliedRatting = 0;
+  double oneStar = 0;
+  double twoStar = 0;
+  double threeStar = 0;
+  double fourStar = 0;
+  double fiveStar = 0;
+  void noofrattingslifetime() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    ratting = 0;
+    noofrattings = 0;
+    double appliedRatting = 0;
+
+    var encoded =
+        Uri.parse(get_rattings + preferences.getString("userid").toString());
+    print("##########################zeeeeeerrr7777777777777777777777");
+
+    //print(get_rattings + widget.userid);
+    print("##########################zeeeeeerrr7777777777777777777777");
+    http.get(encoded).then((value) {
+      if (value.statusCode == 200) {
+        Map mjson;
+        mjson = json.decode(value.body);
+        double total = 0;
+        for (int i = 0; i < mjson["data"]["storeratting"].length; i++) {
+          total = total +
+              double.parse(mjson["data"]["storeratting"][i]["applied_ratting"]
+                  .toString());
+        }
+
+        if (total > 0) {
+          noofrattings = mjson["data"]["storeratting"].length;
+          ratting = total / mjson["data"]["storeratting"].length;
+
+          if (ratting < 1) {
+            ratting = 0.5;
+          } else if (ratting < 1.5) {
+            ratting = 1;
+          } else if (ratting < 2) {
+            ratting = 1.5;
+          } else if (ratting < 2.5) {
+            ratting = 2;
+          } else if (ratting < 3) {
+            ratting = 2.5;
+          } else if (ratting < 3.5) {
+            ratting = 3;
+          } else if (ratting < 4) {
+            ratting = 3.5;
+          } else if (ratting < 4.5) {
+            ratting = 4;
+          } else if (ratting < 5) {
+            ratting = 4.5;
+          } else {
+            ratting = 5;
+          }
+        }
+      }
+    });
   }
 
   void getSellerDetails() async {
@@ -384,7 +532,7 @@ class Seller_DashBoardScreenState extends State<SellerDashBoardScreen> {
                                 "PRODUCT VIEWS",
                                 style: TextStyle(color: Colors.grey),
                               ),
-                              Text("0",
+                              Text(noofproductview.toString(),
                                   style: TextStyle(
                                       fontSize: 25,
                                       fontWeight: FontWeight.w500))
@@ -406,7 +554,7 @@ class Seller_DashBoardScreenState extends State<SellerDashBoardScreen> {
                                 "STORE VIEWS",
                                 style: TextStyle(color: Colors.grey),
                               ),
-                              Text("0",
+                              Text(noofstorview.toString(),
                                   style: TextStyle(
                                       fontSize: 25,
                                       fontWeight: FontWeight.w500))
@@ -436,7 +584,7 @@ class Seller_DashBoardScreenState extends State<SellerDashBoardScreen> {
                                 "FOLLOWERS",
                                 style: TextStyle(color: Colors.grey),
                               ),
-                              Text("0",
+                              Text(nooffollwers.toString(),
                                   style: TextStyle(
                                       fontSize: 25,
                                       fontWeight: FontWeight.w500))
@@ -458,7 +606,7 @@ class Seller_DashBoardScreenState extends State<SellerDashBoardScreen> {
                                 "LISTINGS",
                                 style: TextStyle(color: Colors.grey),
                               ),
-                              Text("0",
+                              Text(products.length.toString(),
                                   style: TextStyle(
                                       fontSize: 25,
                                       fontWeight: FontWeight.w500))
@@ -485,7 +633,7 @@ class Seller_DashBoardScreenState extends State<SellerDashBoardScreen> {
                           "RATINGS",
                           style: TextStyle(color: Colors.grey),
                         ),
-                        Text("0",
+                        Text(noofrattings.toString(),
                             style: TextStyle(
                                 fontSize: 25, fontWeight: FontWeight.w500))
                       ],

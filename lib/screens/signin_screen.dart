@@ -27,77 +27,83 @@ class _SignInScreenState extends State<SignInScreen> {
 
   void mobileNoCheck() async {
     if (txt_mobileno.text != "") {
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          // return object of type Dialog
-          return Dialog(
-            elevation: 0.0,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0)),
-            child: Wrap(
-              children: [
-                Container(
-                  padding: EdgeInsets.all(20.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const <Widget>[
-                      SpinKitRing(
-                        color: primaryColor,
-                        size: 40.0,
-                        lineWidth: 1.2,
-                      ),
-                      SizedBox(height: 25.0),
-                      Text(
-                        'Please Wait..',
-                        style: grey14MediumTextStyle,
-                      ),
-                    ],
+      if (txt_mobileno.text.length == 10) {
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            // return object of type Dialog
+            return Dialog(
+              elevation: 0.0,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0)),
+              child: Wrap(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(20.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: const <Widget>[
+                        SpinKitRing(
+                          color: primaryColor,
+                          size: 40.0,
+                          lineWidth: 1.2,
+                        ),
+                        SizedBox(height: 25.0),
+                        Text(
+                          'Please Wait..',
+                          style: grey14MediumTextStyle,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-          );
-        },
-      );
-      print(get_UserDetailsByMobileNoAndUserType +
-          txt_mobileno.text +
-          "/" +
-          widget.userType);
-      var encoded = Uri.parse(get_UserDetailsByMobileNoAndUserType +
-          txt_mobileno.text +
-          "/" +
-          widget.userType);
-      http.get(encoded).then((value) async {
-        print(value.statusCode);
-        if (value.statusCode == 200) {
-          Map mjson;
-          mjson = json.decode(value.body);
-          if (mjson["data"]["User"].length == 0) {
-            Navigator.of(context).pop();
+                ],
+              ),
+            );
+          },
+        );
+        print(get_UserDetailsByMobileNoAndUserType +
+            txt_mobileno.text +
+            "/" +
+            widget.userType);
+        var encoded = Uri.parse(get_UserDetailsByMobileNoAndUserType +
+            txt_mobileno.text +
+            "/" +
+            widget.userType);
+        http.get(encoded).then((value) async {
+          print(value.statusCode);
+          if (value.statusCode == 200) {
+            Map mjson;
+            mjson = json.decode(value.body);
+            if (mjson["data"]["User"].length == 0) {
+              Navigator.of(context).pop();
 
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        OtpScreen(txt_mobileno.text, widget.userType)));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          OtpScreen(txt_mobileno.text, widget.userType)));
+            } else {
+              Navigator.of(context).pop();
+
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SignInUsingPassword(
+                          txt_mobileno.text, widget.userType)));
+            }
           } else {
-            Navigator.of(context).pop();
-
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => SignInUsingPassword(
-                        txt_mobileno.text, widget.userType)));
+            Navigator.pop(context);
+            showInSnackBar("Sommthing Going Wrong. Please Try agian later.");
           }
-        } else {
-          Navigator.pop(context);
-          showInSnackBar("Sommthing Going Wrong. Please Try agian later.");
-        }
-      }).catchError((onError) {});
-    } else {}
+        }).catchError((onError) {});
+      } else {
+        showInSnackBar("Mobile No Should Be 10 Digits");
+      }
+    } else {
+      showInSnackBar("Please Enter Mobile No");
+    }
   }
 
   @override
@@ -168,8 +174,8 @@ class _SignInScreenState extends State<SignInScreen> {
                 height: 40,
               ),
               Container(
-                margin: const EdgeInsets.only(left: 30,right: 30),
-                width: MediaQuery.of(context).size.width ,
+                margin: const EdgeInsets.only(left: 30, right: 30),
+                width: MediaQuery.of(context).size.width,
                 child: RaisedButton(
                   color: Colors.blue,
                   onPressed: () {

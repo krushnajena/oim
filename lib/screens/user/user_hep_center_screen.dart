@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:oim/screens/user/user_feedback_screen.dart';
 import 'package:oim/screens/user/user_report_bug_screen.dart';
 import 'package:oim/screens/user/user_support_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserHelpCenterScreen extends StatefulWidget {
   const UserHelpCenterScreen({Key? key}) : super(key: key);
@@ -11,6 +12,21 @@ class UserHelpCenterScreen extends StatefulWidget {
 }
 
 class _UserHelpCenterScreenState extends State<UserHelpCenterScreen> {
+  String userid = "";
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getUserDetails();
+  }
+
+  void getUserDetails() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+      userid = preferences.getString("userid").toString();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -140,6 +156,13 @@ class _UserHelpCenterScreenState extends State<UserHelpCenterScreen> {
                       ),
                     ],
                   ),
+                ),
+                Text(
+                  "Id " + userid,
+                  style: TextStyle(fontSize: 18),
+                ),
+                SizedBox(
+                  height: 10,
                 ),
               ],
             ),

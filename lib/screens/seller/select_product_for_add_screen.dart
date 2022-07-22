@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:oim/constants/constant.dart';
 import 'package:http/http.dart' as http;
 import 'package:oim/constants/urls.dart';
@@ -27,6 +28,42 @@ class _SelectProductForAdScreenState extends State<SelectProductForAdScreen> {
   int usedAds = 0;
   List ads = [];
   void getTotalNoOfAds(String productid) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return Dialog(
+          elevation: 0.0,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          child: Wrap(
+            children: [
+              Container(
+                padding: EdgeInsets.all(20.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: const <Widget>[
+                    SpinKitRing(
+                      color: primaryColor,
+                      size: 40.0,
+                      lineWidth: 1.2,
+                    ),
+                    SizedBox(height: 25.0),
+                    Text(
+                      'Please Wait..',
+                      style: grey14MediumTextStyle,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String userid = preferences.getString("userid").toString();
     print(userid);
@@ -37,9 +74,16 @@ class _SelectProductForAdScreenState extends State<SelectProductForAdScreen> {
         Map mnjson;
         mnjson = json.decode(value.body);
         print(value.body);
-        setState(() {
-          totalAds = mnjson["data"]["addpackage"][0]["noofads"];
-        });
+        if (mnjson["data"]["addpackage"].length > 0) {
+          setState(() {
+            totalAds = mnjson["data"]["addpackage"][0]["noofads"];
+          });
+        } else {
+          setState(() {
+            totalAds = 0;
+          });
+        }
+
         getNoOfUsedAds(productid);
       }
     });
@@ -65,6 +109,7 @@ class _SelectProductForAdScreenState extends State<SelectProductForAdScreen> {
         if (noOfAds > 0) {
           postAd(productid);
         } else {
+          Navigator.of(context).pop();
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => AdPackageScreen()));
         }
@@ -87,6 +132,10 @@ class _SelectProductForAdScreenState extends State<SelectProductForAdScreen> {
       if (value.statusCode == 200) {
         showInSnackBar("Your Ad Posted Successfully");
       }
+      Navigator.of(context).pop();
+    }).onError((error, stackTrace) {
+      showInSnackBar("Failed Please Try Again Later");
+      Navigator.of(context).pop();
     });
   }
 

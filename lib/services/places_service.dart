@@ -25,7 +25,17 @@ class PlacesService {
     var response = await http.get(url);
     var json = convert.jsonDecode(response.body);
     var jsonResults = json["data"]['products'] as List;
-    print(jsonResults);
+    return jsonResults
+        .map((place) => NewProductSearch.fromJson(place))
+        .toList();
+  }
+
+  Future<List<NewProductSearch>> getAutocompleteSellerProduct(
+      String search, String sellerid) async {
+    var url = Uri.parse(getproductsearchseller + '$search' + '/$sellerid');
+    var response = await http.get(url);
+    var json = convert.jsonDecode(response.body);
+    var jsonResults = json["data"]['products'] as List;
     return jsonResults
         .map((place) => NewProductSearch.fromJson(place))
         .toList();

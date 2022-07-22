@@ -39,8 +39,12 @@ class _StoryDetailsScreenState extends State<StoryDetailsScreen> {
         });
         for (int i = 0; i < story.length; i++) {
           setState(() {
-            storyItems.add(StoryItem.pageImage(
-                url: baseUrl + story[i]["image"], controller: controller));
+            storyItems.add(
+              StoryItem.pageImage(
+                  url: baseUrl + story[i]["image"],
+                  controller: controller,
+                  caption: story[i]["text"]),
+            );
           });
         }
       }
@@ -85,32 +89,6 @@ class _StoryDetailsScreenState extends State<StoryDetailsScreen> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 610.0),
-                  child: Expanded(
-                    child: Container(
-                        height: 50,
-                        margin: EdgeInsets.only(
-                          top: 100,
-                          left: 30,
-                          right: 30,
-                        ),
-                        child: TextField(
-                          style: TextStyle(color: Colors.white70),
-                          decoration: InputDecoration(
-                              hintStyle: TextStyle(
-                                  color: Colors.white70, fontSize: 12),
-                              enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(50.0),
-                                  borderSide:
-                                      BorderSide(color: Colors.white70)),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(50.0),
-                              ),
-                              hintText: "    Reply Here..."),
-                        )),
-                  ),
-                )
               ],
             )
           : Center(

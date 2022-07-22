@@ -11,6 +11,8 @@ import 'package:oim/services/places_service.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 class LocationProvider with ChangeNotifier {
   double? latitude = 0;
   double? logitude = 0;
@@ -94,6 +96,14 @@ class LocationProvider with ChangeNotifier {
   searchProdcut(String searchTerm) async {
     final placesService = PlacesService();
     psearchResults = await placesService.getAutocompleteProduct(searchTerm);
+    notifyListeners();
+  }
+
+  searchProdcutSeller(String searchTerm) async {
+    final placesService = PlacesService();
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    psearchResults = await placesService.getAutocompleteSellerProduct(
+        searchTerm, preferences.getString("userid").toString());
     notifyListeners();
   }
 

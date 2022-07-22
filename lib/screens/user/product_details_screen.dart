@@ -175,6 +175,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             isLoaded = true;
           });
           getRattings();
+          addView();
         }
       }
     });
@@ -247,6 +248,20 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   "0",
                   "0")));
     }
+  }
+
+  void addView() {
+    var nencoded = Uri.parse(postview);
+    print("sssssssssssssssssssssssssssssssssssssssssssssssssssssssssss");
+    http.post(nencoded, body: {
+      "cid": widget.productid,
+      "userid": sellerid,
+      "type": "product"
+    }).then((value) {
+      print("-----------------------------");
+      print(value.statusCode);
+      if (value.statusCode == 200) {}
+    });
   }
 
   bool itemAddedToCart = false;
@@ -594,6 +609,17 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         ),
                       ],
                     ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 5, top: 15),
+                    child: Text(
+                      "Product Id:- " + widget.productid,
+                      style:
+                          TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 5),

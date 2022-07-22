@@ -9,6 +9,7 @@ import 'package:oim/constants/urls.dart';
 import 'package:oim/screens/flash_screen.dart';
 import 'package:oim/screens/seller/app_settings_screen.dart';
 import 'package:oim/screens/seller/buy_a_plan_or_myorders_screen.dart';
+import 'package:oim/screens/seller/cusine_create_screen.dart';
 import 'package:oim/screens/seller/price_for_two_screen.dart';
 import 'package:oim/screens/seller/purchase_history_screen.dart';
 import 'package:oim/screens/seller/resturent_setting_screen.dart';
@@ -279,13 +280,14 @@ class _SellerAccountScreenState extends State<SellerAccountScreen> {
 
 //                           ),
 // ),
+
             categoryName == "Restaurant"
                 ? GestureDetector(
                     onTap: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ResturentSettingScreen()));
+                              builder: (context) => CusineCreateScreen()));
                     },
                     child: ListTile(
                       leading: Container(
@@ -298,7 +300,7 @@ class _SellerAccountScreenState extends State<SellerAccountScreen> {
                       title: Padding(
                         padding: EdgeInsets.only(top: 8),
                         child: Text(
-                          "Image Upload",
+                          "Cusines",
                           style: TextStyle(
                             fontSize: 16,
                           ),
@@ -315,6 +317,13 @@ class _SellerAccountScreenState extends State<SellerAccountScreen> {
                     ),
                   )
                 : SizedBox(),
+            categoryName == "Restaurant"
+                ? Divider(
+                    height: 1,
+                    color: Colors.black38,
+                  )
+                : SizedBox(),
+
             categoryName == "Restaurant"
                 ? Divider(
                     height: 1,

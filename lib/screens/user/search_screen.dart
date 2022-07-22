@@ -6,6 +6,7 @@ import 'package:oim/constants/constant.dart';
 import 'package:oim/constants/urls.dart';
 import 'package:oim/provider/location_provider.dart';
 import 'package:oim/screens/user/all_category_by_select_screen.dart';
+import 'package:oim/screens/user/product_details_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -117,7 +118,13 @@ class _SearchScreenState extends State<SearchScreen> {
                     style: TextStyle(color: Colors.black),
                   ),
                   onTap: () async {
-                    exit(0);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ProductDetailsScreen(
+                                locationData.psearchResults![index].id
+                                    .toString())));
+                    //exit(0);
                   },
                 );
               })

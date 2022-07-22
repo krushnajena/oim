@@ -68,6 +68,7 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
 
   void getsubcatgories() async {
     var nencoded = Uri.parse(getSubcategoriesByCatelogid + catelogId!);
+
     print(get_catelogues + categoryId);
     http.get(nencoded).then((value) {
       print(value.statusCode);
@@ -84,6 +85,12 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
   }
 
   void getCatlouges() async {
+    setState(() {
+      catelouges = [];
+      subcatelouges = [];
+      catelogName = "";
+      catelogId = "";
+    });
     var nencoded = Uri.parse(get_catelogues + categoryId!);
     print(get_catelogues + categoryId);
     http.get(nencoded).then((value) {
@@ -141,6 +148,7 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
                             setState(() {
                               categoryId = categories[index]["value"];
                               selecedIndex = index;
+                              categoryName = categories[index]["label"];
                               getCatlouges();
                             });
                           },
@@ -165,6 +173,8 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
                                     child: InkWell(
                                       onTap: () {
                                         setState(() {
+                                          categoryName =
+                                              categories[index]["label"];
                                           categoryId =
                                               categories[index]["value"];
                                           selecedIndex = index;
