@@ -13,14 +13,17 @@ import 'package:oim/screens/user/subcategory_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class StoreDetailsScreen extends StatefulWidget {
-  final String userid;
-  StoreDetailsScreen(this.userid);
+class StoreDetailsWithSpecifiedProductCatagoryId extends StatefulWidget {
+  final String userid, categoryid;
+  StoreDetailsWithSpecifiedProductCatagoryId(this.userid, this.categoryid);
+
   @override
-  State<StoreDetailsScreen> createState() => _StoreDetailsScreenState();
+  State<StoreDetailsWithSpecifiedProductCatagoryId> createState() =>
+      _StoreDetailsWithSpecifiedProductCatagoryIdState();
 }
 
-class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
+class _StoreDetailsWithSpecifiedProductCatagoryIdState
+    extends State<StoreDetailsWithSpecifiedProductCatagoryId> {
   String storename = "";
   String imageUrl = "";
   String address = "";
@@ -388,7 +391,9 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
 
         for (int i = 0; i < mnjson["data"]["product"].length; i++) {
           if (mnjson["data"]["product"][i]["isdeleted"] == false &&
-              mnjson["data"]["product"][i]["instock"] == true) {
+              mnjson["data"]["product"][i]["instock"] == true &&
+              mnjson["data"]["product"][i]["catalogueid"] ==
+                  widget.categoryid) {
             setState(() {
               products.add(mnjson["data"]["product"][i]);
             });

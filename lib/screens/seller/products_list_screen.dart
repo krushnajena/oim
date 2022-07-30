@@ -29,6 +29,51 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
   List catelouges = [];
   List products = [];
 
+  void getCatelouges() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? categoryId = preferences.getString("businesscategory");
+    var nencoded = Uri.parse(get_catelogues + categoryId!);
+    http.get(nencoded).then((resp) {
+      if (resp.statusCode == 200) {
+        Map mjson;
+        mjson = json.decode(resp.body);
+        for (int i = 0; i < mjson["data"]["catlog"].length; i++) {
+          bool isExists = false;
+          var coded = Uri.parse(getSubcategoriesByCatelogid +
+              mjson["data"]["catlog"][i]["_id"].toString());
+          print(getSubcategoriesByCatelogid +
+              mjson["data"]["catlog"][i]["_id"].toString());
+          http.get(coded).then((value) {
+            if (value.statusCode == 200) {
+              Map mnjson;
+              mnjson = json.decode(value.body);
+              for (int k = 0; k < mnjson["data"]["catlog"].length; k++) {
+                for (int l = 0; l < products.length; l++) {
+                  print("dfghjikoplxfcgvhbjnkml,;.");
+                  print("Category Id :- " +
+                      mnjson["data"]["catlog"][k]["_id"].toString());
+
+                  print("Product Id :- " +
+                      products[l]["productcategoryid"].toString());
+                  print("888888**************");
+                  if (mnjson["data"]["catlog"][k]["_id"].toString() ==
+                          products[l]["catalogueid"].toString() &&
+                      isExists == false) {
+                    isExists = true;
+                    print("dfghjikoplxfcgvhbjnkml,;.");
+                    setState(() {
+                      catelouges.add(mjson["data"]["catlog"][i]);
+                    });
+                  }
+                }
+              }
+            }
+          });
+        }
+      }
+    });
+  }
+
   void updateStock(String productid, bool stockvalue, int index) {
     var nencoded = Uri.parse(post_stock_update);
     if (stockvalue == true) {
@@ -52,40 +97,10 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
     }
   }
 
-  void getCatelouges() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    String? categoryId = preferences.getString("businesscategory");
-    var nencoded = Uri.parse(get_catelogues + categoryId!);
-    http.get(nencoded).then((resp) {
-      if (resp.statusCode == 200) {
-        Map mnjson;
-        mnjson = json.decode(resp.body);
-        setState(() {
-          catelouges = mnjson["data"]["catlog"];
-        });
-      }
-    });
-  }
-
   void showInSnackBar(String value) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(value.toString()),
     ));
-  }
-
-  void getProducts() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    String? userId = preferences.getString("userid");
-    var nencoded = Uri.parse(get_products_byuserid + userId!);
-    http.get(nencoded).then((resp) {
-      if (resp.statusCode == 200) {
-        Map mnjson;
-        mnjson = json.decode(resp.body);
-        setState(() {
-          products = mnjson["data"]["product"];
-        });
-      }
-    });
   }
 
   void deleteProduct(String id) async {
@@ -141,11 +156,27 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
     });
   }
 
+  void getProducts() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? userId = preferences.getString("userid");
+    var nencoded = Uri.parse(get_products_byuserid + userId!);
+    http.get(nencoded).then((resp) {
+      if (resp.statusCode == 200) {
+        Map mnjson;
+        mnjson = json.decode(resp.body);
+        setState(() {
+          products = mnjson["data"]["product"];
+        });
+        getCatelouges();
+      }
+    });
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getCatelouges();
+    // getCatelouges();
     getProducts();
   }
 
@@ -292,12 +323,17 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                                                           .width -
                                                       16) /
                                                   2,
-                                              child: Image.network(
-                                                baseUrl +
-                                                    products[index]["image"][0]
-                                                        ["filename"],
-                                                fit: BoxFit.fill,
-                                              )),
+                                              child: products[index]["image"]
+                                                          .length >
+                                                      0
+                                                  ? Image.network(
+                                                      baseUrl +
+                                                          products[index]
+                                                                  ["image"][0]
+                                                              ["filename"],
+                                                      fit: BoxFit.fill,
+                                                    )
+                                                  : SizedBox()),
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 right: 15, top: 4),

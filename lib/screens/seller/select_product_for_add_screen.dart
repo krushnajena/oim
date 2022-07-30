@@ -169,270 +169,256 @@ class _SelectProductForAdScreenState extends State<SelectProductForAdScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: scaffoldBgColor,
-        appBar:
-            AppBar(centerTitle: true, title: Text('Select Product'), actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Icon(Icons.search),
-          )
-        ]),
-        body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(
-                top: 8,
-              ),
-              child: CustomScrollView(
-                slivers: [
-                  SliverGrid(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        double disount =
-                            double.parse(products[index]["mrp"].toString()) -
-                                double.parse(products[index]["sellingprice"]
-                                    .toString()
-                                    .toString());
-                        double discountPercentage = (disount /
-                                double.parse(
-                                    products[index]["mrp"].toString())) *
-                            100;
-                        return Container(
-                          height: 250,
-                          child: Card(
-                            child: Container(
-                              height: 250,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  InkWell(
-                                    onTap: () {},
-                                    child: Stack(children: [
-                                      Container(
-                                          margin: EdgeInsets.all(3),
-                                          height: 100,
-                                          width: (MediaQuery.of(context)
-                                                      .size
-                                                      .width -
-                                                  16) /
-                                              2,
-                                          child: Image.network(
-                                            baseUrl +
-                                                products[index]["image"][0]
-                                                    ["filename"],
-                                            fit: BoxFit.fill,
-                                          )),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            right: 15, top: 4),
-                                        child: Card(
-                                            elevation: 2,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(150),
-                                            ),
-                                            child: Container(
-                                              width: 30,
-                                              height: 30,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                              ),
-                                              child: Icon(
-                                                Icons.share,
-                                                color: Colors.grey[400],
-                                              ),
-                                            )),
-                                      ),
-                                    ]),
-                                  ),
-                                  SizedBox(
-                                    height: 8,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
-                                    child: Text(
-                                      products[index]["productname"],
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500),
-                                      maxLines: 3,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 8.0, top: 10),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                            "₹" +
-                                                products[index]["mrp"]
-                                                    .toString(),
-                                            style: TextStyle(
-                                                fontSize: 10,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.grey,
-                                                decoration: TextDecoration
-                                                    .lineThrough)),
-                                        SizedBox(width: 5),
-                                        Text(
-                                            "₹" +
-                                                products[index]["sellingprice"]
-                                                    .toString(),
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w500)),
-                                        SizedBox(width: 5),
-                                        Text(
-                                          discountPercentage
-                                                  .toStringAsFixed(2) +
-                                              "%",
-                                          style: TextStyle(
-                                            color: Colors.green,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500,
+    return Scaffold(
+      backgroundColor: scaffoldBgColor,
+      appBar:
+          AppBar(centerTitle: true, title: Text('Select Product'), actions: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Icon(Icons.search),
+        )
+      ]),
+      body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.only(
+              top: 8,
+            ),
+            child: CustomScrollView(
+              slivers: [
+                SliverGrid(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      double disount =
+                          double.parse(products[index]["mrp"].toString()) -
+                              double.parse(products[index]["sellingprice"]
+                                  .toString()
+                                  .toString());
+                      double discountPercentage = (disount /
+                              double.parse(products[index]["mrp"].toString())) *
+                          100;
+                      return Container(
+                        height: 250,
+                        child: Card(
+                          child: Container(
+                            height: 250,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                InkWell(
+                                  onTap: () {},
+                                  child: Stack(children: [
+                                    Container(
+                                        margin: EdgeInsets.all(3),
+                                        height: 100,
+                                        width:
+                                            (MediaQuery.of(context).size.width -
+                                                    16) /
+                                                2,
+                                        child: Image.network(
+                                          baseUrl +
+                                              products[index]["image"][0]
+                                                  ["filename"],
+                                          fit: BoxFit.fill,
+                                        )),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          right: 15, top: 4),
+                                      child: Card(
+                                          elevation: 2,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(150),
                                           ),
-                                        )
-                                      ],
+                                          child: Container(
+                                            width: 30,
+                                            height: 30,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: Icon(
+                                              Icons.share,
+                                              color: Colors.grey[400],
+                                            ),
+                                          )),
                                     ),
+                                  ]),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 8.0),
+                                  child: Text(
+                                    products[index]["productname"],
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500),
+                                    maxLines: 3,
                                   ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: 8.0, top: 10),
+                                  child: Row(
                                     children: [
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 8.0),
-                                        child: Text(
-                                          products[index]["instock"]
-                                              ? "In Stock"
-                                              : "Stock Out",
+                                      Text(
+                                          "₹" +
+                                              products[index]["mrp"].toString(),
                                           style: TextStyle(
                                               fontSize: 10,
                                               fontWeight: FontWeight.w500,
-                                              color: products[index]["instock"]
-                                                  ? Colors.green
-                                                  : Colors.red),
+                                              color: Colors.grey,
+                                              decoration:
+                                                  TextDecoration.lineThrough)),
+                                      SizedBox(width: 5),
+                                      Text(
+                                          "₹" +
+                                              products[index]["sellingprice"]
+                                                  .toString(),
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500)),
+                                      SizedBox(width: 5),
+                                      Text(
+                                        discountPercentage.toStringAsFixed(2) +
+                                            "%",
+                                        style: TextStyle(
+                                          color: Colors.green,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
                                         ),
-                                      ),
+                                      )
                                     ],
                                   ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            const Icon(
-                                              Icons.remove_red_eye_outlined,
-                                              size: 10,
-                                            ),
-                                            Text(
-                                                "  Views : " +
-                                                    products[index]["views"]
-                                                        .toString(),
-                                                style: const TextStyle(
-                                                    fontSize: 12,
-                                                    fontWeight:
-                                                        FontWeight.w500)),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        Center(
-                                          child: OutlineButton(
-                                              onPressed: () {
-                                                showDialog(
-                                                    context: context,
-                                                    builder: (BuildContext
-                                                            context) =>
-                                                        CupertinoAlertDialog(
-                                                          title: new Text(
-                                                              "Confirmation"),
-                                                          content: new Text(
-                                                              "Do you want to display '" +
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 8.0),
+                                      child: Text(
+                                        products[index]["instock"]
+                                            ? "In Stock"
+                                            : "Stock Out",
+                                        style: TextStyle(
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.w500,
+                                            color: products[index]["instock"]
+                                                ? Colors.green
+                                                : Colors.red),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 8.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          const Icon(
+                                            Icons.remove_red_eye_outlined,
+                                            size: 10,
+                                          ),
+                                          Text(
+                                              "  Views : " +
+                                                  products[index]["views"]
+                                                      .toString(),
+                                              style: const TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w500)),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      Center(
+                                        child: OutlineButton(
+                                            onPressed: () {
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (BuildContext
+                                                          context) =>
+                                                      CupertinoAlertDialog(
+                                                        title: new Text(
+                                                            "Confirmation"),
+                                                        content: new Text(
+                                                            "Do you want to display '" +
+                                                                products[index][
+                                                                    "productname"] +
+                                                                "' on offerzone section. "),
+                                                        actions: <Widget>[
+                                                          CupertinoDialogAction(
+                                                            isDefaultAction:
+                                                                true,
+                                                            child:
+                                                                Text("Post Ad"),
+                                                            onPressed:
+                                                                () async {
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop();
+                                                              getTotalNoOfAds(
                                                                   products[
                                                                           index]
-                                                                      [
-                                                                      "productname"] +
-                                                                  "' on offerzone section. "),
-                                                          actions: <Widget>[
-                                                            CupertinoDialogAction(
-                                                              isDefaultAction:
-                                                                  true,
-                                                              child: Text(
-                                                                  "Post Ad"),
-                                                              onPressed:
-                                                                  () async {
-                                                                Navigator.of(
-                                                                        context)
-                                                                    .pop();
-                                                                getTotalNoOfAds(
-                                                                    products[
-                                                                            index]
-                                                                        [
-                                                                        "_id"]);
-                                                              },
-                                                            ),
-                                                            CupertinoDialogAction(
-                                                              child:
-                                                                  Text("Exit"),
-                                                              onPressed: () {
-                                                                Navigator.pop(
-                                                                    context);
-                                                              },
-                                                            )
-                                                          ],
-                                                        ));
-                                              },
-                                              child: const Text("Post Ad",
-                                                  style:
-                                                      TextStyle(fontSize: 12))),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
+                                                                      ["_id"]);
+                                                            },
+                                                          ),
+                                                          CupertinoDialogAction(
+                                                            child: Text("Exit"),
+                                                            onPressed: () {
+                                                              Navigator.pop(
+                                                                  context);
+                                                            },
+                                                          )
+                                                        ],
+                                                      ));
+                                            },
+                                            child: const Text("Post Ad",
+                                                style:
+                                                    TextStyle(fontSize: 12))),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
                             ),
                           ),
-                        );
-                      },
-                      childCount: products.length,
-                    ),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 2,
-                      mainAxisSpacing: 2,
-                      mainAxisExtent: 283,
-                    ),
+                        ),
+                      );
+                    },
+                    childCount: products.length,
                   ),
-                  SliverGrid.extent(
-                    maxCrossAxisExtent: 250,
-                    mainAxisSpacing: 20.0,
-                    crossAxisSpacing: 20.0,
-                    childAspectRatio: 2.5,
-                    children: <Widget>[
-                      SizedBox(
-                        height: 20,
-                      )
-                    ],
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 2,
+                    mainAxisSpacing: 2,
+                    mainAxisExtent: 283,
                   ),
-                ],
-              ),
+                ),
+                SliverGrid.extent(
+                  maxCrossAxisExtent: 250,
+                  mainAxisSpacing: 20.0,
+                  crossAxisSpacing: 20.0,
+                  childAspectRatio: 2.5,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 20,
+                    )
+                  ],
+                ),
+              ],
             ),
           ),
-        ]),
-      ),
+        ),
+      ]),
     );
   }
 }

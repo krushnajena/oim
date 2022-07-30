@@ -25,8 +25,11 @@ class _StoryListScreenState extends State<StoryListScreen> {
   }
 
   void deleteStory(String id) {
-    var nencoded = Uri.parse(get_story_by_userid + id!);
+    print("Story Delete");
+    var nencoded = Uri.parse(getDeleteStory + id!);
+    print("Story Delete");
     print(getDeleteStory + id!);
+    print("Story Delete");
     http.get(nencoded).then((resp) {
       if (resp.statusCode == 200) {
         Map mnjson;
@@ -51,10 +54,11 @@ class _StoryListScreenState extends State<StoryListScreen> {
 
         print(mnjson["data"]["storybyeuserid"]);
         for (int i = 0; i < mnjson["data"]["storybyeuserid"].length; i++) {
-          if (DateTime.parse(
-                  mnjson["data"]["storybyeuserid"][i]["publishedon"].toString())
-              .add(Duration(hours: 24))
-              .isAfter(DateTime.now())) {
+          if (DateTime.parse(mnjson["data"]["storybyeuserid"][i]["publishedon"]
+                      .toString())
+                  .add(Duration(hours: 24))
+                  .isAfter(DateTime.now()) &&
+              mnjson["data"]["storybyeuserid"][i]["isdeleted"] == false) {
             print("89890809****************))))))))))))");
             print(mnjson["data"]["storybyeuserid"][i]);
             setState(() {

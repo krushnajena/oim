@@ -4,11 +4,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:oim/constants/constant.dart';
 import 'package:oim/constants/urls.dart';
 import 'package:oim/provider/location_provider.dart';
 import 'package:oim/screens/seller/seller_privacy_policy.dart';
 import 'package:oim/screens/user/all_categories_screen.dart';
+import 'package:oim/screens/user/all_category_by_select_screen.dart';
 import 'package:oim/screens/user/cart_screen.dart';
 import 'package:oim/screens/user/chat_screen.dart';
 import 'package:oim/screens/user/location_search_screen.dart';
@@ -54,6 +56,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
         setState(() {
           sellers = mjson["data"]["seller"];
         });
+        getCategories();
       }
     }).catchError((onError) {});
   }
@@ -127,16 +130,26 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
         Map mjson;
         mjson = json.decode(value.body);
         print(mjson);
+
         for (int i = 0; i < mjson["data"]["categories"].length; i++) {
-          setState(() {
-            categories.add(
-              {
-                'value': mjson["data"]["categories"][i]["_id"],
-                'label': mjson["data"]["categories"][i]["categoryname"],
-                'icon': mjson["data"]["categories"][i]["icon"]
-              },
-            );
-          });
+          int s = 0;
+          for (int k = 0; k < sellers.length; k++) {
+            if (mjson["data"]["categories"][i]["_id"] ==
+                sellers[k]["businesscatagories"]) {
+              s = s + 1;
+            }
+          }
+          if (s > 0) {
+            setState(() {
+              categories.add(
+                {
+                  'value': mjson["data"]["categories"][i]["_id"],
+                  'label': mjson["data"]["categories"][i]["categoryname"],
+                  'icon': mjson["data"]["categories"][i]["icon"]
+                },
+              );
+            });
+          }
         }
         setState(() {
           categories.add(
@@ -164,7 +177,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
     // TODO: implement initState
     super.initState();
     getStores();
-    getCategories();
+
     getImageSlider();
     getPopularStores();
     getAddress();
@@ -446,7 +459,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          SellerListByCategoryIdScreen(
+                                                          AllCategofyBySelectScreen(
                                                               categories[index]
                                                                   ["value"],
                                                               categories[index]
@@ -701,8 +714,8 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                                             itemBuilder:
                                                                 (context,
                                                                     iindex) {
-                                                              noofrattingsf(
-                                                                  index);
+                                                              //  noofrattingsf(
+                                                              // index);
                                                               double disount = double.parse(sellers[index]["products"]
                                                                               [iindex][
                                                                           "mrp"]
@@ -825,218 +838,424 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
           );
   }
 
-  double ratting = 0;
-  int noofrattings = 0;
-  double appliedRatting = 0;
-  double oneStar = 0;
-  double twoStar = 0;
-  double threeStar = 0;
-  double fourStar = 0;
-  double fiveStar = 0;
-  void noofrattingsf(int index) async {
-    ratting = 0;
-    noofrattings = 0;
-    double appliedRatting = 0;
-
-    var encoded = Uri.parse(get_rattings + sellers[index]["userid"]);
-    print("##########################zeeeeeerrr7777777777777777777777");
-
-    //print(get_rattings + widget.userid);
-    print("##########################zeeeeeerrr7777777777777777777777");
-    http.get(encoded).then((value) {
-      if (value.statusCode == 200) {
-        Map mjson;
-        mjson = json.decode(value.body);
-        double total = 0;
-        for (int i = 0; i < mjson["data"]["storeratting"].length; i++) {
-          total = total +
-              double.parse(mjson["data"]["storeratting"][i]["applied_ratting"]
-                  .toString());
-        }
-
-        if (total > 0) {
-          noofrattings = mjson["data"]["storeratting"].length;
-          ratting = total / mjson["data"]["storeratting"].length;
-
-          if (ratting < 1) {
-            ratting = 0.5;
-          } else if (ratting < 1.5) {
-            ratting = 1;
-          } else if (ratting < 2) {
-            ratting = 1.5;
-          } else if (ratting < 2.5) {
-            ratting = 2;
-          } else if (ratting < 3) {
-            ratting = 2.5;
-          } else if (ratting < 3.5) {
-            ratting = 3;
-          } else if (ratting < 4) {
-            ratting = 3.5;
-          } else if (ratting < 4.5) {
-            ratting = 4;
-          } else if (ratting < 5) {
-            ratting = 4.5;
-          } else {
-            ratting = 5;
-          }
-        }
-      }
-    });
+  String twlevehourtime(int time) {
+    if (time == 13) {
+      return "01";
+    } else if (time == 14) {
+      return "02";
+    } else if (time == 15) {
+      return "03";
+    } else if (time == 16) {
+      return "04";
+    } else if (time == 17) {
+      return "05";
+    } else if (time == 18) {
+      return "06";
+    } else if (time == 19) {
+      return "07";
+    } else if (time == 20) {
+      return "08";
+    } else if (time == 21) {
+      return "09";
+    } else if (time == 22) {
+      return "10";
+    } else if (time == 23) {
+      return "11";
+    } else {
+      return "12";
+    }
   }
 
   Widget sellerwidget(int index) {
-    Future.delayed(const Duration(milliseconds: 3000), () {
-// Here you can write your code
-    });
-    //sleep(Duration(seconds: 5));
-    // noofrattingsf(index);
-    return Padding(
-      padding: const EdgeInsets.only(left: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 10, left: 2),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  sellers[index]["businessname"],
-                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-                ),
-                Row(
-                  children: [
-                    Text(noofrattings.toString()),
-                    RatingBar(
-                      ignoreGestures: true,
-                      itemSize: 20,
-                      allowHalfRating: true,
-                      initialRating: ratting,
-                      itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                      ratingWidget: RatingWidget(
-                        empty: Icon(Icons.star_border,
-                            color: primaryColor, size: 20),
-                        full: Icon(
-                          Icons.star,
-                          color: primaryColor,
-                          size: 20,
+    double ratting = 0;
+    int noofrattings = 0;
+    double appliedRatting = 0;
+    double oneStar = 0;
+    double twoStar = 0;
+    double threeStar = 0;
+    double fourStar = 0;
+    double fiveStar = 0;
+    double total = 0;
+    for (int i = 0; i < sellers[index]["rattings"].length; i++) {
+      if (sellers[index]["userid"].toString() ==
+          sellers[index]["rattings"][i]["storeid"].toString()) {
+        noofrattings = noofrattings + 1;
+        total = total +
+            double.parse(
+                sellers[index]["rattings"][i]["applied_ratting"].toString());
+      }
+    }
+    if (total > 0) {
+      ratting = total / noofrattings;
+
+      if (ratting < 1) {
+        ratting = 0.5;
+      } else if (ratting < 1.5) {
+        ratting = 1;
+      } else if (ratting < 2) {
+        ratting = 1.5;
+      } else if (ratting < 2.5) {
+        ratting = 2;
+      } else if (ratting < 3) {
+        ratting = 2.5;
+      } else if (ratting < 3.5) {
+        ratting = 3;
+      } else if (ratting < 4) {
+        ratting = 3.5;
+      } else if (ratting < 4.5) {
+        ratting = 4;
+      } else if (ratting < 5) {
+        ratting = 4.5;
+      } else {
+        ratting = 5;
+      }
+    }
+    DateTime date = DateTime.now();
+
+    String day = DateFormat('EEEE').format(date);
+    String opeingText = "";
+    bool isClosed = false;
+    if (day == "Sunday") {
+      if (sellers[index].containsKey("sundayopeningtime")) {
+        int openingtime = int.parse(
+            sellers[index]["sundayopeningtime"].toString().split(':')[0]);
+        int closingtime = int.parse(
+            sellers[index]["sundayclosingtime"].toString().split(':')[0]);
+        if (openingtime <= date.hour && closingtime > date.hour) {
+          opeingText = "Open . Closes " +
+              twlevehourtime(closingtime) +
+              ":" +
+              sellers[index]["sundayclosingtime"].toString().split(':')[1];
+          isClosed = false;
+        } else if (closingtime < date.hour) {
+          isClosed = true;
+          opeingText = "Opens " +
+              twlevehourtime(int.parse(sellers[index]["mondayopeningtime"]
+                  .toString()
+                  .split(':')[0])) +
+              ":" +
+              sellers[index]["mondayopeningtime"].toString().split(':')[1];
+          " Mon";
+        }
+      }
+    } else if (day == "Monday") {
+      if (sellers[index].containsKey("mondayopeningtime")) {
+        int openingtime = int.parse(
+            sellers[index]["mondayopeningtime"].toString().split(':')[0]);
+        int closingtime = int.parse(
+            sellers[index]["mondayclosingtime"].toString().split(':')[0]);
+
+        if (openingtime <= date.hour && closingtime > date.hour) {
+          opeingText = "Open . Closes " +
+              twlevehourtime(closingtime) +
+              ":" +
+              sellers[index]["mondayclosingtime"].toString().split(':')[1];
+          isClosed = false;
+        } else if (closingtime < date.hour) {
+          isClosed = true;
+          opeingText = "Opens " +
+              twlevehourtime(int.parse(sellers[index]["tuesdayopeningtime"]
+                  .toString()
+                  .split(':')[0])) +
+              ":" +
+              sellers[index]["tuesdayopeningtime"].toString().split(':')[1];
+          " Tue";
+        }
+      }
+    } else if (day == "Tuesday") {
+      if (sellers[index].containsKey("tuesdayopeningtime")) {
+        int openingtime = int.parse(
+            sellers[index]["tuesdayopeningtime"].toString().split(':')[0]);
+        int closingtime = int.parse(
+            sellers[index]["tuesdayclosingtime"].toString().split(':')[0]);
+
+        if (openingtime <= date.hour && closingtime > date.hour) {
+          opeingText = "Open . Closes " +
+              twlevehourtime(closingtime) +
+              ":" +
+              sellers[index]["tuesdayclosingtime"].toString().split(':')[1];
+          isClosed = false;
+        } else if (closingtime < date.hour) {
+          isClosed = true;
+          opeingText = "Opens " +
+              twlevehourtime(int.parse(sellers[index]["wednesdayopeningtime"]
+                  .toString()
+                  .split(':')[0])) +
+              ":" +
+              sellers[index]["wednesdayopeningtime"].toString().split(':')[1];
+          " Wed";
+        }
+      }
+    } else if (day == "Wednesday") {
+      if (sellers[index].containsKey("wednesdayopeningtime")) {
+        int openingtime = int.parse(
+            sellers[index]["wednesdayopeningtime"].toString().split(':')[0]);
+        int closingtime = int.parse(
+            sellers[index]["wednesdayclosingtime"].toString().split(':')[0]);
+
+        if (openingtime <= date.hour && closingtime > date.hour) {
+          opeingText = "Open . Closes " +
+              twlevehourtime(closingtime) +
+              ":" +
+              sellers[index]["wednesdayclosingtime"].toString().split(':')[1];
+          isClosed = false;
+        } else if (closingtime < date.hour) {
+          isClosed = true;
+          opeingText = "Opens " +
+              twlevehourtime(int.parse(sellers[index]["tuesdayopeningtime"]
+                  .toString()
+                  .split(':')[0])) +
+              ":" +
+              sellers[index]["tuesdayopeningtime"].toString().split(':')[1];
+          " Thu";
+        }
+      }
+    } else if (day == "Thursday") {
+      if (sellers[index].containsKey("thursdayopeningtime")) {
+        int openingtime = int.parse(
+            sellers[index]["thursdayopeningtime"].toString().split(':')[0]);
+        int closingtime = int.parse(
+            sellers[index]["tuesdayclosingtime"].toString().split(':')[0]);
+
+        if (openingtime <= date.hour && closingtime > date.hour) {
+          opeingText = "Open . Closes " +
+              twlevehourtime(closingtime) +
+              ":" +
+              sellers[index]["tuesdayclosingtime"].toString().split(':')[1];
+          isClosed = false;
+        } else if (closingtime < date.hour) {
+          isClosed = true;
+          opeingText = "Opens " +
+              twlevehourtime(int.parse(sellers[index]["fridayopeningtime"]
+                  .toString()
+                  .split(':')[0])) +
+              ":" +
+              sellers[index]["fridayopeningtime"].toString().split(':')[1];
+          " Fri";
+        }
+      }
+    } else if (day == "Friday") {
+      if (sellers[index].containsKey("fridayopeningtime")) {
+        int openingtime = int.parse(
+            sellers[index]["fridayopeningtime"].toString().split(':')[0]);
+        int closingtime = int.parse(
+            sellers[index]["fridayclosingtime"].toString().split(':')[0]);
+
+        if (openingtime <= date.hour && closingtime > date.hour) {
+          opeingText = "Open . Closes " +
+              twlevehourtime(closingtime) +
+              ":" +
+              sellers[index]["fridayclosingtime"].toString().split(':')[1];
+          isClosed = false;
+        } else if (closingtime < date.hour) {
+          isClosed = true;
+          opeingText = "Opens " +
+              twlevehourtime(int.parse(sellers[index]["saturdayopeningtime"]
+                  .toString()
+                  .split(':')[0])) +
+              ":" +
+              sellers[index]["saturdayopeningtime"].toString().split(':')[1];
+          " Sat";
+        }
+      }
+    } else if (day == "Saturday") {
+      if (sellers[index].containsKey("saturdayopeningtime")) {
+        int openingtime = int.parse(
+            sellers[index]["saturdayopeningtime"].toString().split(':')[0]);
+        int closingtime = int.parse(
+            sellers[index]["saturdayclosingtime"].toString().split(':')[0]);
+
+        if (openingtime <= date.hour && closingtime > date.hour) {
+          opeingText = "Open . Closes " +
+              twlevehourtime(closingtime) +
+              ":" +
+              sellers[index]["saturdayclosingtime"].toString().split(':')[1];
+          isClosed = false;
+        } else if (closingtime < date.hour) {
+          isClosed = true;
+          opeingText = "Opens " +
+              twlevehourtime(int.parse(sellers[index]["sundayopeningtime"]
+                  .toString()
+                  .split(':')[0])) +
+              ":" +
+              sellers[index]["sundayopeningtime"].toString().split(':')[1];
+          " Sun";
+        }
+      }
+    }
+    return InkWell(
+      onTap: () {
+        sellers[index]["businesscatagories"] == "Restaurant"
+            ? Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        ResturentDetailsScreen(sellers[index]["userid"])))
+            : Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        StoreDetailsScreen(sellers[index]["userid"])));
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(left: 8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 10, left: 2),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    sellers[index]["businessname"],
+                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                  ),
+                  Row(
+                    children: [
+                      Text(ratting.toString()),
+                      RatingBar(
+                        ignoreGestures: true,
+                        itemSize: 20,
+                        allowHalfRating: true,
+                        initialRating: ratting,
+                        itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                        ratingWidget: RatingWidget(
+                          empty: Icon(Icons.star_border,
+                              color: primaryColor, size: 20),
+                          full: Icon(
+                            Icons.star,
+                            color: primaryColor,
+                            size: 20,
+                          ),
+                          half: Icon(Icons.star_border,
+                              color: primaryColor, size: 20),
                         ),
-                        half: Icon(Icons.star_border,
-                            color: primaryColor, size: 20),
+                        onRatingUpdate: (value) {
+                          print(value);
+                        },
                       ),
-                      onRatingUpdate: (value) {
-                        print(value);
-                      },
+                      Text("(" + noofrattings.toString() + ")")
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4.0, bottom: 4),
+                    child: Text(
+                      sellers[index]["streetaddress"],
                     ),
-                    Text("15.5 km")
-                  ],
+                  ),
+                  Text("In-store shopping"),
+                  isClosed == true
+                      ? Row(
+                          children: [
+                            Text(
+                              "Closed",
+                              style: TextStyle(color: Colors.red),
+                            ),
+                            Text(opeingText)
+                          ],
+                        )
+                      : Text(opeingText)
+                ],
+              ),
+            ),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: RaisedButton(
+                    child: SizedBox(
+                      width: 60,
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.call,
+                            color: Colors.blue,
+                          ),
+                          Text(
+                            '  Call',
+                            style: TextStyle(color: Colors.black),
+                          )
+                        ],
+                      ),
+                    ),
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(16.0))),
+                    onPressed: () async {
+                      final Uri launchUri = Uri(
+                        scheme: 'tel',
+                        path: sellers[index]["businesscontactinfo"],
+                      );
+                      await launchUrl(launchUri);
+                    },
+                  ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 4.0, bottom: 4),
-                  child: Text(
-                    sellers[index]["streetaddress"],
+                  padding: const EdgeInsets.only(top: 10, left: 15.0),
+                  child: RaisedButton(
+                    child: SizedBox(
+                      width: 100,
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.directions,
+                            color: Colors.blue,
+                          ),
+                          Text(
+                            '  Directions',
+                            style: TextStyle(color: Colors.black),
+                          )
+                        ],
+                      ),
+                    ),
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(16.0))),
+                    onPressed: () async {
+                      String googleUrl =
+                          'https://www.google.com/maps/search/?api=1&query=${sellers[index]["latitude"]},${sellers[index]["longitude"]}';
+
+                      print(googleUrl);
+
+                      await launch(googleUrl);
+                    },
                   ),
                 ),
-                Text("In-store shopping")
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15.0),
+                  child: RaisedButton(
+                    child: SizedBox(
+                      width: 70,
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.share,
+                            color: Colors.blue,
+                          ),
+                          Text(
+                            '  Share',
+                            style: TextStyle(color: Colors.black),
+                          )
+                        ],
+                      ),
+                    ),
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(16.0))),
+                    onPressed: () {},
+                  ),
+                ),
               ],
             ),
-          ),
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 10.0),
-                child: RaisedButton(
-                  child: SizedBox(
-                    width: 60,
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.call,
-                          color: Colors.blue,
-                        ),
-                        Text(
-                          '  Call',
-                          style: TextStyle(color: Colors.black),
-                        )
-                      ],
-                    ),
-                  ),
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(16.0))),
-                  onPressed: () async {
-                    final Uri launchUri = Uri(
-                      scheme: 'tel',
-                      path: sellers[index]["businesscontactinfo"],
-                    );
-                    await launchUrl(launchUri);
-                  },
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10, left: 15.0),
-                child: RaisedButton(
-                  child: SizedBox(
-                    width: 100,
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.directions,
-                          color: Colors.blue,
-                        ),
-                        Text(
-                          '  Directions',
-                          style: TextStyle(color: Colors.black),
-                        )
-                      ],
-                    ),
-                  ),
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(16.0))),
-                  onPressed: () async {
-                    String googleUrl =
-                        'https://www.google.com/maps/search/?api=1&query=${sellers[index]["latitude"]},${sellers[index]["longitude"]}';
-
-                    print(googleUrl);
-
-                    await launch(googleUrl);
-                  },
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10, left: 15.0),
-                child: RaisedButton(
-                  child: SizedBox(
-                    width: 70,
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.share,
-                          color: Colors.blue,
-                        ),
-                        Text(
-                          '  Share',
-                          style: TextStyle(color: Colors.black),
-                        )
-                      ],
-                    ),
-                  ),
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(16.0))),
-                  onPressed: () {},
-                ),
-              ),
-            ],
-          ),
-          Padding(
-              padding: const EdgeInsets.only(
-                  top: 10, left: 10, right: 20, bottom: 10),
-              child: Divider(
-                color: Colors.grey,
-              )),
-        ],
+            Padding(
+                padding: const EdgeInsets.only(
+                    top: 10, left: 10, right: 20, bottom: 10),
+                child: Divider(
+                  color: Colors.grey,
+                )),
+          ],
+        ),
       ),
     );
   }

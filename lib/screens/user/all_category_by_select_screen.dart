@@ -37,25 +37,37 @@ class _AllCategofyBySelectScreenState extends State<AllCategofyBySelectScreen> {
         Map mjson;
         mjson = json.decode(value.body);
         print(mjson);
+        int l = 0;
         for (int i = 0; i < mjson["data"]["categories"].length; i++) {
-          if (mjson["data"]["categories"][i]["categoryName"] ==
-              widget.categoryName) {
-            setState(() {
-              categoryId = mjson["data"]["categories"][i]["_id"];
-              categoryName = mjson["data"]["categories"][i]["categoryname"];
-              selecedIndex = i;
-            });
-            getCatlouges();
+          int s = 0;
+          for (int k = 0; k < sellers.length; k++) {
+            if (mjson["data"]["categories"][i]["_id"] ==
+                sellers[k]["businesscatagories"]) {
+              s = s + 1;
+            }
           }
-          setState(() {
-            categories.add(
-              {
-                'value': mjson["data"]["categories"][i]["_id"],
-                'label': mjson["data"]["categories"][i]["categoryname"],
-                'icon': mjson["data"]["categories"][i]["icon"]
-              },
-            );
-          });
+          if (s > 0) {
+            if (mjson["data"]["categories"][i]["categoryname"] ==
+                widget.categoryName) {
+              setState(() {
+                categoryId = mjson["data"]["categories"][i]["_id"];
+                categoryName = mjson["data"]["categories"][i]["categoryname"];
+                selecedIndex = l;
+              });
+              getCatlouges();
+            }
+            // l = l+1;
+            setState(() {
+              categories.add(
+                {
+                  'value': mjson["data"]["categories"][i]["_id"],
+                  'label': mjson["data"]["categories"][i]["categoryname"],
+                  'icon': mjson["data"]["categories"][i]["icon"]
+                },
+              );
+              l = l + 1;
+            });
+          }
         }
 
         setState(() {
@@ -114,11 +126,29 @@ class _AllCategofyBySelectScreenState extends State<AllCategofyBySelectScreen> {
     });
   }
 
+  List sellers = [];
+  getStores() async {
+    var encoded = Uri.parse(get_seller_and_products + "/d");
+
+    http.get(encoded).then((value) async {
+      if (value.statusCode == 200) {
+        Map mjson;
+        mjson = json.decode(value.body);
+        print(mjson["data"]["result"]);
+        setState(() {
+          sellers = mjson["data"]["seller"];
+        });
+        getCategories();
+      }
+    }).catchError((onError) {});
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getCategories();
+    getStores();
+    // getCategories();
   }
 
   @override

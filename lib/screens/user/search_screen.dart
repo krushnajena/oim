@@ -7,6 +7,7 @@ import 'package:oim/constants/urls.dart';
 import 'package:oim/provider/location_provider.dart';
 import 'package:oim/screens/user/all_category_by_select_screen.dart';
 import 'package:oim/screens/user/product_details_screen.dart';
+import 'package:oim/screens/user/search_details_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -50,6 +51,7 @@ class _SearchScreenState extends State<SearchScreen> {
     });
   }
 
+  TextEditingController txt_searchbar = new TextEditingController();
   bool show = false;
   @override
   void initState() {
@@ -75,6 +77,7 @@ class _SearchScreenState extends State<SearchScreen> {
             child: Container(
               height: 42,
               child: TextField(
+                controller: txt_searchbar,
                 onChanged: (value) {
                   if (value == "") {
                     setState(() {
@@ -90,10 +93,21 @@ class _SearchScreenState extends State<SearchScreen> {
                 decoration: InputDecoration(
                     hintText: "Search from Product...",
                     hintStyle: TextStyle(color: Colors.grey, fontSize: 16),
-                    prefixIcon: (Icon(
-                      Icons.search,
-                      color: Colors.grey,
-                    )),
+                    suffixIcon: InkWell(
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      SearchDetailsScreen(txt_searchbar.text)));
+                        },
+                        child: (Icon(
+                          Icons.search,
+                          color: Colors.grey,
+                        )),
+                      ),
+                    ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5),
                     ),
@@ -121,8 +135,8 @@ class _SearchScreenState extends State<SearchScreen> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ProductDetailsScreen(
-                                locationData.psearchResults![index].id
+                            builder: (context) => SearchDetailsScreen(
+                                locationData.psearchResults![index].productname
                                     .toString())));
                     //exit(0);
                   },

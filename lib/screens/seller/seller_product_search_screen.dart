@@ -7,6 +7,7 @@ import 'package:oim/constants/constant.dart';
 import 'package:oim/constants/urls.dart';
 import 'package:oim/provider/location_provider.dart';
 import 'package:oim/screens/seller/product_edit_screen.dart';
+import 'package:oim/screens/seller/seller_product_serach_details_screen.dart';
 import 'package:oim/screens/user/all_category_by_select_screen.dart';
 import 'package:oim/screens/user/product_details_screen.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +24,7 @@ class SellerProductSearchScreen extends StatefulWidget {
 
 class _SellerProductSearchScreenState extends State<SellerProductSearchScreen> {
   bool show = false;
+  TextEditingController txt_searchbar = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     final locationData = Provider.of<LocationProvider>(context);
@@ -40,6 +42,7 @@ class _SellerProductSearchScreenState extends State<SellerProductSearchScreen> {
               child: Container(
                 height: 42,
                 child: TextField(
+                  controller: txt_searchbar,
                   onChanged: (value) {
                     if (value == "") {
                       setState(() {
@@ -55,10 +58,20 @@ class _SellerProductSearchScreenState extends State<SellerProductSearchScreen> {
                   decoration: InputDecoration(
                       hintText: "Search from Product...",
                       hintStyle: TextStyle(color: Colors.grey, fontSize: 16),
-                      prefixIcon: (Icon(
-                        Icons.search,
-                        color: Colors.grey,
-                      )),
+                      suffixIcon: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      SellerProductSearchDetailsScreen(
+                                          txt_searchbar.text)));
+                        },
+                        child: (Icon(
+                          Icons.search,
+                          color: Colors.grey,
+                        )),
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),
@@ -87,8 +100,9 @@ class _SellerProductSearchScreenState extends State<SellerProductSearchScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ProductEditScreen(
-                                  locationData.psearchResults![index].id
+                              builder: (context) =>
+                                  SellerProductSearchDetailsScreen(locationData
+                                      .psearchResults![index].productname
                                       .toString())));
                       //exit(0);
                     },

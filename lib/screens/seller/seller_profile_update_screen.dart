@@ -204,128 +204,147 @@ class _SellerProfileUpdateScreenState extends State<SellerProfileUpdateScreen> {
   }
 
   void registerSi() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return Dialog(
-          elevation: 0.0,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-          child: Wrap(
-            children: [
-              Container(
-                padding: EdgeInsets.all(20.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const <Widget>[
-                    SpinKitRing(
-                      color: primaryColor,
-                      size: 40.0,
-                      lineWidth: 1.2,
-                    ),
-                    SizedBox(height: 25.0),
-                    Text(
-                      'Please Wait..',
-                      style: grey14MediumTextStyle,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
+    if (txt_contactinfo.text != "") {
+      if (txt_businessname.text != "") {
+        if (txt_name.text != "") {
+          if (txt_contactinfo.text.length == 10) {
+            SharedPreferences preferences =
+                await SharedPreferences.getInstance();
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) {
+                // return object of type Dialog
+                return Dialog(
+                  elevation: 0.0,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0)),
+                  child: Wrap(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(20.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: const <Widget>[
+                            SpinKitRing(
+                              color: primaryColor,
+                              size: 40.0,
+                              lineWidth: 1.2,
+                            ),
+                            SizedBox(height: 25.0),
+                            Text(
+                              'Please Wait..',
+                              style: grey14MediumTextStyle,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
 
-    String? userid = preferences.getString("userid");
+            String? userid = preferences.getString("userid");
 
-    final imageUploadRequest =
-        http.MultipartRequest('POST', Uri.parse(post_updateseller));
-    if (_pickedImage != null) {
-      final mimeTypeData = lookupMimeType(_pickedImage!.path.toString(),
-              headerBytes: [0xFF, 0xD8])!
-          .split('/');
-      final file = await http.MultipartFile.fromPath('logo', _pickedImage!.path,
-          contentType: MediaType(mimeTypeData[0], mimeTypeData[1]));
-      imageUploadRequest.files.add(file);
-    }
-    imageUploadRequest.fields['id'] = id.toString();
-    imageUploadRequest.fields['userid'] = userid.toString();
-    imageUploadRequest.fields['businessname'] = txt_businessname.text;
-    imageUploadRequest.fields['businesscatagories'] = _valueChanged;
-    imageUploadRequest.fields['ownername'] = txt_name.text;
-    imageUploadRequest.fields['businesscontactinfo'] = txt_contactinfo.text;
-    imageUploadRequest.fields['streetaddress'] = streetaddress.toString();
-    imageUploadRequest.fields['city'] = city.toString();
-    imageUploadRequest.fields['pincode'] = pincode.toString();
-    imageUploadRequest.fields['latitude'] = lat.toString();
-    imageUploadRequest.fields['longitude'] = lang.toString();
-    imageUploadRequest.fields['landmark'] = landmark.toString();
-    imageUploadRequest.fields['address'] = address.toString();
+            final imageUploadRequest =
+                http.MultipartRequest('POST', Uri.parse(post_updateseller));
+            if (_pickedImage != null) {
+              final mimeTypeData = lookupMimeType(_pickedImage!.path.toString(),
+                      headerBytes: [0xFF, 0xD8])!
+                  .split('/');
+              final file = await http.MultipartFile.fromPath(
+                  'logo', _pickedImage!.path,
+                  contentType: MediaType(mimeTypeData[0], mimeTypeData[1]));
+              imageUploadRequest.files.add(file);
+            }
+            imageUploadRequest.fields['id'] = id.toString();
+            imageUploadRequest.fields['userid'] = userid.toString();
+            imageUploadRequest.fields['businessname'] = txt_businessname.text;
+            imageUploadRequest.fields['businesscatagories'] = _valueChanged;
+            imageUploadRequest.fields['ownername'] = txt_name.text;
+            imageUploadRequest.fields['businesscontactinfo'] =
+                txt_contactinfo.text;
+            imageUploadRequest.fields['streetaddress'] =
+                streetaddress.toString();
+            imageUploadRequest.fields['city'] = city.toString();
+            imageUploadRequest.fields['pincode'] = pincode.toString();
+            imageUploadRequest.fields['latitude'] = lat.toString();
+            imageUploadRequest.fields['longitude'] = lang.toString();
+            imageUploadRequest.fields['landmark'] = landmark.toString();
+            imageUploadRequest.fields['address'] = address.toString();
 
-    if (bisinesshour != null) {
-      imageUploadRequest.fields['sunday'] = bisinesshour["sunday"].toString();
-      imageUploadRequest.fields['sundayopeningtime'] =
-          bisinesshour["sundayopeningtime"];
-      imageUploadRequest.fields['sundayclosingtime'] =
-          bisinesshour["sundayclosingtime"];
+            if (bisinesshour != null) {
+              //imageUploadRequest.fields['sunday'] = bisinesshour["sunday"].toString();
+              imageUploadRequest.fields['sundayopeningtime'] =
+                  bisinesshour["sundayopeningtime"];
+              imageUploadRequest.fields['sundayclosingtime'] =
+                  bisinesshour["sundayclosingtime"];
 
-      imageUploadRequest.fields['monday'] = bisinesshour["monday"].toString();
-      imageUploadRequest.fields['mondayopeningtime'] =
-          bisinesshour["mondayopeningtime"];
-      imageUploadRequest.fields['mondayclosinmonday'] =
-          bisinesshour["mondayclosingtime"];
+              //imageUploadRequest.fields['monday'] = bisinesshour["monday"].toString();
+              imageUploadRequest.fields['mondayopeningtime'] =
+                  bisinesshour["mondayopeningtime"];
+              imageUploadRequest.fields['mondayclosinmonday'] =
+                  bisinesshour["mondayclosingtime"];
 
-      imageUploadRequest.fields['tuesday'] = bisinesshour["tuesday"].toString();
-      imageUploadRequest.fields['tuesdayopeningtime'] =
-          bisinesshour["tuesdayopeningtime"];
-      imageUploadRequest.fields['tuesdayclosintuesday'] =
-          bisinesshour["tuesdayclosingtime"];
+              //imageUploadRequest.fields['tuesday'] = bisinesshour["tuesday"].toString();
+              imageUploadRequest.fields['tuesdayopeningtime'] =
+                  bisinesshour["tuesdayopeningtime"];
+              imageUploadRequest.fields['tuesdayclosintuesday'] =
+                  bisinesshour["tuesdayclosingtime"];
 
-      imageUploadRequest.fields['wednesday'] =
-          bisinesshour["wednessday"].toString();
-      imageUploadRequest.fields['wednesdayopeningtime'] =
-          bisinesshour["wednessdayopeningtime"];
-      imageUploadRequest.fields['wednesdayclosingtiwednes'] =
-          bisinesshour["wednessdayclosingtime"];
+              //imageUploadRequest.fields['wednesday'] = bisinesshour["wednessday"].toString();
+              imageUploadRequest.fields['wednesdayopeningtime'] =
+                  bisinesshour["wednessdayopeningtime"];
+              imageUploadRequest.fields['wednesdayclosingtiwednes'] =
+                  bisinesshour["wednessdayclosingtime"];
 
-      imageUploadRequest.fields['thursday'] = bisinesshour["thursday"];
-      imageUploadRequest.fields['thursdayopeningtime'] =
-          bisinesshour["thursdayopeningtime"];
-      imageUploadRequest.fields['thursdayclosingtime'] =
-          bisinesshour["thursdayclosingtime"];
+              //imageUploadRequest.fields['thursday'] = bisinesshour["thursday"];
+              imageUploadRequest.fields['thursdayopeningtime'] =
+                  bisinesshour["thursdayopeningtime"];
+              imageUploadRequest.fields['thursdayclosingtime'] =
+                  bisinesshour["thursdayclosingtime"];
 
-      imageUploadRequest.fields['friday'] = bisinesshour["friday"];
-      imageUploadRequest.fields['fridayopeningtime'] =
-          bisinesshour["fridayopeningtime"];
-      imageUploadRequest.fields['fridayclosingtime'] =
-          bisinesshour["fridayclosingtime"];
+              //imageUploadRequest.fields['friday'] = bisinesshour["friday"];
+              imageUploadRequest.fields['fridayopeningtime'] =
+                  bisinesshour["fridayopeningtime"];
+              imageUploadRequest.fields['fridayclosingtime'] =
+                  bisinesshour["fridayclosingtime"];
 
-      imageUploadRequest.fields['saturday'] = bisinesshour["saturday"];
-      imageUploadRequest.fields['saturdayopeningtime'] =
-          bisinesshour["saturdayopeningtime"];
-      imageUploadRequest.fields['saturdayclosingtime'] =
-          bisinesshour["saturdayclosingtime"];
-    }
+              //imageUploadRequest.fields['saturday'] = bisinesshour["saturday"];
+              imageUploadRequest.fields['saturdayopeningtime'] =
+                  bisinesshour["saturdayopeningtime"];
+              imageUploadRequest.fields['saturdayclosingtime'] =
+                  bisinesshour["saturdayclosingtime"];
+            }
 
-    try {
-      final streamedResponse = await imageUploadRequest.send();
-      final response = await http.Response.fromStream(streamedResponse);
-      print(response.statusCode);
+            try {
+              final streamedResponse = await imageUploadRequest.send();
+              final response = await http.Response.fromStream(streamedResponse);
+              print(response.statusCode);
 
-      if (response.statusCode == 200) {
-        preferences.setString("businessname", txt_businessname.text);
-        preferences.setString("businesscategory", _valueChanged);
-        Navigator.of(context).pop();
-        showInSnackBar("Seller Profile Updated");
+              if (response.statusCode == 200) {
+                preferences.setString("businessname", txt_businessname.text);
+                preferences.setString("businesscategory", _valueChanged);
+                Navigator.of(context).pop();
+                showInSnackBar("Seller Profile Updated");
+              }
+            } catch (e) {
+              print(e);
+              Navigator.of(context).pop();
+            }
+          } else {
+            showInSnackBar("Contact No Should Be 10 Digits");
+          }
+        } else {
+          showInSnackBar("Please Enter Owner Name");
+        }
+      } else {
+        showInSnackBar("Please Enter Business Name");
       }
-    } catch (e) {
-      print(e);
-      Navigator.of(context).pop();
+    } else {
+      showInSnackBar("Please Enter Contact No.");
     }
   }
 

@@ -82,24 +82,42 @@ class _AdPackageScreenState extends State<AdPackageScreen> {
                 child: SizedBox(
                   height: 120,
                   width: 120,
-                  child: Image.asset("images/advimg6.jpg"),
+                  child: Image.asset("images/no_ad_emoji.png"),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(
-                  top: 10,
-                  left: 20,
-                ),
-                child: Text(
-                  "Increase footfall to your store by promoting your Store with 'Ad' tag in top position.",
-                  style: TextStyle(
-                      fontSize: 17, fontWeight: FontWeight.w700, height: 1.5),
+                padding: const EdgeInsets.all(10.0),
+                child: Container(
+                  height: 60,
+                  width: MediaQuery.of(context).size.width,
+                  color: Colors.yellow[200],
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: Text(
+                        "You have already posted 2 free Ad in last 30 days.",
+                        style: TextStyle(
+                          fontSize: 15,
+                          height: 1.0,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
               Divider(
                 color: Colors.black12,
                 height: 30,
                 thickness: 5,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Center(
+                child: Text(
+                  "Post More Ads",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
               ),
               SizedBox(
                 height: 10,
@@ -128,7 +146,44 @@ class _AdPackageScreenState extends State<AdPackageScreen> {
                     width: 10,
                   ),
                   Icon(Icons.check, color: Colors.black54),
-                  Text('  Get your Store to the "Top Rankings".',
+                  Expanded(
+                    child: Text(
+                        '  Post more Ads and get your product noticed in "OFFERZONE" section.',
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black54,
+                            height: 1.5)),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Icon(Icons.check, color: Colors.black54),
+                  Text('  Package available for 180 days.',
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black54,
+                          height: 1.5)),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Icon(Icons.check, color: Colors.black54),
+                  Text('  Ad will be valid for 30 days.',
                       style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,

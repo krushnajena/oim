@@ -427,6 +427,8 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
                           String productid = mnjson["data"]["product"]["_id"];
 
                           Navigator.of(context).pop();
+
+                          Navigator.of(context).pop();
                           showInSnackBar("Product Updated Successfully");
                           setState(() {
                             _pickedImage1 = null;

@@ -78,6 +78,7 @@ dependencies:
   percent_indicator: ^3.0.1
   screenshot: ^1.2.3
   image_gallery_saver: '^1.7.1'
+  intl: ^0.17.0
   
 
 dev_dependencies:
