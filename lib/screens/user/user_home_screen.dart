@@ -164,6 +164,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
   String address = "";
   void getAddress() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
+
     if ((preferences.getString("address") ?? "") == "") {
       setState(() {
         address = "Select Location";
@@ -254,7 +255,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold),
                               overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
+                              maxLines: 2,
                             ),
                           ),
                           Icon(Icons.keyboard_arrow_down_sharp),

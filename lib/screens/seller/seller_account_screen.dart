@@ -96,23 +96,9 @@ class _SellerAccountScreenState extends State<SellerAccountScreen> {
                 leading: ClipRRect(
                   borderRadius: BorderRadius.circular(30),
                   child: Container(
-                    height: 50,
-                    width: 50,
-                    color: Colors.black38,
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.person_rounded,
-                        size: 35,
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    SellerProfileUpdateScreen()));
-                      },
-                    ),
-                  ),
+                      height: 50,
+                      width: 50,
+                      child: Image.asset("images/humanicon.png")),
                 ),
                 title: Padding(
                   padding: const EdgeInsets.all(8.0),

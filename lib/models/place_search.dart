@@ -16,6 +16,6 @@ class NewPlaceSearch {
   NewPlaceSearch({this.areaname});
 
   factory NewPlaceSearch.fromJson(Map<String, dynamic> json) {
-    return NewPlaceSearch(areaname: json['areaname']);
+    return NewPlaceSearch(areaname: json['areaname'] + ", " + json['cityname']);
   }
 }

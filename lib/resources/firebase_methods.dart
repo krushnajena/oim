@@ -29,7 +29,8 @@ class FirebaseMethods {
           .collection("players")
           .doc(players.msgid)
           .update({
-            "lastMessage": players.message,
+            "lastMessage":
+                players.type == "text" ? players.message : players.type,
             "isDeletdBySeller": "0",
             "isDeletdByByer": "0",
             "isSellerUnred": "1"
@@ -41,7 +42,8 @@ class FirebaseMethods {
           .collection("players")
           .doc(players.msgid)
           .update({
-            "lastMessage": players.message,
+            "lastMessage":
+                players.type == "text" ? players.message : players.type,
             "isDeletdBySeller": "0",
             "isDeletdByByer": "0",
             "isByerUnred": "1"

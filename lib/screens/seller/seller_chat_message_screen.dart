@@ -1,5 +1,11 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:mime/mime.dart';
 import 'package:oim/constants/urls.dart';
 import 'package:oim/models/chat_model.dart';
 
@@ -12,6 +18,7 @@ import 'package:oim/screens/widgets/reply_message_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:http/http.dart' as http;
 
 class SellerChatMessageScreen extends StatefulWidget {
   const SellerChatMessageScreen(this.id, this.userid, this.sellerid,
@@ -100,7 +107,8 @@ class _SellerChatMessageScreenState extends State<SellerChatMessageScreen> {
                   ? OwnMessageCard(
                       message: snapshot.data!.docs[index]["message"].toString(),
                       time: snapshot.data!.docs[index]["time"].toString(),
-                      isRead: snapshot.data!.docs[index]["issRead"])
+                      isRead: snapshot.data!.docs[index]["issRead"],
+                      messageType: snapshot.data!.docs[index]["type"])
                   : snapshot.data!.docs[index]["isBlockedBySeller"]
                               .toString() !=
                           "1"
@@ -108,7 +116,7 @@ class _SellerChatMessageScreenState extends State<SellerChatMessageScreen> {
                           message:
                               snapshot.data!.docs[index]["message"].toString(),
                           time: snapshot.data!.docs[index]["time"].toString(),
-                        )
+                          messageType: snapshot.data!.docs[index]["type"])
                       : SizedBox();
             },
           );
@@ -151,6 +159,86 @@ class _SellerChatMessageScreenState extends State<SellerChatMessageScreen> {
         isBlockedBySeller: widget.isSellerBlocked);
     _repository.sendMessageDb(_players);
     print("dddddddddddddddddddddddddddddddd");
+  }
+
+  File? _pickedImage2;
+  void _pickImage2(String from, String type) async {
+    if (from == "gallery") {
+      final pickedImageFile =
+          await ImagePicker().pickImage(source: ImageSource.gallery);
+      setState(() {
+        _pickedImage2 = File(pickedImageFile!.path.toString());
+      });
+    } else {
+      final pickedImageFile =
+          await ImagePicker().pickImage(source: ImageSource.camera);
+      setState(() {
+        _pickedImage2 = File(pickedImageFile!.path.toString());
+      });
+    }
+  }
+
+  void sendImageMessage() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    FirebaseRepository _repository = FirebaseRepository();
+    DateTime todayDate = DateTime.now(); //DateTime
+    print("dedddddddddddddddddddddddddddddddddddd");
+    Timestamp todayDateTimeStamp = Timestamp.fromDate(todayDate);
+    print("dedddddddddddddddddddddddddddddddddddd");
+
+    if (_pickedImage2 != null) {
+      final imageUploadRequest =
+          http.MultipartRequest('POST', Uri.parse(postDcumentUploadForMessage));
+      final mimeTypeData = lookupMimeType(_pickedImage2!.path.toString(),
+              headerBytes: [0xFF, 0xD8])!
+          .split('/');
+
+      final file = await http.MultipartFile.fromPath(
+          'image', _pickedImage2!.path,
+          contentType: MediaType(mimeTypeData[0], mimeTypeData[1]));
+      imageUploadRequest.files.add(file);
+
+      try {
+        final streamedResponse = await imageUploadRequest.send();
+        final response = await http.Response.fromStream(streamedResponse);
+        print(response.body);
+        print(response.statusCode);
+        Map mnjson;
+        mnjson = json.decode(response.body);
+        if (response.statusCode == 200) {
+          setState(() {
+            _pickedImage2 = null;
+          });
+
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          FirebaseRepository _repository = FirebaseRepository();
+          DateTime todayDate = DateTime.now(); //DateTime
+          print("dedddddddddddddddddddddddddddddddddddd");
+          Timestamp todayDateTimeStamp = Timestamp.fromDate(todayDate);
+          print("dedddddddddddddddddddddddddddddddddddd");
+          String upimageurl = mnjson["data"]["upfilename"].toString();
+          MessageModel _players = MessageModel(
+              type: "text",
+              message: upimageurl,
+              time: DateTime.now().hour.toString() +
+                  ":" +
+                  DateTime.now().minute.toString(),
+              from: preferences.getString("userid"),
+              to: widget.sellerid,
+              source: "seller",
+              messagedon: todayDateTimeStamp,
+              msgid: widget.id,
+              issRead: false,
+              isBlockedByByer: widget.isUserBlocked,
+              isBlockedBySeller: widget.isSellerBlocked);
+          _repository.sendMessageDb(_players);
+          print("dddddddddddddddddddddddddddddddd");
+        }
+      } catch (e) {
+        print(e);
+        Navigator.of(context).pop();
+      }
+    }
   }
 
   void setMessage(String type, String message) {
@@ -351,11 +439,57 @@ class _SellerChatMessageScreenState extends State<SellerChatMessageScreen> {
                                             IconButton(
                                               icon: Icon(Icons.camera_alt),
                                               onPressed: () {
-                                                // Navigator.push(
-                                                //     context,
-                                                //     MaterialPageRoute(
-                                                //         builder: (builder) =>
-                                                //             CameraApp()));
+                                                showModalBottomSheet(
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        children: <Widget>[
+                                                          SizedBox(
+                                                            height: 10,
+                                                          ),
+                                                          Text(
+                                                            "Send Image",
+                                                            style: TextStyle(
+                                                                fontSize: 18,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                          ListTile(
+                                                            leading: new Icon(
+                                                                Icons.photo),
+                                                            title: new Text(
+                                                                'Gallery'),
+                                                            onTap: () {
+                                                              _pickImage2(
+                                                                  "gallery",
+                                                                  "");
+                                                            },
+                                                          ),
+                                                          ListTile(
+                                                            leading: new Icon(
+                                                                Icons.videocam),
+                                                            title: new Text(
+                                                                'Camera'),
+                                                            onTap: () {
+                                                              _pickImage2(
+                                                                  "camera", "");
+                                                            },
+                                                          ),
+                                                          RaisedButton(
+                                                            onPressed: () {
+                                                              sendImageMessage();
+                                                            },
+                                                            child: Text("Send"),
+                                                          ),
+                                                          SizedBox(
+                                                            height: 10,
+                                                          ),
+                                                        ],
+                                                      );
+                                                    });
                                               },
                                             ),
                                           ],

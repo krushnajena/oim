@@ -197,28 +197,38 @@ class _MyQrScreenState extends State<MyQrScreen> {
             topRight: Radius.circular(20),
           ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            OutlineButton(
-              onPressed: () {},
-              child: Text("Share QR"),
-            ),
-            RaisedButton(
-              color: Colors.black,
-              onPressed: () async {
-                await screenshotController
-                    .captureFromWidget(CustomWidget())
-                    .then((capturedImage) async {
-                  await downloadQr(capturedImage);
-                });
-              },
-              child: Text(
-                "Download QR",
-                style: TextStyle(color: Colors.white),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Expanded(
+                child: OutlineButton(
+                  onPressed: () {},
+                  child: Text("Share QR"),
+                ),
               ),
-            )
-          ],
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                child: RaisedButton(
+                  color: Colors.black,
+                  onPressed: () async {
+                    await screenshotController
+                        .captureFromWidget(CustomWidget())
+                        .then((capturedImage) async {
+                      await downloadQr(capturedImage);
+                    });
+                  },
+                  child: Text(
+                    "Download QR",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
       //bottomNavigationBar: Container(),

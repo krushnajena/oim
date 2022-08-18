@@ -61,46 +61,51 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
         ),
         centerTitle: true,
         actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: InkWell(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => NotificationScreen()));
-              },
-              child: new Stack(
-                children: <Widget>[
-                  new Icon(
-                    Icons.notifications,
-                    color: Colors.white,
-                  ),
-                  new Positioned(
-                    right: 0,
-                    child: new Container(
-                      padding: EdgeInsets.all(1),
-                      decoration: new BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(6),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 15.0),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => NotificationScreen()));
+                  },
+                  child: new Stack(
+                    children: <Widget>[
+                      new Icon(
+                        Icons.notifications,
+                        color: Colors.white,
                       ),
-                      constraints: BoxConstraints(
-                        minWidth: 12,
-                        minHeight: 12,
-                      ),
-                      child: new Text(
-                        '$noofunreadnotifications',
-                        style: new TextStyle(
-                          color: Colors.white,
-                          fontSize: 8,
+                      new Positioned(
+                        right: 0,
+                        child: new Container(
+                          padding: EdgeInsets.all(1),
+                          decoration: new BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          constraints: BoxConstraints(
+                            minWidth: 12,
+                            minHeight: 12,
+                          ),
+                          child: new Text(
+                            '$noofunreadnotifications',
+                            style: new TextStyle(
+                              color: Colors.white,
+                              fontSize: 8,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  )
-                ],
+                      )
+                    ],
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
         ],
       ),
@@ -111,10 +116,12 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
             color: Colors.white,
             height: 100,
             child: Row(children: [
-              Icon(
-                Icons.person,
-                color: Colors.black,
-                size: 50,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                    height: 50,
+                    width: 50,
+                    child: Image.asset("images/humanicon.png")),
               ),
               InkWell(
                 onTap: () {
@@ -164,8 +171,8 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
             ]),
           ),
           Container(
-            height: 5,
-            color: Colors.grey,
+            height: 8,
+            color: Colors.grey[200],
           ),
           SizedBox(
             height: 10,

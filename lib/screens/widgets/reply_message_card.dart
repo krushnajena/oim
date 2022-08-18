@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:oim/constants/urls.dart';
 
 class ReplyCard extends StatelessWidget {
-  const ReplyCard({Key? key, this.message, this.time}) : super(key: key);
+  const ReplyCard({Key? key, this.message, this.time, this.messageType})
+      : super(key: key);
   final String? message;
   final String? time;
-
+  final String? messageType;
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -27,12 +29,18 @@ class ReplyCard extends StatelessWidget {
                   top: 5,
                   bottom: 10,
                 ),
-                child: Text(
-                  message!,
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
+                child: messageType == "text"
+                    ? Text(
+                        message!,
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      )
+                    : Container(
+                        height: 120,
+                        width: 120,
+                        child: Image.network(baseUrl + message.toString()),
+                      ),
               ),
               Positioned(
                 bottom: 4,

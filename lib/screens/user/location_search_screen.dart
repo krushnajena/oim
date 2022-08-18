@@ -27,6 +27,7 @@ class _SearchLocationState extends State<SearchLocation> {
   @override
   void initState() {
     super.initState();
+    getRecentSearch();
     getstates();
   }
 
@@ -42,6 +43,17 @@ class _SearchLocationState extends State<SearchLocation> {
         });
       }
     });
+  }
+
+  List<String> str = [];
+  void getRecentSearch() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    if ((preferences.getStringList("recentaddress") ?? "") == "") {
+    } else {
+      setState(() {
+        str = preferences.getStringList("recentaddress")!;
+      });
+    }
   }
 
   @override
@@ -114,7 +126,22 @@ class _SearchLocationState extends State<SearchLocation> {
                               print(locationData.searchResults![index].areaname
                                   .toString());
                               print("--------------");
-
+                              if ((preferences.getStringList("recentaddress") ??
+                                      "") ==
+                                  "") {
+                                List<String> str = [];
+                                str.add(locationData
+                                    .searchResults![index].areaname
+                                    .toString());
+                                preferences.setStringList("recentaddress", str);
+                              } else {
+                                List<String>? str =
+                                    preferences.getStringList("recentaddress");
+                                str!.add(locationData
+                                    .searchResults![index].areaname
+                                    .toString());
+                                preferences.setStringList("recentaddress", str);
+                              }
                               preferences.setString(
                                   "address",
                                   locationData.searchResults![index].areaname
@@ -130,27 +157,100 @@ class _SearchLocationState extends State<SearchLocation> {
                   ),
                 )
               : Expanded(
-                  child: Container(
-                    color: Colors.white,
-                    child: ListView.builder(
-                        itemCount: states.length,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            title: Text(
-                              states[index]["statename"].toString(),
-                              style: TextStyle(color: Colors.black),
-                            ),
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => CityScreen(
-                                          states[index]["_id"].toString(),
-                                          states[index]["statename"]
-                                              .toString())));
-                            },
-                          );
-                        }),
+                  child: Column(
+                    children: [
+                      Container(
+                        color: Colors.blue,
+                        width: MediaQuery.of(context).size.width,
+                        height: 36,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "Recent Search",
+                            style: TextStyle(color: Colors.white, fontSize: 18),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: 123,
+                        child: ListView.builder(
+                          itemBuilder: (context, index) {
+                            return Column(
+                              children: [
+                                InkWell(
+                                  onTap: () async {
+                                    SharedPreferences preferences =
+                                        await SharedPreferences.getInstance();
+                                    preferences.setString(
+                                        "address", str[index].toString());
+                                    Navigator.of(context).pushAndRemoveUntil(
+                                        MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                UserBottomAppBar()),
+                                        (Route<dynamic> route) => false);
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.refresh),
+                                      SizedBox(
+                                        width: 8,
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                          str[index].toString(),
+                                          style: TextStyle(color: Colors.black),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Divider(
+                                  thickness: 1,
+                                  color: Colors.grey[30],
+                                ),
+                              ],
+                            );
+                          },
+                          itemCount: str.length > 3 ? 3 : str.length,
+                        ),
+                      ),
+                      Container(
+                        color: Colors.blue,
+                        width: MediaQuery.of(context).size.width,
+                        height: 36,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "States",
+                            style: TextStyle(color: Colors.white, fontSize: 18),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          color: Colors.white,
+                          child: ListView.builder(
+                              itemCount: states.length,
+                              itemBuilder: (context, index) {
+                                return ListTile(
+                                  title: Text(
+                                    states[index]["statename"].toString(),
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => CityScreen(
+                                                states[index]["_id"].toString(),
+                                                states[index]["statename"]
+                                                    .toString())));
+                                  },
+                                );
+                              }),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
         ])));
