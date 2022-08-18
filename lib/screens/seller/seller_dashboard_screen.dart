@@ -6,6 +6,7 @@ import 'package:oim/constants/constant.dart';
 import 'package:oim/constants/urls.dart';
 import 'package:oim/screens/seller/my_qr_screen.dart';
 import 'package:oim/screens/seller/promote_your_business_screen.dart';
+import 'package:oim/screens/seller/seller_resturent_profie_view.dart';
 import 'package:oim/screens/seller/seller_store_view_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -21,6 +22,7 @@ class Seller_DashBoardScreenState extends State<SellerDashBoardScreen> {
   String? businessName;
   String selectedval = "Life Time";
   String photo = "";
+  String categoryName = "";
   @override
   void initState() {
     // TODO: implement initState
@@ -201,6 +203,7 @@ class Seller_DashBoardScreenState extends State<SellerDashBoardScreen> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       businessName = preferences.getString("businessname");
+      categoryName = preferences.getString("businesscategory")!;
     });
   }
 
@@ -294,11 +297,19 @@ class Seller_DashBoardScreenState extends State<SellerDashBoardScreen> {
                                         InkWell(
                                           onTap: () {
                                             //Store Page;
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        SellerStoreViewScreen()));
+                                            if (categoryName != "Restaurant") {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          SellerStoreViewScreen()));
+                                            } else {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          SellerResturentProfileView()));
+                                            }
                                           },
                                           child: Container(
                                             width: 45,

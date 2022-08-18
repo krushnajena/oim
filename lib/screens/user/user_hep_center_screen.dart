@@ -74,12 +74,8 @@ class _UserHelpCenterScreenState extends State<UserHelpCenterScreen> {
                           ],
                         ),
                       ),
-                      Container(
-                        margin: EdgeInsets.only(top: 5, left: 50),
-                        child: Divider(
-                          height: 10,
-                          color: Colors.grey,
-                        ),
+                      SizedBox(
+                        height: 10,
                       ),
                       InkWell(
                         onTap: () {
@@ -110,12 +106,8 @@ class _UserHelpCenterScreenState extends State<UserHelpCenterScreen> {
                           ],
                         ),
                       ),
-                      Container(
-                        margin: EdgeInsets.only(top: 5, left: 50),
-                        child: Divider(
-                          height: 10,
-                          color: Colors.grey,
-                        ),
+                      SizedBox(
+                        height: 10,
                       ),
                       InkWell(
                         onTap: () {
@@ -145,13 +137,6 @@ class _UserHelpCenterScreenState extends State<UserHelpCenterScreen> {
                               ),
                             ),
                           ],
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 5, left: 50),
-                        child: Divider(
-                          height: 10,
-                          color: Colors.grey,
                         ),
                       ),
                     ],

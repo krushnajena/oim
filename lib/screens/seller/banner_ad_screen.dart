@@ -31,14 +31,12 @@ class _BannerAdScreenState extends State<BannerAdScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(
-                top: 10,
-                left: 20,
-              ),
+              padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
               child: Text(
                 "Get noticed instantly by Customers to maximize your Product/Store/Offer Visibility and Sales by Promoting through banner Ad which will be displayed in the Slider Section.",
                 style: TextStyle(
                     fontSize: 17, fontWeight: FontWeight.w700, height: 1.5),
+                textAlign: TextAlign.justify,
               ),
             ),
             Divider(
@@ -52,11 +50,14 @@ class _BannerAdScreenState extends State<BannerAdScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text("See Example",
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        decoration: TextDecoration.underline)),
+                Padding(
+                  padding: const EdgeInsets.only(right: 20),
+                  child: Text("See Example",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          decoration: TextDecoration.underline)),
+                ),
               ],
             ),
             Center(
@@ -67,16 +68,20 @@ class _BannerAdScreenState extends State<BannerAdScreen> {
               ),
             ),
             Center(
-                child: Text(
-                    'To know more, Please fill out the form below\nand we will get back to you as soon as possible.',
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black54,
-                        height: 1.5))),
+                child: Padding(
+              padding: const EdgeInsets.only(left: 20.0, right: 20),
+              child: Text(
+                'To know more, Please fill out the form below and we will get back to you as soon as possible.',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: Color.fromRGBO(0, 0, 0, 0.541),
+                ),
+                textAlign: TextAlign.justify,
+              ),
+            )),
             Center(
               child: SizedBox(
-                  height: 450,
                   width: 350,
                   child: Column(
                     children: [
@@ -123,9 +128,10 @@ class _BannerAdScreenState extends State<BannerAdScreen> {
                           margin: EdgeInsets.only(top: 20),
                           width: 300,
                           child: const TextField(
+                            maxLines: 8,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
-                                  vertical: 40, horizontal: 15),
+                                  vertical: 10, horizontal: 15),
                               border: OutlineInputBorder(),
                               labelText: '* Message',
                               hintText: 'Message',

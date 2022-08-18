@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:oim/constants/urls.dart';
@@ -8,11 +10,14 @@ import 'package:oim/models/message_model.dart';
 import 'package:flutter/material.dart';
 import 'package:oim/resources/firebase_repository.dart';
 import 'package:oim/screens/user/product_details_screen.dart';
+import 'package:oim/screens/user/store_details_screen.dart';
 import 'package:oim/screens/widgets/own_message_card.dart';
 import 'package:oim/screens/widgets/reply_message_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 class ChatMessage_Screen extends StatefulWidget {
   const ChatMessage_Screen(this.id, this.userid, this.sellerid, this.productid,
@@ -36,6 +41,7 @@ class _ChatMessage_ScreenState extends State<ChatMessage_Screen> {
   String productName = "";
   String productPrice = "";
   String productImage = "";
+  String sellerPhoneNo = "";
   Future<void> validate() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
@@ -50,8 +56,6 @@ class _ChatMessage_ScreenState extends State<ChatMessage_Screen> {
     if (result.docs.length == 0) {
     } else {
       setState(() {
-        sellerName = result.docs[0]["sellername"].toString();
-        sellerImage = result.docs[0]["sellerlogo"].toString();
         productName = result.docs[0]["productname"].toString();
         productImage = result.docs[0]["productlogo"].toString();
         productPrice = result.docs[0]["productprice"].toString();
@@ -117,6 +121,25 @@ class _ChatMessage_ScreenState extends State<ChatMessage_Screen> {
         });
   }
 
+  void getSellerDetails() async {
+    var nencoded = Uri.parse(get_sellerdetalsbyuserid + widget.sellerid);
+    print("seller id " + widget.userid);
+    http.get(nencoded).then((resp) {
+      if (resp.statusCode == 200) {
+        Map mnjson;
+        mnjson = json.decode(resp.body);
+        if (mnjson["Data"]["Seller"].length > 0) {
+          setState(() {
+            sellerName = mnjson["Data"]["Seller"][0]["businessname"];
+            sellerImage = baseUrl + mnjson["Data"]["Seller"][0]["photo"];
+
+            sellerPhoneNo = mnjson["Data"]["Seller"][0]["businesscontactinfo"];
+          });
+        }
+      }
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -128,6 +151,7 @@ class _ChatMessage_ScreenState extends State<ChatMessage_Screen> {
       }
     });
     validate();
+    getSellerDetails();
   }
 
   void sendMessage(String message, String sourceId, String targetId) async {
@@ -209,12 +233,18 @@ class _ChatMessage_ScreenState extends State<ChatMessage_Screen> {
                 ),
               ),
               title: InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              StoreDetailsScreen(widget.sellerid)));
+                },
                 child: Container(
                   margin: EdgeInsets.all(6),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         sellerName,
@@ -223,59 +253,32 @@ class _ChatMessage_ScreenState extends State<ChatMessage_Screen> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Text(
-                        "",
-                        style: TextStyle(
-                          fontSize: 13,
-                        ),
-                      )
                     ],
                   ),
                 ),
               ),
               actions: [
-                IconButton(icon: Icon(Icons.videocam), onPressed: () {}),
-                IconButton(icon: Icon(Icons.call), onPressed: () {}),
-                PopupMenuButton<String>(
-                  padding: EdgeInsets.all(0),
-                  onSelected: (value) {
-                    print(value);
-                  },
-                  itemBuilder: (BuildContext contesxt) {
-                    return [
-                      PopupMenuItem(
-                        child: Text("View Contact"),
-                        value: "View Contact",
-                      ),
-                      PopupMenuItem(
-                        child: Text("Media, links, and docs"),
-                        value: "Media, links, and docs",
-                      ),
-                      PopupMenuItem(
-                        child: Text("Whatsapp Web"),
-                        value: "Whatsapp Web",
-                      ),
-                      PopupMenuItem(
-                        child: Text("Search"),
-                        value: "Search",
-                      ),
-                      PopupMenuItem(
-                        child: Text("Mute Notification"),
-                        value: "Mute Notification",
-                      ),
-                      PopupMenuItem(
-                        child: Text("Wallpaper"),
-                        value: "Wallpaper",
-                      ),
-                    ];
-                  },
-                ),
+                IconButton(
+                    icon: Icon(Icons.call),
+                    onPressed: () async {
+                      final Uri launchUri = Uri(
+                        scheme: 'tel',
+                        path: sellerPhoneNo,
+                      );
+                      await launchUrl(launchUri);
+                    }),
               ],
             ),
           ),
           body: Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("images/bg2.jpg"),
+                fit: BoxFit.cover,
+              ),
+            ),
             child: WillPopScope(
               child: Column(
                 children: [
@@ -362,71 +365,60 @@ class _ChatMessage_ScreenState extends State<ChatMessage_Screen> {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(25),
                                   ),
-                                  child: TextFormField(
-                                    controller: _controller,
-                                    focusNode: focusNode,
-                                    textAlignVertical: TextAlignVertical.center,
-                                    keyboardType: TextInputType.multiline,
-                                    maxLines: 5,
-                                    minLines: 1,
-                                    onChanged: (value) {
-                                      if (value.length > 0) {
-                                        setState(() {
-                                          sendButton = true;
-                                        });
-                                      } else {
-                                        setState(() {
-                                          sendButton = false;
-                                        });
-                                      }
-                                    },
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      hintText: "Type a message",
-                                      hintStyle: TextStyle(color: Colors.grey),
-                                      prefixIcon: IconButton(
-                                        icon: Icon(
-                                          show
-                                              ? Icons.keyboard
-                                              : Icons.emoji_emotions_outlined,
-                                        ),
-                                        onPressed: () {
-                                          if (!show) {
-                                            focusNode.unfocus();
-                                            focusNode.canRequestFocus = false;
-                                          }
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 25.0),
+                                    child: TextFormField(
+                                      controller: _controller,
+                                      focusNode: focusNode,
+                                      textAlignVertical:
+                                          TextAlignVertical.center,
+                                      keyboardType: TextInputType.multiline,
+                                      maxLines: 5,
+                                      minLines: 1,
+                                      onChanged: (value) {
+                                        if (value.length > 0) {
                                           setState(() {
-                                            show = !show;
+                                            sendButton = true;
                                           });
-                                        },
+                                        } else {
+                                          setState(() {
+                                            sendButton = false;
+                                          });
+                                        }
+                                      },
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintText: "Type a message",
+                                        hintStyle:
+                                            TextStyle(color: Colors.grey),
+                                        suffixIcon: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            IconButton(
+                                              icon: Icon(Icons.attach_file),
+                                              onPressed: () {
+                                                showModalBottomSheet(
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                    context: context,
+                                                    builder: (builder) =>
+                                                        bottomSheet());
+                                              },
+                                            ),
+                                            IconButton(
+                                              icon: Icon(Icons.camera_alt),
+                                              onPressed: () {
+                                                // Navigator.push(
+                                                //     context,
+                                                //     MaterialPageRoute(
+                                                //         builder: (builder) =>
+                                                //             CameraApp()));
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                        contentPadding: EdgeInsets.all(5),
                                       ),
-                                      suffixIcon: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          IconButton(
-                                            icon: Icon(Icons.attach_file),
-                                            onPressed: () {
-                                              showModalBottomSheet(
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                  context: context,
-                                                  builder: (builder) =>
-                                                      bottomSheet());
-                                            },
-                                          ),
-                                          IconButton(
-                                            icon: Icon(Icons.camera_alt),
-                                            onPressed: () {
-                                              // Navigator.push(
-                                              //     context,
-                                              //     MaterialPageRoute(
-                                              //         builder: (builder) =>
-                                              //             CameraApp()));
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                      contentPadding: EdgeInsets.all(5),
                                     ),
                                   ),
                                 ),
@@ -439,14 +431,14 @@ class _ChatMessage_ScreenState extends State<ChatMessage_Screen> {
                                 ),
                                 child: CircleAvatar(
                                   radius: 25,
-                                  backgroundColor: Color(0xFF128C7E),
+                                  backgroundColor: Colors.blue,
                                   child: IconButton(
                                     icon: Icon(
-                                      sendButton ? Icons.send : Icons.mic,
+                                      sendButton ? Icons.send : Icons.send,
                                       color: Colors.white,
                                     ),
                                     onPressed: () {
-                                      if (sendButton) {
+                                      if (_controller.text != "") {
                                         sendMessage(_controller.text, "", "");
 
                                         _controller.clear();

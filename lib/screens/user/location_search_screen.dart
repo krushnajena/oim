@@ -74,20 +74,15 @@ class _SearchLocationState extends State<SearchLocation> {
                     locationData.searchPlaces(value);
                   },
                   decoration: InputDecoration(
-                      hintText: "Search from area, street name...",
+                      border: InputBorder.none,
+                      hintText: "Search for area, street name...",
                       hintStyle: TextStyle(color: Colors.grey, fontSize: 16),
-                      prefixIcon: (Icon(
+                      suffixIcon: (Icon(
                         Icons.search,
                         color: Colors.grey,
                       )),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      contentPadding: EdgeInsets.symmetric(vertical: 0),
-                      fillColor: Color(0XFFEEEEEE),
+                      contentPadding: EdgeInsets.only(top: 10),
+                      fillColor: Color(0XFFFFFFFF),
                       filled: true),
                 ),
               )),

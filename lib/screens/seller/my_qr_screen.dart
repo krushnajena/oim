@@ -68,8 +68,8 @@ class _MyQrScreenState extends State<MyQrScreen> {
 
   Widget CustomWidget() {
     return Container(
-      width: 500,
-      height: 700,
+      width: 400,
+      height: 550,
       child: Padding(
         padding: EdgeInsets.all(16),
         child: Card(
@@ -82,7 +82,7 @@ class _MyQrScreenState extends State<MyQrScreen> {
                 child: Stack(
                   children: [
                     Container(
-                        height: 320,
+                        height: 220,
                         color: Colors.blue,
                         child: Center(
                           child: Column(
@@ -91,8 +91,8 @@ class _MyQrScreenState extends State<MyQrScreen> {
                             children: [
                               Image(
                                 image: AssetImage("images/splash_logo.png"),
-                                height: 150,
-                                width: 150,
+                                height: 100,
+                                width: 100,
                               ),
                               SizedBox(
                                 height: 10,
@@ -110,10 +110,10 @@ class _MyQrScreenState extends State<MyQrScreen> {
                     Center(
                       child: Container(
                         margin: EdgeInsets.only(
-                          top: 250,
+                          top: 180,
                         ),
-                        height: 250,
-                        width: 250,
+                        height: 180,
+                        width: 150,
                         child: userid != ""
                             ? Column(
                                 children: [
@@ -121,7 +121,7 @@ class _MyQrScreenState extends State<MyQrScreen> {
                                     child: QrImage(
                                       data: userid,
                                       version: QrVersions.auto,
-                                      size: 200.0,
+                                      size: 130.0,
                                     ),
                                   ),
                                   SizedBox(
@@ -143,18 +143,35 @@ class _MyQrScreenState extends State<MyQrScreen> {
               SizedBox(
                 height: 10,
               ),
+              Text("To Know Our Upcomming Offers "),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.store,
+                  RaisedButton(
+                    onPressed: () {},
+                    child: Text(
+                      "Follow",
+                      style: TextStyle(color: Colors.white),
+                    ),
                     color: Colors.blue,
                   ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Text("Digital ShowRoom By OIM")
+                  Expanded(
+                    child: Text(
+                      " Our Store On OffersinMarket App",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  )
                 ],
+              ),
+              Text("Download The App Now"),
+              Container(
+                height: 40,
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Image(
+                    image: AssetImage("images/playstore.png"),
+                    fit: BoxFit.fill,
+                  )
+                ]),
               )
             ],
           ),
@@ -168,7 +185,7 @@ class _MyQrScreenState extends State<MyQrScreen> {
     return Scaffold(
       backgroundColor: scaffoldBgColor,
       appBar: AppBar(
-        title: Text("My QR"),
+        title: Text("My Store QR"),
         centerTitle: true,
       ),
       bottomNavigationBar: Container(
@@ -325,11 +342,6 @@ class _MyQrScreenState extends State<MyQrScreen> {
                                     "How To Use?",
                                     style: TextStyle(fontSize: 22),
                                   ),
-                                  Container(
-                                    height: 5,
-                                    width: 35,
-                                    color: Colors.blue,
-                                  ),
                                   SizedBox(
                                     height: 10,
                                   ),
@@ -338,7 +350,7 @@ class _MyQrScreenState extends State<MyQrScreen> {
                                     child: Row(
                                       children: [
                                         Image.asset(
-                                          "images/scan.jpg",
+                                          "images/print1.png",
                                           height: 50,
                                           width: 50,
                                         ),
@@ -358,7 +370,7 @@ class _MyQrScreenState extends State<MyQrScreen> {
                                     child: Row(
                                       children: [
                                         Image.asset(
-                                          "images/print.png",
+                                          "images/scan1.png",
                                           height: 50,
                                           width: 50,
                                         ),
@@ -379,7 +391,7 @@ class _MyQrScreenState extends State<MyQrScreen> {
                                   Row(
                                     children: [
                                       Image.asset(
-                                        "images/buy.png",
+                                        "images/buy1.png",
                                         height: 50,
                                         width: 50,
                                       ),

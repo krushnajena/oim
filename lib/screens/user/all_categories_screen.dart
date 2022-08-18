@@ -25,6 +25,24 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
   String catelogName = "";
   int selecedcatalogIndex = 0;
 
+  List sellers = [];
+  String username = "";
+  getStores() async {
+    var encoded = Uri.parse(get_seller_and_products + "/d");
+
+    http.get(encoded).then((value) async {
+      if (value.statusCode == 200) {
+        Map mjson;
+        mjson = json.decode(value.body);
+        print(mjson["data"]["result"]);
+        setState(() {
+          sellers = mjson["data"]["seller"];
+        });
+        getCategories();
+      }
+    }).catchError((onError) {});
+  }
+
   void getCategories() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
@@ -35,24 +53,26 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
         Map mjson;
         mjson = json.decode(value.body);
         print(mjson);
+
         for (int i = 0; i < mjson["data"]["categories"].length; i++) {
-          if (i == 0) {
-            setState(() {
-              categoryId = mjson["data"]["categories"][i]["_id"];
-              categoryName = mjson["data"]["categories"][i]["categoryname"];
-              selecedIndex = 0;
-            });
-            getCatlouges();
+          int s = 0;
+          for (int k = 0; k < sellers.length; k++) {
+            if (mjson["data"]["categories"][i]["_id"] ==
+                sellers[k]["businesscatagories"]) {
+              s = s + 1;
+            }
           }
-          setState(() {
-            categories.add(
-              {
-                'value': mjson["data"]["categories"][i]["_id"],
-                'label': mjson["data"]["categories"][i]["categoryname"],
-                'icon': mjson["data"]["categories"][i]["icon"]
-              },
-            );
-          });
+          if (s > 0) {
+            setState(() {
+              categories.add(
+                {
+                  'value': mjson["data"]["categories"][i]["_id"],
+                  'label': mjson["data"]["categories"][i]["categoryname"],
+                  'icon': mjson["data"]["categories"][i]["icon"]
+                },
+              );
+            });
+          }
         }
         setState(() {
           categories.add(
@@ -119,7 +139,7 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getCategories();
+    getStores();
   }
 
   @override
@@ -205,16 +225,6 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Sub Categories",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
                   SizedBox(
                     height: 10,
                   ),
@@ -327,8 +337,8 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
                                           crossAxisCount: 3,
                                           //  maxCrossAxisExtent: 120,
                                           childAspectRatio: 3 / 3,
-                                          crossAxisSpacing: 20,
-                                          mainAxisSpacing: 20),
+                                          crossAxisSpacing: 5,
+                                          mainAxisSpacing: 5),
                                   itemCount: subcatelouges.length,
                                   itemBuilder: (BuildContext ctx, index) {
                                     return InkWell(
@@ -348,8 +358,8 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
                                           child: Column(
                                             children: [
                                               SizedBox(
-                                                height: 50,
-                                                width: 50,
+                                                height: 65,
+                                                width: 65,
                                                 child: Card(
                                                   clipBehavior: Clip
                                                       .antiAliasWithSaveLayer,

@@ -95,23 +95,45 @@ class _PostAdScreenState extends State<PostAdScreen> {
           elevation: 1,
           title: Text("Ads Balance-" + noOfAds.toString()),
         ),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () async {
-            var a = await Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => SelectProductForAdScreen()));
-            getTotalNoOfAds();
-          },
-          isExtended: true,
-          backgroundColor: Colors.orange[800],
-          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          label: Text(
-            "Select Product",
-            style: TextStyle(fontSize: 19, color: Colors.white),
+        bottomNavigationBar: Container(
+          height: 70,
+          child: Column(
+            children: [
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    RaisedButton(
+                      onPressed: () async {
+                        var a = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    SelectProductForAdScreen()));
+                        getTotalNoOfAds();
+                      },
+                      color: Colors.blue,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Select Product',
+                            style: TextStyle(fontSize: 14, color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              )
+            ],
           ),
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -124,7 +146,7 @@ class _PostAdScreenState extends State<PostAdScreen> {
               child: Row(
                 children: [
                   SizedBox(
-                    width: 50,
+                    width: 40,
                   ),
                   Text(
                     "Total Ads-" + totalAds.toString(),
@@ -134,20 +156,23 @@ class _PostAdScreenState extends State<PostAdScreen> {
                         fontSize: 18),
                   ),
                   SizedBox(
-                    width: 50,
+                    width: 40,
                   ),
                   VerticalDivider(
                     color: Colors.white,
                     thickness: 1.5,
                   ),
                   SizedBox(
-                    width: 50,
+                    width: 40,
                   ),
-                  Text("Used Ads-" + usedAds.toString(),
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18)),
+                  Center(
+                    child: Text("Used Ads-" + usedAds.toString(),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 18)),
+                  ),
                 ],
               ),
             ),
@@ -170,7 +195,7 @@ class _PostAdScreenState extends State<PostAdScreen> {
                                     child: Stack(children: [
                                       Container(
                                           margin: EdgeInsets.all(3),
-                                          height: 100,
+                                          height: 115,
                                           width: (MediaQuery.of(context)
                                                       .size
                                                       .width -
@@ -213,7 +238,7 @@ class _PostAdScreenState extends State<PostAdScreen> {
                                     child: Text(
                                       ads[index]["productid"]["productname"],
                                       style: TextStyle(
-                                          fontSize: 14,
+                                          fontSize: 16,
                                           fontWeight: FontWeight.w500),
                                       maxLines: 3,
                                     ),
@@ -228,7 +253,7 @@ class _PostAdScreenState extends State<PostAdScreen> {
                                                 ads[index]["productid"]["mrp"]
                                                     .toString(),
                                             style: TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 14,
                                                 fontWeight: FontWeight.w500,
                                                 color: Colors.grey,
                                                 decoration: TextDecoration
@@ -240,50 +265,26 @@ class _PostAdScreenState extends State<PostAdScreen> {
                                                         ["sellingprice"]
                                                     .toString(),
                                             style: TextStyle(
-                                                fontSize: 12,
+                                                fontSize: 14,
                                                 fontWeight: FontWeight.w500)),
                                         SizedBox(width: 5),
                                         Text(
                                           "26%",
                                           style: TextStyle(
                                             color: Colors.green,
-                                            fontSize: 12,
+                                            fontSize: 14,
                                             fontWeight: FontWeight.w500,
                                           ),
                                         )
                                       ],
                                     ),
                                   ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 8.0),
-                                        child: Text(
-                                          ads[index]["productid"]["instock"]
-                                              ? "In Stock"
-                                              : "Stock Out",
-                                          style: TextStyle(
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w500,
-                                              color: ads[index]["productid"]
-                                                      ["instock"]
-                                                  ? Colors.green
-                                                  : Colors.red),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                    padding: const EdgeInsets.only(
+                                        left: 8.0, top: 8.0, right: 8.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Row(
                                           children: [
@@ -297,20 +298,51 @@ class _PostAdScreenState extends State<PostAdScreen> {
                                                             ["views"]
                                                         .toString(),
                                                 style: const TextStyle(
-                                                    fontSize: 12,
+                                                    fontSize: 13,
                                                     fontWeight:
                                                         FontWeight.w500)),
                                           ],
                                         ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 8.0),
+                                          child: Text(
+                                            ads[index]["productid"]["instock"]
+                                                ? "In Stock"
+                                                : "Stock Out",
+                                            style: TextStyle(
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w500,
+                                                color: ads[index]["productid"]
+                                                        ["instock"]
+                                                    ? Colors.green
+                                                    : Colors.red),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 8.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
                                         const SizedBox(
                                           height: 5,
                                         ),
                                         Center(
                                           child: OutlineButton(
                                               onPressed: () {},
-                                              child: const Text("Delete Ad",
-                                                  style:
-                                                      TextStyle(fontSize: 12))),
+                                              child: Container(
+                                                height: 15,
+                                                width: 100,
+                                                child: Center(
+                                                  child: const Text("Delete Ad",
+                                                      style: TextStyle(
+                                                          fontSize: 12)),
+                                                ),
+                                              )),
                                         )
                                       ],
                                     ),
@@ -328,7 +360,7 @@ class _PostAdScreenState extends State<PostAdScreen> {
                       crossAxisCount: 2,
                       crossAxisSpacing: 2,
                       mainAxisSpacing: 2,
-                      mainAxisExtent: 283,
+                      mainAxisExtent: 260,
                     ),
                   ),
                 ],

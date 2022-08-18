@@ -129,7 +129,7 @@ class _SellerChatScreenState extends State<SellerChatScreen> {
                                               children: [
                                                 Text(
                                                   snapshot.data!
-                                                      .docs[index]["sellername"]
+                                                      .docs[index]["username"]
                                                       .toString(),
                                                   style: TextStyle(
                                                       fontWeight:
@@ -317,7 +317,7 @@ class _SellerChatScreenState extends State<SellerChatScreen> {
                                               children: [
                                                 Text(
                                                   snapshot.data!
-                                                      .docs[index]["sellername"]
+                                                      .docs[index]["username"]
                                                       .toString(),
                                                   style: TextStyle(
                                                       fontWeight:

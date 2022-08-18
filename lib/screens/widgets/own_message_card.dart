@@ -14,12 +14,11 @@ class OwnMessageCard extends StatelessWidget {
       alignment: Alignment.centerRight,
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          maxWidth: MediaQuery.of(context).size.width - 45,
-        ),
+            maxWidth: MediaQuery.of(context).size.width - 45, minWidth: 150),
         child: Card(
           elevation: 1,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          color: Color(0xffdcf8c6),
+          color: Colors.blue[200],
           margin: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
           child: Stack(
             children: [
@@ -39,7 +38,7 @@ class OwnMessageCard extends StatelessWidget {
               ),
               Positioned(
                 bottom: 4,
-                left: 10,
+                right: 5,
                 child: Row(
                   children: [
                     Text(

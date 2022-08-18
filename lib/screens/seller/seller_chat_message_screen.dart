@@ -43,14 +43,16 @@ class _SellerChatMessageScreenState extends State<SellerChatMessageScreen> {
     QuerySnapshot<Map<String, dynamic>> result = await firestore
         .collection("players")
         .where("productid", isEqualTo: widget.productid)
-        .where("sellerid", isEqualTo: widget.sellerid)
-        .where("userid", isEqualTo: preferences.getString("userid"))
+        .where("userid", isEqualTo: widget.userid)
+        .where("sellerid", isEqualTo: preferences.getString("userid"))
         .get();
 
     if (result.docs.length == 0) {
     } else {
+      print("86748900r676890vbnm,.67890-=bnm,.67890-");
+      print(result.docs[0]["username"].toString());
       setState(() {
-        sellerName = result.docs[0]["sellername"].toString();
+        sellerName = result.docs[0]["username"].toString();
         sellerImage = result.docs[0]["sellerlogo"].toString();
         productName = result.docs[0]["productname"].toString();
         productImage = result.docs[0]["productlogo"].toString();
@@ -204,77 +206,88 @@ class _SellerChatMessageScreenState extends State<SellerChatMessageScreen> {
                   ],
                 ),
               ),
-              title: InkWell(
-                onTap: () {},
-                child: Container(
-                  margin: EdgeInsets.all(6),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        sellerName,
-                        style: TextStyle(
-                          fontSize: 18.5,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        "",
-                        style: TextStyle(
-                          fontSize: 13,
-                        ),
-                      )
-                    ],
+              title: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  sellerName,
+                  style: TextStyle(
+                    fontSize: 18.5,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-              actions: [
-                IconButton(icon: Icon(Icons.videocam), onPressed: () {}),
-                IconButton(icon: Icon(Icons.call), onPressed: () {}),
-                PopupMenuButton<String>(
-                  padding: EdgeInsets.all(0),
-                  onSelected: (value) {
-                    print(value);
-                  },
-                  itemBuilder: (BuildContext contesxt) {
-                    return [
-                      PopupMenuItem(
-                        child: Text("View Contact"),
-                        value: "View Contact",
-                      ),
-                      PopupMenuItem(
-                        child: Text("Media, links, and docs"),
-                        value: "Media, links, and docs",
-                      ),
-                      PopupMenuItem(
-                        child: Text("Whatsapp Web"),
-                        value: "Whatsapp Web",
-                      ),
-                      PopupMenuItem(
-                        child: Text("Search"),
-                        value: "Search",
-                      ),
-                      PopupMenuItem(
-                        child: Text("Mute Notification"),
-                        value: "Mute Notification",
-                      ),
-                      PopupMenuItem(
-                        child: Text("Wallpaper"),
-                        value: "Wallpaper",
-                      ),
-                    ];
-                  },
-                ),
-              ],
+              actions: [],
             ),
           ),
           body: Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("images/bg2.jpg"),
+                fit: BoxFit.cover,
+              ),
+            ),
             child: WillPopScope(
               child: Column(
                 children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      child: InkWell(
+                        onTap: () {},
+                        child: Container(
+                          height: 80,
+                          width: MediaQuery.of(context).size.width,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  height: 60,
+                                  width: 60,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: NetworkImage(
+                                            baseUrl + productImage),
+                                        fit: BoxFit.cover),
+                                    borderRadius: BorderRadius.circular(5),
+                                    color: Colors.redAccent,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                Expanded(
+                                    child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        productName,
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    Text(
+                                      "₹" + productPrice,
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ))
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                   Expanded(
                       // height: MediaQuery.of(context).size.height - 150,
                       child: messgaList()),
@@ -295,71 +308,60 @@ class _SellerChatMessageScreenState extends State<SellerChatMessageScreen> {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(25),
                                   ),
-                                  child: TextFormField(
-                                    controller: _controller,
-                                    focusNode: focusNode,
-                                    textAlignVertical: TextAlignVertical.center,
-                                    keyboardType: TextInputType.multiline,
-                                    maxLines: 5,
-                                    minLines: 1,
-                                    onChanged: (value) {
-                                      if (value.length > 0) {
-                                        setState(() {
-                                          sendButton = true;
-                                        });
-                                      } else {
-                                        setState(() {
-                                          sendButton = false;
-                                        });
-                                      }
-                                    },
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      hintText: "Type a message",
-                                      hintStyle: TextStyle(color: Colors.grey),
-                                      prefixIcon: IconButton(
-                                        icon: Icon(
-                                          show
-                                              ? Icons.keyboard
-                                              : Icons.emoji_emotions_outlined,
-                                        ),
-                                        onPressed: () {
-                                          if (!show) {
-                                            focusNode.unfocus();
-                                            focusNode.canRequestFocus = false;
-                                          }
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 25.0),
+                                    child: TextFormField(
+                                      controller: _controller,
+                                      focusNode: focusNode,
+                                      textAlignVertical:
+                                          TextAlignVertical.center,
+                                      keyboardType: TextInputType.multiline,
+                                      maxLines: 5,
+                                      minLines: 1,
+                                      onChanged: (value) {
+                                        if (value.length > 0) {
                                           setState(() {
-                                            show = !show;
+                                            sendButton = true;
                                           });
-                                        },
+                                        } else {
+                                          setState(() {
+                                            sendButton = false;
+                                          });
+                                        }
+                                      },
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintText: "Type a message",
+                                        hintStyle:
+                                            TextStyle(color: Colors.grey),
+                                        suffixIcon: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            IconButton(
+                                              icon: Icon(Icons.attach_file),
+                                              onPressed: () {
+                                                showModalBottomSheet(
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                    context: context,
+                                                    builder: (builder) =>
+                                                        bottomSheet());
+                                              },
+                                            ),
+                                            IconButton(
+                                              icon: Icon(Icons.camera_alt),
+                                              onPressed: () {
+                                                // Navigator.push(
+                                                //     context,
+                                                //     MaterialPageRoute(
+                                                //         builder: (builder) =>
+                                                //             CameraApp()));
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                        contentPadding: EdgeInsets.all(5),
                                       ),
-                                      suffixIcon: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          IconButton(
-                                            icon: Icon(Icons.attach_file),
-                                            onPressed: () {
-                                              showModalBottomSheet(
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                  context: context,
-                                                  builder: (builder) =>
-                                                      bottomSheet());
-                                            },
-                                          ),
-                                          IconButton(
-                                            icon: Icon(Icons.camera_alt),
-                                            onPressed: () {
-                                              // Navigator.push(
-                                              //     context,
-                                              //     MaterialPageRoute(
-                                              //         builder: (builder) =>
-                                              //             CameraApp()));
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                      contentPadding: EdgeInsets.all(5),
                                     ),
                                   ),
                                 ),
@@ -375,11 +377,11 @@ class _SellerChatMessageScreenState extends State<SellerChatMessageScreen> {
                                   backgroundColor: Color(0xFF128C7E),
                                   child: IconButton(
                                     icon: Icon(
-                                      sendButton ? Icons.send : Icons.mic,
+                                      Icons.send,
                                       color: Colors.white,
                                     ),
                                     onPressed: () {
-                                      if (sendButton) {
+                                      if (_controller.text != "") {
                                         sendMessage(_controller.text, "", "");
 
                                         _controller.clear();

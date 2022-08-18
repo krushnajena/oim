@@ -10,6 +10,7 @@ import 'package:oim/constants/urls.dart';
 import 'package:oim/screens/seller/ad_packages_screen.dart';
 import 'package:oim/screens/seller/ad_plans_screen.dart';
 import 'package:oim/screens/seller/promote_your_business_screen.dart';
+import 'package:oim/screens/seller/seller_product_search_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math' as math;
 
@@ -175,7 +176,14 @@ class _SelectProductForAdScreenState extends State<SelectProductForAdScreen> {
           AppBar(centerTitle: true, title: Text('Select Product'), actions: [
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Icon(Icons.search),
+          child: InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SellerProductSearchScreen()));
+              },
+              child: Icon(Icons.search)),
         )
       ]),
       body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -197,6 +205,7 @@ class _SelectProductForAdScreenState extends State<SelectProductForAdScreen> {
                       double discountPercentage = (disount /
                               double.parse(products[index]["mrp"].toString())) *
                           100;
+
                       return Container(
                         height: 250,
                         child: Card(
@@ -210,7 +219,7 @@ class _SelectProductForAdScreenState extends State<SelectProductForAdScreen> {
                                   child: Stack(children: [
                                     Container(
                                         margin: EdgeInsets.all(3),
-                                        height: 100,
+                                        height: 115,
                                         width:
                                             (MediaQuery.of(context).size.width -
                                                     16) /
@@ -252,7 +261,7 @@ class _SelectProductForAdScreenState extends State<SelectProductForAdScreen> {
                                   child: Text(
                                     products[index]["productname"],
                                     style: TextStyle(
-                                        fontSize: 14,
+                                        fontSize: 16,
                                         fontWeight: FontWeight.w500),
                                     maxLines: 3,
                                   ),
@@ -266,7 +275,7 @@ class _SelectProductForAdScreenState extends State<SelectProductForAdScreen> {
                                           "₹" +
                                               products[index]["mrp"].toString(),
                                           style: TextStyle(
-                                              fontSize: 10,
+                                              fontSize: 14,
                                               fontWeight: FontWeight.w500,
                                               color: Colors.grey,
                                               decoration:
@@ -277,7 +286,7 @@ class _SelectProductForAdScreenState extends State<SelectProductForAdScreen> {
                                               products[index]["sellingprice"]
                                                   .toString(),
                                           style: TextStyle(
-                                              fontSize: 12,
+                                              fontSize: 14,
                                               fontWeight: FontWeight.w500)),
                                       SizedBox(width: 5),
                                       Text(
@@ -285,41 +294,19 @@ class _SelectProductForAdScreenState extends State<SelectProductForAdScreen> {
                                             "%",
                                         style: TextStyle(
                                           color: Colors.green,
-                                          fontSize: 12,
+                                          fontSize: 14,
                                           fontWeight: FontWeight.w500,
                                         ),
                                       )
                                     ],
                                   ),
                                 ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 8.0),
-                                      child: Text(
-                                        products[index]["instock"]
-                                            ? "In Stock"
-                                            : "Stock Out",
-                                        style: TextStyle(
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.w500,
-                                            color: products[index]["instock"]
-                                                ? Colors.green
-                                                : Colors.red),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 8.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                  padding: const EdgeInsets.only(
+                                      left: 8.0, top: 8.0, right: 8.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Row(
                                         children: [
@@ -332,10 +319,34 @@ class _SelectProductForAdScreenState extends State<SelectProductForAdScreen> {
                                                   products[index]["views"]
                                                       .toString(),
                                               style: const TextStyle(
-                                                  fontSize: 12,
+                                                  fontSize: 13,
                                                   fontWeight: FontWeight.w500)),
                                         ],
                                       ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 8.0),
+                                        child: Text(
+                                          products[index]["instock"]
+                                              ? "In Stock"
+                                              : "Stock Out",
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w500,
+                                              color: products[index]["instock"]
+                                                  ? Colors.green
+                                                  : Colors.red),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 8.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
                                       const SizedBox(
                                         height: 5,
                                       ),
@@ -381,9 +392,15 @@ class _SelectProductForAdScreenState extends State<SelectProductForAdScreen> {
                                                         ],
                                                       ));
                                             },
-                                            child: const Text("Post Ad",
-                                                style:
-                                                    TextStyle(fontSize: 12))),
+                                            child: Container(
+                                              height: 15,
+                                              width: 100,
+                                              child: Center(
+                                                child: const Text("Post Ad",
+                                                    style: TextStyle(
+                                                        fontSize: 12)),
+                                              ),
+                                            )),
                                       )
                                     ],
                                   ),
@@ -400,7 +417,7 @@ class _SelectProductForAdScreenState extends State<SelectProductForAdScreen> {
                     crossAxisCount: 2,
                     crossAxisSpacing: 2,
                     mainAxisSpacing: 2,
-                    mainAxisExtent: 283,
+                    mainAxisExtent: 260,
                   ),
                 ),
                 SliverGrid.extent(

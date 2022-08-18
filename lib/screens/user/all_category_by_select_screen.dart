@@ -231,16 +231,6 @@ class _AllCategofyBySelectScreenState extends State<AllCategofyBySelectScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Sub Categories",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
                   SizedBox(
                     height: 10,
                   ),
@@ -353,8 +343,8 @@ class _AllCategofyBySelectScreenState extends State<AllCategofyBySelectScreen> {
                                           crossAxisCount: 3,
                                           //  maxCrossAxisExtent: 120,
                                           childAspectRatio: 3 / 3,
-                                          crossAxisSpacing: 20,
-                                          mainAxisSpacing: 20),
+                                          crossAxisSpacing: 5,
+                                          mainAxisSpacing: 5),
                                   itemCount: subcatelouges.length,
                                   itemBuilder: (BuildContext ctx, index) {
                                     return InkWell(
@@ -374,8 +364,8 @@ class _AllCategofyBySelectScreenState extends State<AllCategofyBySelectScreen> {
                                           child: Column(
                                             children: [
                                               SizedBox(
-                                                height: 50,
-                                                width: 50,
+                                                height: 65,
+                                                width: 65,
                                                 child: Card(
                                                   clipBehavior: Clip
                                                       .antiAliasWithSaveLayer,

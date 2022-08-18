@@ -101,55 +101,95 @@ class _UserBottomAppBarState extends State<UserBottomAppBar> {
           onTap: _onItemTapped,
           items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined,
-                  color: _selectedIndex == 0 ? Colors.blue : Colors.grey),
-              label: 'Home',
-            ),
+                icon: Column(
+                  children: [
+                    Icon(Icons.home_outlined,
+                        color: _selectedIndex == 0 ? Colors.blue : Colors.grey),
+                    Text(
+                      "Home",
+                      style: TextStyle(
+                          color:
+                              _selectedIndex == 0 ? Colors.blue : Colors.grey),
+                    )
+                  ],
+                ),
+                label: '',
+                backgroundColor:
+                    _selectedIndex == 0 ? Colors.blue : Colors.grey),
             BottomNavigationBarItem(
-              icon: Icon(Icons.chat_outlined,
-                  color: _selectedIndex == 1 ? Colors.blue : Colors.grey),
-              label: 'Chat',
-            ),
+                icon: Column(children: [
+                  Icon(Icons.chat_outlined,
+                      color: _selectedIndex == 1 ? Colors.blue : Colors.grey),
+                  Text(
+                    "Chat",
+                    style: TextStyle(
+                        color: _selectedIndex == 1 ? Colors.blue : Colors.grey),
+                  )
+                ]),
+                label: '',
+                backgroundColor:
+                    _selectedIndex == 1 ? Colors.blue : Colors.grey),
             BottomNavigationBarItem(
               icon: Icon(Icons.chat_outlined,
                   color: _selectedIndex == 2 ? Colors.blue : Colors.grey),
               label: '',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.book_outlined,
-                  color: _selectedIndex == 3 ? Colors.blue : Colors.grey),
-              label: 'Story',
-            ),
+                icon: Column(
+                  children: [
+                    Icon(Icons.book_outlined,
+                        color: _selectedIndex == 3 ? Colors.blue : Colors.grey),
+                    Text(
+                      "Story",
+                      style: TextStyle(
+                          color:
+                              _selectedIndex == 3 ? Colors.blue : Colors.grey),
+                    )
+                  ],
+                ),
+                label: '',
+                backgroundColor:
+                    _selectedIndex == 3 ? Colors.blue : Colors.grey),
             BottomNavigationBarItem(
-              icon: new Stack(
-                children: <Widget>[
-                  Icon(Icons.account_circle_outlined,
-                      color: _selectedIndex == 4 ? Colors.blue : Colors.grey),
-                  new Positioned(
-                    right: 0,
-                    child: new Container(
-                      padding: EdgeInsets.all(1),
-                      decoration: new BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      constraints: BoxConstraints(
-                        minWidth: 12,
-                        minHeight: 12,
-                      ),
-                      child: new Text(
-                        '$noofunreadnotifications',
-                        style: new TextStyle(
-                          color: Colors.white,
-                          fontSize: 8,
+              icon: Column(
+                children: [
+                  new Stack(
+                    children: <Widget>[
+                      Icon(Icons.account_circle_outlined,
+                          color:
+                              _selectedIndex == 4 ? Colors.blue : Colors.grey),
+                      new Positioned(
+                        right: 0,
+                        child: new Container(
+                          padding: EdgeInsets.all(1),
+                          decoration: new BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          constraints: BoxConstraints(
+                            minWidth: 12,
+                            minHeight: 12,
+                          ),
+                          child: new Text(
+                            '$noofunreadnotifications',
+                            style: new TextStyle(
+                              color: Colors.white,
+                              fontSize: 8,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
+                      )
+                    ],
+                  ),
+                  Text(
+                    "Account",
+                    style: TextStyle(
+                        color: _selectedIndex == 4 ? Colors.blue : Colors.grey),
                   )
                 ],
               ),
-              label: 'Account',
+              label: '',
             ),
           ],
         ),

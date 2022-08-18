@@ -383,10 +383,22 @@ class _SellerProfileUpdateScreenState extends State<SellerProfileUpdateScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Update your business profile",
-          style: TextStyle(color: Colors.black),
+          "Business profile",
+          style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
+        actions: [
+          PopupMenuButton(
+              onSelected: (newValue) {
+                if (newValue == 1) {}
+              },
+              itemBuilder: (context) => [
+                    PopupMenuItem(
+                      child: Text("Update Business Category"),
+                      value: 1,
+                    ),
+                  ]),
+        ],
       ),
       body: SafeArea(
           child: SingleChildScrollView(
@@ -509,47 +521,6 @@ class _SellerProfileUpdateScreenState extends State<SellerProfileUpdateScreen> {
                 autofocus: false,
                 obscureText: false,
               )),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 30),
-              child: Text(
-                "Business Categories",
-                style: TextStyle(fontWeight: FontWeight.w700),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30),
-              child: SizedBox(
-                // width: 350,
-                child: _items.length > 0
-                    ? SelectFormField(
-                        type: SelectFormFieldType.dropdown,
-                        controller: _controller,
-                        //initialValue: _initialValue,
-
-                        labelText: 'Business Category',
-                        changeIcon: false,
-                        dialogTitle: 'Please select your business category',
-                        dialogCancelBtn: 'CANCEL',
-                        enableSearch: true,
-                        dialogSearchHint: 'Search item',
-                        items: _items,
-                        onChanged: (val) => setState(() => _valueChanged = val),
-                        validator: (val) {
-                          setState(() => _valueToValidate = val ?? '');
-                          return null;
-                        },
-                        onSaved: (val) =>
-                            setState(() => _valueSaved = val ?? ''),
-                      )
-                    : SizedBox(),
-              ),
             ),
             SizedBox(
               height: 20,

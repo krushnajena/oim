@@ -17,6 +17,18 @@ class PromoteYourBusinessScreen extends StatefulWidget {
 
 class _PromoteYourBusinessScreenState extends State<PromoteYourBusinessScreen> {
   List ads = [];
+  String businessName = "";
+  String categoryName = "";
+
+  void getBusinessDetails() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+      businessName = preferences.getString("businessname")!;
+      categoryName = preferences.getString("businesscategory")!;
+    });
+    print(categoryName);
+  }
+
   void getAds() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String userid = preferences.getString("userid").toString();
@@ -40,6 +52,7 @@ class _PromoteYourBusinessScreenState extends State<PromoteYourBusinessScreen> {
     // TODO: implement initState
     super.initState();
     getAds();
+    getBusinessDetails();
   }
 
   @override
@@ -98,63 +111,70 @@ class _PromoteYourBusinessScreenState extends State<PromoteYourBusinessScreen> {
                   Center(
                     child: Column(
                       children: [
-                        Container(
-                          margin: EdgeInsets.only(
-                            top: 220,
-                          ),
-                          height: 280,
-                          width: 350,
-                          child: Card(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  "images/advimg.jpg",
-                                  height: 150,
-                                  width: 150,
+                        categoryName != "Restaurant"
+                            ? Container(
+                                margin: EdgeInsets.only(
+                                  top: 220,
                                 ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  "Post Free Ads On Offer Zone",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 20),
-                                ),
-                                SizedBox(
-                                  height: 7,
-                                ),
-                                Text(
-                                  "Oim allows 2 free ads in 30 days",
-                                  style: TextStyle(color: Colors.black38),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                SizedBox(
-                                  height: 35,
-                                  width: 300,
-                                  child: RaisedButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  PostAdScreen()));
-                                    },
-                                    color: Colors.blue,
-                                    child: Text("Post Ads",
+                                height: 280,
+                                width: 350,
+                                child: Card(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        "images/advimg.jpg",
+                                        height: 150,
+                                        width: 150,
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        "Post Free Ads On Offer Zone",
                                         style: TextStyle(
-                                            fontSize: 18, color: Colors.white)),
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 20),
+                                      ),
+                                      SizedBox(
+                                        height: 7,
+                                      ),
+                                      Text(
+                                        "Oim allows 2 free ads in 30 days",
+                                        style: TextStyle(color: Colors.black38),
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      SizedBox(
+                                        height: 35,
+                                        width: 300,
+                                        child: RaisedButton(
+                                          onPressed: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        PostAdScreen()));
+                                          },
+                                          color: Colors.blue,
+                                          child: Text("Post Ads",
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.white)),
+                                        ),
+                                      )
+                                    ],
                                   ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
+                                ),
+                              )
+                            : SizedBox(),
                         Container(
-                          margin: EdgeInsets.only(top: 20),
+                          margin: categoryName != "Restaurant"
+                              ? EdgeInsets.only(top: 20)
+                              : EdgeInsets.only(
+                                  top: 220,
+                                ),
                           height: 280,
                           width: 350,
                           child: Card(

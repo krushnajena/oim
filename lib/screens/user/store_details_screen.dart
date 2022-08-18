@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:oim/constants/constant.dart';
 import 'package:oim/constants/urls.dart';
 import 'package:oim/screens/seller/products_list_screen.dart';
+import 'package:oim/screens/user/all_categories_screen.dart';
 import 'package:oim/screens/user/product_details_screen.dart';
 import 'package:oim/screens/user/storerattingscreen.dart';
 import 'package:oim/screens/user/subcategory_screen.dart';
@@ -40,7 +41,8 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
   double threeStar = 0;
   double fourStar = 0;
   double fiveStar = 0;
-  String opeingText = "Closed";
+  String opeingText = "";
+  bool isClosed = false;
   void getRattings() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     var encoded = Uri.parse(get_rattings + widget.userid);
@@ -145,6 +147,34 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
     });
   }
 
+  String twlevehourtime(int time) {
+    if (time == 13) {
+      return "01";
+    } else if (time == 14) {
+      return "02";
+    } else if (time == 15) {
+      return "03";
+    } else if (time == 16) {
+      return "04";
+    } else if (time == 17) {
+      return "05";
+    } else if (time == 18) {
+      return "06";
+    } else if (time == 19) {
+      return "07";
+    } else if (time == 20) {
+      return "08";
+    } else if (time == 21) {
+      return "09";
+    } else if (time == 22) {
+      return "10";
+    } else if (time == 23) {
+      return "11";
+    } else {
+      return "12";
+    }
+  }
+
   void getSellerDetails() async {
     var nencoded = Uri.parse(get_sellerdetalsbyuserid + widget.userid);
     print("seller id " + widget.userid);
@@ -178,15 +208,25 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                   .toString()
                   .split(':')[0]);
               if (openingtime <= date.hour && closingtime > date.hour) {
-                setState(() {
-                  opeingText = "Open Now";
-                });
+                opeingText = "Open . Closes " +
+                    twlevehourtime(closingtime) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["sundayclosingtime"]
+                        .toString()
+                        .split(':')[1];
+                isClosed = false;
               } else if (closingtime < date.hour) {
-                setState(() {
-                  opeingText = "Opens at Next Day " +
-                      mnjson["Data"]["Seller"][0]["mondayopeningtime"]
-                          .toString();
-                });
+                isClosed = true;
+                opeingText = "Opens " +
+                    twlevehourtime(int.parse(mnjson["Data"]["Seller"][0]
+                            ["mondayopeningtime"]
+                        .toString()
+                        .split(':')[0])) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["mondayopeningtime"]
+                        .toString()
+                        .split(':')[1];
+                " Mon";
               }
             }
           } else if (day == "Monday") {
@@ -199,16 +239,27 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                       ["mondayclosingtime"]
                   .toString()
                   .split(':')[0]);
+
               if (openingtime <= date.hour && closingtime > date.hour) {
-                setState(() {
-                  opeingText = "Open Now";
-                });
+                opeingText = "Open . Closes " +
+                    twlevehourtime(closingtime) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["mondayclosingtime"]
+                        .toString()
+                        .split(':')[1];
+                isClosed = false;
               } else if (closingtime < date.hour) {
-                setState(() {
-                  opeingText = "Opens at Next Day " +
-                      mnjson["Data"]["Seller"][0]["tuesdayopeningtime"]
-                          .toString();
-                });
+                isClosed = true;
+                opeingText = "Opens " +
+                    twlevehourtime(int.parse(mnjson["Data"]["Seller"][0]
+                            ["tuesdayopeningtime"]
+                        .toString()
+                        .split(':')[0])) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["tuesdayopeningtime"]
+                        .toString()
+                        .split(':')[1];
+                " Tue";
               }
             }
           } else if (day == "Tuesday") {
@@ -221,16 +272,27 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                       ["tuesdayclosingtime"]
                   .toString()
                   .split(':')[0]);
+
               if (openingtime <= date.hour && closingtime > date.hour) {
-                setState(() {
-                  opeingText = "Open Now";
-                });
+                opeingText = "Open . Closes " +
+                    twlevehourtime(closingtime) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["tuesdayclosingtime"]
+                        .toString()
+                        .split(':')[1];
+                isClosed = false;
               } else if (closingtime < date.hour) {
-                setState(() {
-                  opeingText = "Opens at Next Day " +
-                      mnjson["Data"]["Seller"][0]["wednesdayopeningtime"]
-                          .toString();
-                });
+                isClosed = true;
+                opeingText = "Opens " +
+                    twlevehourtime(int.parse(mnjson["Data"]["Seller"][0]
+                            ["wednesdayopeningtime"]
+                        .toString()
+                        .split(':')[0])) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["wednesdayopeningtime"]
+                        .toString()
+                        .split(':')[1];
+                " Wed";
               }
             }
           } else if (day == "Wednesday") {
@@ -244,16 +306,27 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                       ["wednesdayclosingtime"]
                   .toString()
                   .split(':')[0]);
+
               if (openingtime <= date.hour && closingtime > date.hour) {
-                setState(() {
-                  opeingText = "Open Now";
-                });
+                opeingText = "Open . Closes " +
+                    twlevehourtime(closingtime) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["wednesdayclosingtime"]
+                        .toString()
+                        .split(':')[1];
+                isClosed = false;
               } else if (closingtime < date.hour) {
-                setState(() {
-                  opeingText = "Opens at Next Day " +
-                      mnjson["Data"]["Seller"][0]["tuesdayopeningtime"]
-                          .toString();
-                });
+                isClosed = true;
+                opeingText = "Opens " +
+                    twlevehourtime(int.parse(mnjson["Data"]["Seller"][0]
+                            ["tuesdayopeningtime"]
+                        .toString()
+                        .split(':')[0])) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["tuesdayopeningtime"]
+                        .toString()
+                        .split(':')[1];
+                " Thu";
               }
             }
           } else if (day == "Thursday") {
@@ -264,19 +337,30 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                   .toString()
                   .split(':')[0]);
               int closingtime = int.parse(mnjson["Data"]["Seller"][0]
-                      ["thursdayopeningtime"]
+                      ["tuesdayclosingtime"]
                   .toString()
                   .split(':')[0]);
+
               if (openingtime <= date.hour && closingtime > date.hour) {
-                setState(() {
-                  opeingText = "Open Now";
-                });
+                opeingText = "Open . Closes " +
+                    twlevehourtime(closingtime) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["tuesdayclosingtime"]
+                        .toString()
+                        .split(':')[1];
+                isClosed = false;
               } else if (closingtime < date.hour) {
-                setState(() {
-                  opeingText = "Opens at Next Day " +
-                      mnjson["Data"]["Seller"][0]["fridayopeningtime"]
-                          .toString();
-                });
+                isClosed = true;
+                opeingText = "Opens " +
+                    twlevehourtime(int.parse(mnjson["Data"]["Seller"][0]
+                            ["fridayopeningtime"]
+                        .toString()
+                        .split(':')[0])) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["fridayopeningtime"]
+                        .toString()
+                        .split(':')[1];
+                " Fri";
               }
             }
           } else if (day == "Friday") {
@@ -289,21 +373,33 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                       ["fridayclosingtime"]
                   .toString()
                   .split(':')[0]);
+
               if (openingtime <= date.hour && closingtime > date.hour) {
-                setState(() {
-                  opeingText = "Open Now";
-                });
+                opeingText = "Open . Closes " +
+                    twlevehourtime(closingtime) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["fridayclosingtime"]
+                        .toString()
+                        .split(':')[1];
+                isClosed = false;
               } else if (closingtime < date.hour) {
-                setState(() {
-                  opeingText = "Opens at Next Day " +
-                      mnjson["Data"]["Seller"][0]["saturdayopeningtime"]
-                          .toString();
-                });
+                isClosed = true;
+                opeingText = "Opens " +
+                    twlevehourtime(int.parse(mnjson["Data"]["Seller"][0]
+                            ["saturdayopeningtime"]
+                        .toString()
+                        .split(':')[0])) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["saturdayopeningtime"]
+                        .toString()
+                        .split(':')[1];
+                " Sat";
               }
             }
           } else if (day == "Saturday") {
             if (mnjson["Data"]["Seller"][0]
                 .containsKey("saturdayopeningtime")) {
+              print("345678904567890-4567890-=567890-=7890-");
               int openingtime = int.parse(mnjson["Data"]["Seller"][0]
                       ["saturdayopeningtime"]
                   .toString()
@@ -312,19 +408,33 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                       ["saturdayclosingtime"]
                   .toString()
                   .split(':')[0]);
+
               if (openingtime <= date.hour && closingtime > date.hour) {
-                setState(() {
-                  opeingText = "Open Now";
-                });
+                opeingText = "Open . Closes " +
+                    twlevehourtime(closingtime) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["saturdayclosingtime"]
+                        .toString()
+                        .split(':')[1];
+                isClosed = false;
               } else if (closingtime < date.hour) {
-                setState(() {
-                  opeingText = "Opens at Next Day " +
-                      mnjson["Data"]["Seller"][0]["sundayopeningtime"]
-                          .toString();
-                });
+                opeingText = "Opens " +
+                    twlevehourtime(int.parse(mnjson["Data"]["Seller"][0]
+                            ["sundayopeningtime"]
+                        .toString()
+                        .split(':')[0])) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["sundayopeningtime"]
+                        .toString()
+                        .split(':')[1];
+                " Sun";
+                isClosed = true;
               }
             }
           }
+          setState(() {});
+          print("34567890erty890- 567890-=rtyuiop[]");
+          print(opeingText);
         }
       }
     });
@@ -345,25 +455,16 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
           bool isExists = false;
           var coded = Uri.parse(getSubcategoriesByCatelogid +
               mjson["data"]["catlog"][i]["_id"].toString());
-          print(getSubcategoriesByCatelogid +
-              mjson["data"]["catlog"][i]["_id"].toString());
+
           http.get(coded).then((value) {
             if (value.statusCode == 200) {
               Map mnjson;
               mnjson = json.decode(value.body);
               for (int k = 0; k < mnjson["data"]["catlog"].length; k++) {
                 for (int l = 0; l < products.length; l++) {
-                  print("dfghjikoplxfcgvhbjnkml,;.");
-                  print("Category Id :- " +
-                      mnjson["data"]["catlog"][k]["_id"].toString());
-
-                  print("Product Id :- " +
-                      products[l]["productcategoryid"].toString());
-                  print("888888**************");
                   if (mnjson["data"]["catlog"][k]["_id"].toString() ==
                           products[l]["catalogueid"].toString() &&
                       isExists == false) {
-                    print("dfghjikoplxfcgvhbjnkml,;.");
                     isExists = true;
                     setState(() {
                       catelouges.add(mjson["data"]["catlog"][i]);
@@ -537,29 +638,29 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            storename,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20),
+                          Expanded(
+                            child: Text(
+                              storename,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 20),
+                            ),
                           ),
                           SizedBox(
-                            height: 60,
-                            width: 50,
+                            height: 70,
+                            width: 70,
                             child: Card(
                               clipBehavior: Clip.antiAliasWithSaveLayer,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50.0),
+                                borderRadius: BorderRadius.circular(70.0),
                               ),
                               child: InkWell(
                                 onTap: () {
                                   //Navigator.push(context, MaterialPageRoute(builder: (context)=>Status()));
                                 },
-                                child: imageUrl != ""
-                                    ? Image.asset(
-                                        imageUrl,
-                                        fit: BoxFit.cover,
-                                      )
-                                    : SizedBox(),
+                                child: Image.network(
+                                  baseUrl + imageUrl,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
                           ),
@@ -621,11 +722,19 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                     child: Row(
                       children: [
                         Text(address),
-                        Text(
-                          opeingText,
-                          style: TextStyle(
-                              color: Colors.green, fontWeight: FontWeight.bold),
-                        )
+                        SizedBox(width: 10),
+                        Expanded(
+                            child: isClosed == true
+                                ? Row(
+                                    children: [
+                                      Text(
+                                        "Closed",
+                                        style: TextStyle(color: Colors.red),
+                                      ),
+                                      Text(opeingText)
+                                    ],
+                                  )
+                                : Text(opeingText))
                       ],
                     ),
                   ),

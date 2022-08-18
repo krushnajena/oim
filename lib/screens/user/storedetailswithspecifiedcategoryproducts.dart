@@ -8,10 +8,13 @@ import 'package:oim/constants/constant.dart';
 import 'package:oim/constants/urls.dart';
 import 'package:oim/screens/seller/products_list_screen.dart';
 import 'package:oim/screens/user/product_details_screen.dart';
+import 'package:oim/screens/user/store_details_screen.dart';
 import 'package:oim/screens/user/storerattingscreen.dart';
 import 'package:oim/screens/user/subcategory_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'all_categories_screen.dart';
 
 class StoreDetailsWithSpecifiedProductCatagoryId extends StatefulWidget {
   final String userid, categoryid;
@@ -43,7 +46,8 @@ class _StoreDetailsWithSpecifiedProductCatagoryIdState
   double threeStar = 0;
   double fourStar = 0;
   double fiveStar = 0;
-  String opeingText = "Closed";
+  String opeingText = "";
+  bool isClosed = false;
   void getRattings() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     var encoded = Uri.parse(get_rattings + widget.userid);
@@ -148,6 +152,34 @@ class _StoreDetailsWithSpecifiedProductCatagoryIdState
     });
   }
 
+  String twlevehourtime(int time) {
+    if (time == 13) {
+      return "01";
+    } else if (time == 14) {
+      return "02";
+    } else if (time == 15) {
+      return "03";
+    } else if (time == 16) {
+      return "04";
+    } else if (time == 17) {
+      return "05";
+    } else if (time == 18) {
+      return "06";
+    } else if (time == 19) {
+      return "07";
+    } else if (time == 20) {
+      return "08";
+    } else if (time == 21) {
+      return "09";
+    } else if (time == 22) {
+      return "10";
+    } else if (time == 23) {
+      return "11";
+    } else {
+      return "12";
+    }
+  }
+
   void getSellerDetails() async {
     var nencoded = Uri.parse(get_sellerdetalsbyuserid + widget.userid);
     print("seller id " + widget.userid);
@@ -181,15 +213,25 @@ class _StoreDetailsWithSpecifiedProductCatagoryIdState
                   .toString()
                   .split(':')[0]);
               if (openingtime <= date.hour && closingtime > date.hour) {
-                setState(() {
-                  opeingText = "Open Now";
-                });
+                opeingText = "Open . Closes " +
+                    twlevehourtime(closingtime) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["sundayclosingtime"]
+                        .toString()
+                        .split(':')[1];
+                isClosed = false;
               } else if (closingtime < date.hour) {
-                setState(() {
-                  opeingText = "Opens at Next Day " +
-                      mnjson["Data"]["Seller"][0]["mondayopeningtime"]
-                          .toString();
-                });
+                isClosed = true;
+                opeingText = "Opens " +
+                    twlevehourtime(int.parse(mnjson["Data"]["Seller"][0]
+                            ["mondayopeningtime"]
+                        .toString()
+                        .split(':')[0])) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["mondayopeningtime"]
+                        .toString()
+                        .split(':')[1];
+                " Mon";
               }
             }
           } else if (day == "Monday") {
@@ -202,16 +244,27 @@ class _StoreDetailsWithSpecifiedProductCatagoryIdState
                       ["mondayclosingtime"]
                   .toString()
                   .split(':')[0]);
+
               if (openingtime <= date.hour && closingtime > date.hour) {
-                setState(() {
-                  opeingText = "Open Now";
-                });
+                opeingText = "Open . Closes " +
+                    twlevehourtime(closingtime) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["mondayclosingtime"]
+                        .toString()
+                        .split(':')[1];
+                isClosed = false;
               } else if (closingtime < date.hour) {
-                setState(() {
-                  opeingText = "Opens at Next Day " +
-                      mnjson["Data"]["Seller"][0]["tuesdayopeningtime"]
-                          .toString();
-                });
+                isClosed = true;
+                opeingText = "Opens " +
+                    twlevehourtime(int.parse(mnjson["Data"]["Seller"][0]
+                            ["tuesdayopeningtime"]
+                        .toString()
+                        .split(':')[0])) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["tuesdayopeningtime"]
+                        .toString()
+                        .split(':')[1];
+                " Tue";
               }
             }
           } else if (day == "Tuesday") {
@@ -224,16 +277,27 @@ class _StoreDetailsWithSpecifiedProductCatagoryIdState
                       ["tuesdayclosingtime"]
                   .toString()
                   .split(':')[0]);
+
               if (openingtime <= date.hour && closingtime > date.hour) {
-                setState(() {
-                  opeingText = "Open Now";
-                });
+                opeingText = "Open . Closes " +
+                    twlevehourtime(closingtime) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["tuesdayclosingtime"]
+                        .toString()
+                        .split(':')[1];
+                isClosed = false;
               } else if (closingtime < date.hour) {
-                setState(() {
-                  opeingText = "Opens at Next Day " +
-                      mnjson["Data"]["Seller"][0]["wednesdayopeningtime"]
-                          .toString();
-                });
+                isClosed = true;
+                opeingText = "Opens " +
+                    twlevehourtime(int.parse(mnjson["Data"]["Seller"][0]
+                            ["wednesdayopeningtime"]
+                        .toString()
+                        .split(':')[0])) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["wednesdayopeningtime"]
+                        .toString()
+                        .split(':')[1];
+                " Wed";
               }
             }
           } else if (day == "Wednesday") {
@@ -247,16 +311,27 @@ class _StoreDetailsWithSpecifiedProductCatagoryIdState
                       ["wednesdayclosingtime"]
                   .toString()
                   .split(':')[0]);
+
               if (openingtime <= date.hour && closingtime > date.hour) {
-                setState(() {
-                  opeingText = "Open Now";
-                });
+                opeingText = "Open . Closes " +
+                    twlevehourtime(closingtime) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["wednesdayclosingtime"]
+                        .toString()
+                        .split(':')[1];
+                isClosed = false;
               } else if (closingtime < date.hour) {
-                setState(() {
-                  opeingText = "Opens at Next Day " +
-                      mnjson["Data"]["Seller"][0]["tuesdayopeningtime"]
-                          .toString();
-                });
+                isClosed = true;
+                opeingText = "Opens " +
+                    twlevehourtime(int.parse(mnjson["Data"]["Seller"][0]
+                            ["tuesdayopeningtime"]
+                        .toString()
+                        .split(':')[0])) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["tuesdayopeningtime"]
+                        .toString()
+                        .split(':')[1];
+                " Thu";
               }
             }
           } else if (day == "Thursday") {
@@ -267,19 +342,30 @@ class _StoreDetailsWithSpecifiedProductCatagoryIdState
                   .toString()
                   .split(':')[0]);
               int closingtime = int.parse(mnjson["Data"]["Seller"][0]
-                      ["thursdayopeningtime"]
+                      ["tuesdayclosingtime"]
                   .toString()
                   .split(':')[0]);
+
               if (openingtime <= date.hour && closingtime > date.hour) {
-                setState(() {
-                  opeingText = "Open Now";
-                });
+                opeingText = "Open . Closes " +
+                    twlevehourtime(closingtime) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["tuesdayclosingtime"]
+                        .toString()
+                        .split(':')[1];
+                isClosed = false;
               } else if (closingtime < date.hour) {
-                setState(() {
-                  opeingText = "Opens at Next Day " +
-                      mnjson["Data"]["Seller"][0]["fridayopeningtime"]
-                          .toString();
-                });
+                isClosed = true;
+                opeingText = "Opens " +
+                    twlevehourtime(int.parse(mnjson["Data"]["Seller"][0]
+                            ["fridayopeningtime"]
+                        .toString()
+                        .split(':')[0])) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["fridayopeningtime"]
+                        .toString()
+                        .split(':')[1];
+                " Fri";
               }
             }
           } else if (day == "Friday") {
@@ -292,21 +378,33 @@ class _StoreDetailsWithSpecifiedProductCatagoryIdState
                       ["fridayclosingtime"]
                   .toString()
                   .split(':')[0]);
+
               if (openingtime <= date.hour && closingtime > date.hour) {
-                setState(() {
-                  opeingText = "Open Now";
-                });
+                opeingText = "Open . Closes " +
+                    twlevehourtime(closingtime) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["fridayclosingtime"]
+                        .toString()
+                        .split(':')[1];
+                isClosed = false;
               } else if (closingtime < date.hour) {
-                setState(() {
-                  opeingText = "Opens at Next Day " +
-                      mnjson["Data"]["Seller"][0]["saturdayopeningtime"]
-                          .toString();
-                });
+                isClosed = true;
+                opeingText = "Opens " +
+                    twlevehourtime(int.parse(mnjson["Data"]["Seller"][0]
+                            ["saturdayopeningtime"]
+                        .toString()
+                        .split(':')[0])) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["saturdayopeningtime"]
+                        .toString()
+                        .split(':')[1];
+                " Sat";
               }
             }
           } else if (day == "Saturday") {
             if (mnjson["Data"]["Seller"][0]
                 .containsKey("saturdayopeningtime")) {
+              print("345678904567890-4567890-=567890-=7890-");
               int openingtime = int.parse(mnjson["Data"]["Seller"][0]
                       ["saturdayopeningtime"]
                   .toString()
@@ -315,19 +413,33 @@ class _StoreDetailsWithSpecifiedProductCatagoryIdState
                       ["saturdayclosingtime"]
                   .toString()
                   .split(':')[0]);
+
               if (openingtime <= date.hour && closingtime > date.hour) {
-                setState(() {
-                  opeingText = "Open Now";
-                });
+                opeingText = "Open . Closes " +
+                    twlevehourtime(closingtime) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["saturdayclosingtime"]
+                        .toString()
+                        .split(':')[1];
+                isClosed = false;
               } else if (closingtime < date.hour) {
-                setState(() {
-                  opeingText = "Opens at Next Day " +
-                      mnjson["Data"]["Seller"][0]["sundayopeningtime"]
-                          .toString();
-                });
+                opeingText = "Opens " +
+                    twlevehourtime(int.parse(mnjson["Data"]["Seller"][0]
+                            ["sundayopeningtime"]
+                        .toString()
+                        .split(':')[0])) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["sundayopeningtime"]
+                        .toString()
+                        .split(':')[1];
+                " Sun";
+                isClosed = true;
               }
             }
           }
+          setState(() {});
+          print("34567890erty890- 567890-=rtyuiop[]");
+          print(opeingText);
         }
       }
     });
@@ -626,11 +738,19 @@ class _StoreDetailsWithSpecifiedProductCatagoryIdState
                     child: Row(
                       children: [
                         Text(address),
-                        Text(
-                          opeingText,
-                          style: TextStyle(
-                              color: Colors.green, fontWeight: FontWeight.bold),
-                        )
+                        SizedBox(width: 10),
+                        Expanded(
+                            child: isClosed == true
+                                ? Row(
+                                    children: [
+                                      Text(
+                                        "Closed",
+                                        style: TextStyle(color: Colors.red),
+                                      ),
+                                      Text(opeingText)
+                                    ],
+                                  )
+                                : Text(opeingText))
                       ],
                     ),
                   ),
@@ -815,29 +935,24 @@ class _StoreDetailsWithSpecifiedProductCatagoryIdState
               maxHeight: 92,
               child: Padding(
                 padding: const EdgeInsets.only(left: 8, right: 8),
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: catelouges.length,
-                    itemBuilder: (context, index) {
-                      return InkWell(
+                child: Row(
+                  children: [
+                    InkWell(
                         onTap: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SubCategoryScreen(
-                                      catelouges[index]["_id"],
-                                      categoryId,
-                                      catelouges,
-                                      widget.userid)));
+                                  builder: (context) =>
+                                      StoreDetailsScreen(widget.userid)));
                         },
                         child: Container(
-                          margin: EdgeInsets.only(right: 30),
+                          color: Colors.white,
+                          //margin: EdgeInsets.only(right: 10),
                           child: Column(
                             children: [
                               SizedBox(
-                                height: 70,
-                                width: 70,
+                                height: 65,
+                                width: 65,
                                 child: Card(
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                   shape: RoundedRectangleBorder(
@@ -849,22 +964,18 @@ class _StoreDetailsWithSpecifiedProductCatagoryIdState
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  SubCategoryScreen(
-                                                      catelouges[index]["_id"],
-                                                      categoryId,
-                                                      catelouges,
+                                                  StoreDetailsScreen(
                                                       widget.userid)));
-                                      //Navigator.push(context, MaterialPageRoute(builder: (context)=>Status()));
                                     },
-                                    child: Image.network(
-                                      baseUrl + catelouges[index]["image"],
+                                    child: Image.asset(
+                                      "images/app.png",
                                       fit: BoxFit.cover,
                                     ),
                                   ),
                                 ),
                               ),
                               Text(
-                                catelouges[index]["cataloguename"],
+                                "All Categories",
                                 style: TextStyle(
                                     fontSize: 10,
                                     fontWeight: FontWeight.bold,
@@ -872,9 +983,75 @@ class _StoreDetailsWithSpecifiedProductCatagoryIdState
                               ),
                             ],
                           ),
-                        ),
-                      );
-                    }),
+                        )),
+                    Expanded(
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: catelouges.length,
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SubCategoryScreen(
+                                            catelouges[index]["_id"],
+                                            categoryId,
+                                            catelouges,
+                                            widget.userid)));
+                              },
+                              child: Container(
+                                margin: EdgeInsets.only(right: 30),
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 70,
+                                      width: 70,
+                                      child: Card(
+                                        clipBehavior:
+                                            Clip.antiAliasWithSaveLayer,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(50.0),
+                                        ),
+                                        child: InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        SubCategoryScreen(
+                                                            catelouges[index]
+                                                                ["_id"],
+                                                            categoryId,
+                                                            catelouges,
+                                                            widget.userid)));
+                                            //Navigator.push(context, MaterialPageRoute(builder: (context)=>Status()));
+                                          },
+                                          child: Image.network(
+                                            baseUrl +
+                                                catelouges[index]["image"],
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Text(
+                                      catelouges[index]["cataloguename"],
+                                      style: TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          }),
+                    ),
+                  ],
+                ),
               ),
             )),
             SliverGrid(

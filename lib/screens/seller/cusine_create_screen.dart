@@ -90,6 +90,7 @@ class _CusineCreateScreenState extends State<CusineCreateScreen> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Wrap(
                   children: hobbyList.map(
@@ -124,14 +125,14 @@ class _CusineCreateScreenState extends State<CusineCreateScreen> {
                                   borderRadius: BorderRadius.circular(18),
                                   border: Border.all(
                                       color: isSelected
-                                          ? primaryColor
+                                          ? Colors.blue
                                           : Colors.grey,
                                       width: 2)),
                               child: Text(
                                 hobby,
                                 style: TextStyle(
                                     color:
-                                        isSelected ? primaryColor : Colors.grey,
+                                        isSelected ? Colors.blue : Colors.grey,
                                     fontSize: 14),
                               ),
                             )),
@@ -142,12 +143,41 @@ class _CusineCreateScreenState extends State<CusineCreateScreen> {
                 SizedBox(
                   height: 10,
                 ),
-                RaisedButton(
-                  onPressed: () {
-                    save();
-                  },
-                  child: Text("Save"),
-                )
+                Container(
+                  height: 70,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            RaisedButton(
+                              onPressed: () {
+                                save();
+                              },
+                              color: Colors.blue,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Save',
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.white),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      )
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

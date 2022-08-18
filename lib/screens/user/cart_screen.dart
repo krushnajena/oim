@@ -86,338 +86,335 @@ class _CartScreenState extends State<CartScreen> {
         title: Text("Cart"),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: items.length > 0
-            ? Column(
-                children: [
-                  ListView.builder(
-                    itemCount: items.length,
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      double disount = double.parse(
-                              items[index]["productid"]["mrp"].toString()) -
-                          double.parse(items[index]["productid"]["sellingprice"]
-                              .toString());
-                      double discountPercentage = (disount /
-                              double.parse(items[index]["productid"]["mrp"]
-                                  .toString())) *
-                          100;
+      body: items.length > 0
+          ? SingleChildScrollView(
+              child: Column(
+              children: [
+                ListView.builder(
+                  itemCount: items.length,
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    double disount = double.parse(
+                            items[index]["productid"]["mrp"].toString()) -
+                        double.parse(items[index]["productid"]["sellingprice"]
+                            .toString());
+                    double discountPercentage = (disount /
+                            double.parse(
+                                items[index]["productid"]["mrp"].toString())) *
+                        100;
 
-                      return Stack(children: [
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ProductDetailsScreen(
-                                        items[index]["productid"]["_id"]
-                                            .toString())));
-                          },
-                          child: Container(
-                              margin: EdgeInsets.only(top: 20, left: 20),
-                              height: 150,
-                              width: 350,
-                              child: Card(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 10, left: 10),
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                            child: SizedBox(
-                                              height: 85,
-                                              width: 85,
-                                              child: Image.network(
-                                                baseUrl +
-                                                    items[index]["productid"]
-                                                            ["image"][0]
-                                                        ["filename"],
-                                                fit: BoxFit.cover,
-                                              ),
+                    return Stack(children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ProductDetailsScreen(
+                                      items[index]["productid"]["_id"]
+                                          .toString())));
+                        },
+                        child: Container(
+                            margin: EdgeInsets.only(top: 20, left: 20),
+                            height: 150,
+                            width: 350,
+                            child: Card(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 10, left: 10),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                          child: SizedBox(
+                                            height: 85,
+                                            width: 85,
+                                            child: Image.network(
+                                              baseUrl +
+                                                  items[index]["productid"]
+                                                      ["image"][0]["filename"],
+                                              fit: BoxFit.cover,
                                             ),
                                           ),
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 8, top: 10),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                items[index]["productid"]
-                                                    ["productname"],
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ),
-                                              SizedBox(height: 5),
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                    "₹" +
-                                                        items[index][
-                                                                    "productid"]
-                                                                ["sellingprice"]
-                                                            .toString(),
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        color: Colors.black26),
-                                                  ),
-                                                  SizedBox(width: 10),
-                                                  Text(
-                                                    "₹" +
-                                                        items[index][
-                                                                    "productid"]
-                                                                ["mrp"]
-                                                            .toString(),
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        color: Colors.black26,
-                                                        decoration:
-                                                            TextDecoration
-                                                                .lineThrough),
-                                                  ),
-                                                  SizedBox(width: 5),
-                                                  Text(
-                                                    discountPercentage
-                                                            .toStringAsFixed(
-                                                                2) +
-                                                        "% Off",
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        color: Colors.green),
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(height: 5),
-                                              Text(
-                                                items[index]["sellername"],
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.w500,
-                                                    color: Colors.black26),
-                                              ),
-                                              SizedBox(height: 5),
-                                              Row(
-                                                children: [
-                                                  Icon(Icons
-                                                      .location_on_outlined),
-                                                  Text(
-                                                    items[index]
-                                                        ["sellerlocation"],
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        color: Colors.black),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              )),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: 125,
-                            left: 23,
-                          ),
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 172,
-                                child: OutlinedButton(
-                                  onPressed: () {
-                                    getRemoveItem(
-                                        items[index]["_id"].toString());
-                                  },
-                                  child: Text(
-                                    "REMOVE",
-                                    style: TextStyle(color: Colors.black38),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 8, top: 10),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              items[index]["productid"]
+                                                  ["productname"],
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                            SizedBox(height: 5),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  "₹" +
+                                                      items[index]["productid"]
+                                                              ["sellingprice"]
+                                                          .toString(),
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color: Colors.black26),
+                                                ),
+                                                SizedBox(width: 10),
+                                                Text(
+                                                  "₹" +
+                                                      items[index]["productid"]
+                                                              ["mrp"]
+                                                          .toString(),
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color: Colors.black26,
+                                                      decoration: TextDecoration
+                                                          .lineThrough),
+                                                ),
+                                                SizedBox(width: 5),
+                                                Text(
+                                                  discountPercentage
+                                                          .toStringAsFixed(2) +
+                                                      "% Off",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color: Colors.green),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(height: 5),
+                                            Text(
+                                              items[index]["sellername"],
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.black26),
+                                            ),
+                                            SizedBox(height: 5),
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                    Icons.location_on_outlined),
+                                                Text(
+                                                  items[index]
+                                                      ["sellerlocation"],
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ],
                                   ),
+                                ],
+                              ),
+                            )),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: 125,
+                          left: 23,
+                        ),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 172,
+                              child: OutlinedButton(
+                                onPressed: () {
+                                  getRemoveItem(items[index]["_id"].toString());
+                                },
+                                child: Text(
+                                  "REMOVE",
+                                  style: TextStyle(color: Colors.black38),
                                 ),
                               ),
-                              SizedBox(
-                                width: 172,
-                                child: OutlinedButton(
-                                  onPressed: () async {
-                                    String googleUrl =
-                                        'https://www.google.com/maps/search/?api=1&query=' +
-                                            items[index]["sellerlat"]
-                                                .toString() +
-                                            ',' +
-                                            items[index]["sellerlang"]
-                                                .toString();
+                            ),
+                            SizedBox(
+                              width: 172,
+                              child: OutlinedButton(
+                                onPressed: () async {
+                                  String googleUrl =
+                                      'https://www.google.com/maps/search/?api=1&query=' +
+                                          items[index]["sellerlat"].toString() +
+                                          ',' +
+                                          items[index]["sellerlang"].toString();
 
-                                    print(googleUrl);
+                                  print(googleUrl);
 
-                                    await launch(googleUrl);
-                                  },
-                                  child: Text("DIRECTIONS",
-                                      style: TextStyle(color: Colors.black38)),
-                                ),
+                                  await launch(googleUrl);
+                                },
+                                child: Text("DIRECTIONS",
+                                    style: TextStyle(color: Colors.black38)),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ]);
-                    },
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: 10, top: 19),
-                    height: 200,
-                    width: 370,
-                    color: Colors.white,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 10, top: 10, bottom: 5),
-                          child: Text(
-                            "PRICE DETAILS",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black26,
-                                fontSize: 16),
-                          ),
+                      ),
+                    ]);
+                  },
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 10, top: 19),
+                  height: 200,
+                  width: 370,
+                  color: Colors.white,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(left: 10, top: 10, bottom: 5),
+                        child: Text(
+                          "PRICE DETAILS",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black26,
+                              fontSize: 16),
                         ),
-                        Divider(
-                          color: Colors.black38,
+                      ),
+                      Divider(
+                        color: Colors.black38,
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(left: 10, top: 10, bottom: 5),
+                        child: Row(
+                          children: [
+                            Text(
+                              "Price (" + items.length.toString() + " items)",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black54,
+                                  fontSize: 14),
+                            ),
+                            SizedBox(
+                              width: 195,
+                            ),
+                            Text(
+                              "₹" + Mrptotal.toStringAsFixed(2),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black54,
+                                  fontSize: 14),
+                            ),
+                          ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 10, top: 10, bottom: 5),
-                          child: Row(
-                            children: [
-                              Text(
-                                "Price (" + items.length.toString() + " items)",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black54,
-                                    fontSize: 14),
-                              ),
-                              SizedBox(
-                                width: 195,
-                              ),
-                              Text(
-                                "₹" + Mrptotal.toStringAsFixed(2),
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black54,
-                                    fontSize: 14),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 10, top: 10, bottom: 5),
-                          child: Row(
-                            children: [
-                              Text(
-                                "Discount",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black54,
-                                    fontSize: 14),
-                              ),
-                              SizedBox(width: 195),
-                              Text(
-                                "-₹" +
-                                    (Mrptotal - sellingtotal)
-                                        .toStringAsFixed(2),
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.green,
-                                    fontSize: 14),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Text(
-                          '   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -',
-                          style: TextStyle(color: Colors.black38),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 10, bottom: 5, top: 5),
-                          child: Row(
-                            children: [
-                              Text(
-                                "Total Amount",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black87,
-                                    fontSize: 14),
-                              ),
-                              SizedBox(width: 195),
-                              Text(
-                                "₹" + sellingtotal.toStringAsFixed(2),
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black87,
-                                    fontSize: 15),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Divider(
-                          color: Colors.black38,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
-                          child: Text(
-                              "You will save ₹" +
-                                  (Mrptotal - sellingtotal).toStringAsFixed(2) +
-                                  " on this order",
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(left: 10, top: 10, bottom: 5),
+                        child: Row(
+                          children: [
+                            Text(
+                              "Discount",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black54,
+                                  fontSize: 14),
+                            ),
+                            SizedBox(width: 195),
+                            Text(
+                              "-₹" +
+                                  (Mrptotal - sellingtotal).toStringAsFixed(2),
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   color: Colors.green,
-                                  fontSize: 14)),
-                        )
-                      ],
-                    ),
+                                  fontSize: 14),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Text(
+                        '   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -',
+                        style: TextStyle(color: Colors.black38),
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(left: 10, bottom: 5, top: 5),
+                        child: Row(
+                          children: [
+                            Text(
+                              "Total Amount",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black87,
+                                  fontSize: 14),
+                            ),
+                            SizedBox(width: 195),
+                            Text(
+                              "₹" + sellingtotal.toStringAsFixed(2),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black87,
+                                  fontSize: 15),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Divider(
+                        color: Colors.black38,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10.0),
+                        child: Text(
+                            "You will save ₹" +
+                                (Mrptotal - sellingtotal).toStringAsFixed(2) +
+                                " on this order",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                color: Colors.green,
+                                fontSize: 14)),
+                      )
+                    ],
                   ),
-                ],
-              )
-            : Center(
-                child: Column(
-                  children: [
-                    Image(
+                ),
+              ],
+            ))
+          : Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Image(
                         image: AssetImage(
                       "images/emptycart.png",
                     )),
-                    SizedBox(
-                      height: 10,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  RaisedButton(
+                    color: Colors.blue,
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      "Start Shopping",
+                      style: TextStyle(color: Colors.white),
                     ),
-                    RaisedButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text("Back To Home"),
-                    )
-                  ],
-                ),
+                  )
+                ],
               ),
-      ),
+            ),
     );
   }
 }

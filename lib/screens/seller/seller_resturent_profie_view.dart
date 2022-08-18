@@ -1,24 +1,28 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:http/http.dart' as http;
 import 'package:oim/constants/constant.dart';
 import 'package:oim/constants/urls.dart';
 import 'package:oim/screens/seller/products_list_screen.dart';
-import 'package:oim/screens/seller/seller_product_details_screen.dart';
 import 'package:oim/screens/user/product_details_screen.dart';
+import 'package:oim/screens/user/restrurentomagesscreen.dart';
+import 'package:oim/screens/user/storerattingscreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:http/http.dart' as http;
 
-class SellerStoreViewScreen extends StatefulWidget {
-  const SellerStoreViewScreen({Key? key}) : super(key: key);
+class SellerResturentProfileView extends StatefulWidget {
+  const SellerResturentProfileView({Key? key}) : super(key: key);
 
   @override
-  State<SellerStoreViewScreen> createState() => _SellerStoreViewScreenState();
+  State<SellerResturentProfileView> createState() =>
+      _SellerResturentProfileViewState();
 }
 
-class _SellerStoreViewScreenState extends State<SellerStoreViewScreen> {
+class _SellerResturentProfileViewState
+    extends State<SellerResturentProfileView> {
   String storename = "";
   String imageUrl = "";
   String address = "";
@@ -30,7 +34,6 @@ class _SellerStoreViewScreenState extends State<SellerStoreViewScreen> {
   List products = [];
   List catelouges = [];
   bool? follewed;
-
   double ratting = 0;
   int noofrattings = 0;
   double appliedRatting = 0;
@@ -39,6 +42,70 @@ class _SellerStoreViewScreenState extends State<SellerStoreViewScreen> {
   double threeStar = 0;
   double fourStar = 0;
   double fiveStar = 0;
+
+  List<Widget> images = [];
+  List food = [];
+  List amb = [];
+  List img = [];
+  bool isImageSliderLoaded = false;
+  String selectedItem = "food";
+
+  getImageSlider() async {
+    setState(() {
+      images = [];
+      food = [];
+      amb = [];
+      img = [];
+    });
+
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    var encoded = Uri.parse(getRestaurentImageBySellerId +
+        preferences.getString("userid").toString());
+    print(get_image_banner);
+    http.get(encoded).then((value) async {
+      if (value.statusCode == 200) {
+        Map mjson;
+        mjson = json.decode(value.body);
+        print(mjson);
+
+        for (int i = 0; i < mjson["data"]["sellerimages"].length; i++) {
+          if (mjson["data"]["sellerimages"][i]["type"] == "banner") {
+            setState(() {
+              images.add(Image.network(
+                  baseUrl + mjson["data"]["sellerimages"][i]["image"],
+                  fit: BoxFit.fill));
+            });
+          }
+
+          if (mjson["data"]["sellerimages"][i]["type"] == "food") {
+            setState(() {
+              food.add(
+                mjson["data"]["sellerimages"][i]["image"],
+              );
+            });
+          }
+          if (mjson["data"]["sellerimages"][i]["type"] == "ambience") {
+            setState(() {
+              amb.add(
+                mjson["data"]["sellerimages"][i]["image"],
+              );
+            });
+          }
+          if (mjson["data"]["sellerimages"][i]["type"] == "menu") {
+            setState(() {
+              img.add(
+                mjson["data"]["sellerimages"][i]["image"],
+              );
+            });
+          }
+        }
+        setState(() {
+          isImageSliderLoaded = true;
+        });
+      }
+    }).catchError((onError) {});
+  }
+
   void getRattings() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     var encoded =
@@ -97,6 +164,47 @@ class _SellerStoreViewScreenState extends State<SellerStoreViewScreen> {
             noofrattings = mjson["data"]["storeratting"].length;
             ratting = total / mjson["data"]["storeratting"].length;
           });
+          if (ratting < 1) {
+            setState(() {
+              ratting = 0.5;
+            });
+          } else if (ratting < 1.5) {
+            setState(() {
+              ratting = 1;
+            });
+          } else if (ratting < 2) {
+            setState(() {
+              ratting = 1.5;
+            });
+          } else if (ratting < 2.5) {
+            setState(() {
+              ratting = 2;
+            });
+          } else if (ratting < 3) {
+            setState(() {
+              ratting = 2.5;
+            });
+          } else if (ratting < 3.5) {
+            setState(() {
+              ratting = 3;
+            });
+          } else if (ratting < 4) {
+            setState(() {
+              ratting = 3.5;
+            });
+          } else if (ratting < 4.5) {
+            setState(() {
+              ratting = 4;
+            });
+          } else if (ratting < 5) {
+            setState(() {
+              ratting = 4.5;
+            });
+          } else {
+            setState(() {
+              ratting = 5;
+            });
+          }
         }
       }
     });
@@ -104,8 +212,8 @@ class _SellerStoreViewScreenState extends State<SellerStoreViewScreen> {
 
   void getSellerDetails() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    var nencoded =
-        Uri.parse(get_sellerdetalsbyuserid + preferences.getString("userid")!);
+    var nencoded = Uri.parse(
+        get_sellerdetalsbyuserid + preferences.getString("userid").toString());
 
     http.get(nencoded).then((resp) {
       if (resp.statusCode == 200) {
@@ -127,65 +235,38 @@ class _SellerStoreViewScreenState extends State<SellerStoreViewScreen> {
     });
   }
 
+  void applyRatting() async {}
   void getCatelouges() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    String? categoryId = preferences.getString("businesscategory");
-    var nencoded = Uri.parse(get_catelogues + categoryId!);
-    setState(() {
-      catelouges.clear();
-    });
+    var nencoded = Uri.parse(get_catelogues + categoryId);
     http.get(nencoded).then((resp) {
       if (resp.statusCode == 200) {
-        Map mjson;
-        mjson = json.decode(resp.body);
-        for (int i = 0; i < mjson["data"]["catlog"].length; i++) {
-          bool isExists = false;
-          var coded = Uri.parse(getSubcategoriesByCatelogid +
-              mjson["data"]["catlog"][i]["_id"].toString());
-          print(getSubcategoriesByCatelogid +
-              mjson["data"]["catlog"][i]["_id"].toString());
-          http.get(coded).then((value) {
-            if (value.statusCode == 200) {
-              Map mnjson;
-              mnjson = json.decode(value.body);
-              for (int k = 0; k < mnjson["data"]["catlog"].length; k++) {
-                for (int l = 0; l < products.length; l++) {
-                  print("dfghjikoplxfcgvhbjnkml,;.");
-                  print("Category Id :- " +
-                      mnjson["data"]["catlog"][k]["_id"].toString());
-
-                  print("Product Id :- " +
-                      products[l]["productcategoryid"].toString());
-                  print("888888**************");
-                  if (mnjson["data"]["catlog"][k]["_id"].toString() ==
-                          products[l]["catalogueid"].toString() &&
-                      isExists == false) {
-                    isExists = true;
-                    print("dfghjikoplxfcgvhbjnkml,;.");
-                    setState(() {
-                      catelouges.add(mjson["data"]["catlog"][i]);
-                    });
-                  }
-                }
-              }
-            }
-          });
-        }
+        Map mnjson;
+        mnjson = json.decode(resp.body);
+        setState(() {
+          catelouges = mnjson["data"]["catlog"];
+        });
       }
     });
   }
 
   void getProducts() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    var nencoded =
-        Uri.parse(get_products_byuserid + preferences.getString("userid")!);
+    var nencoded = Uri.parse(
+        get_products_byuserid + preferences.getString("userid").toString());
     http.get(nencoded).then((resp) {
       if (resp.statusCode == 200) {
         Map mnjson;
         mnjson = json.decode(resp.body);
-        setState(() {
-          products = mnjson["data"]["product"];
-        });
+
+        for (int i = 0; i < mnjson["data"]["product"].length; i++) {
+          if (mnjson["data"]["product"][i]["isdeleted"] == false &&
+              mnjson["data"]["product"][i]["instock"] == true) {
+            setState(() {
+              products.add(mnjson["data"]["product"][i]);
+            });
+          }
+        }
+        setState(() {});
         print("*****************************************");
         print(products.length);
         print("*****************************************");
@@ -195,8 +276,11 @@ class _SellerStoreViewScreenState extends State<SellerStoreViewScreen> {
 
   void getNoOfFollers() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    var nencoded =
-        Uri.parse(get_follwers_by_sellerid + preferences.getString("userid")!);
+    var nencoded = Uri.parse(
+        get_follwers_by_sellerid + preferences.getString("userid").toString());
+    print("%%%%%%%%%%%%%%%%%%%%%%%%%");
+    print(
+        get_follwers_by_sellerid + preferences.getString("userid").toString());
     http.get(nencoded).then((resp) {
       if (resp.statusCode == 200) {
         Map mnjson;
@@ -221,7 +305,9 @@ class _SellerStoreViewScreenState extends State<SellerStoreViewScreen> {
     getSellerDetails();
     getProducts();
     getNoOfFollers();
+
     getRattings();
+    getImageSlider();
   }
 
   @override
@@ -308,7 +394,7 @@ class _SellerStoreViewScreenState extends State<SellerStoreViewScreen> {
                           "(" + noofrattings.toString() + ")",
                         ),
                         InkWell(
-                          onTap: () {},
+                          onTap: () async {},
                           child: Image.asset(
                             "images/star.png",
                             height: 22,
@@ -385,7 +471,7 @@ class _SellerStoreViewScreenState extends State<SellerStoreViewScreen> {
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     child: Text(
-                                      'Un Follow',
+                                      'Following',
                                       style: TextStyle(
                                         fontSize: 14,
                                         color: Colors.white,
@@ -504,140 +590,115 @@ class _SellerStoreViewScreenState extends State<SellerStoreViewScreen> {
             )),
             SliverPersistentHeader(
                 delegate: SliverAppBarDelegate(
-              minHeight: 92,
-              maxHeight: 92,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8, right: 8),
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: catelouges.length,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        margin: EdgeInsets.only(right: 30),
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 70,
-                              width: 70,
-                              child: Card(
-                                clipBehavior: Clip.antiAliasWithSaveLayer,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50.0),
-                                ),
-                                child: InkWell(
-                                  onTap: () {
-                                    //Navigator.push(context, MaterialPageRoute(builder: (context)=>Status()));
-                                  },
-                                  child: Image.network(
-                                    baseUrl + catelouges[index]["image"],
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Text(
-                              catelouges[index]["cataloguename"],
-                              style: TextStyle(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
-                          ],
-                        ),
-                      );
-                    }),
+              minHeight: 210,
+              maxHeight: 210,
+              child: ImageSlideshow(
+                width: double.infinity,
+                height: 200,
+                initialPage: 0,
+                indicatorColor: Colors.blue,
+                indicatorBackgroundColor: Colors.grey,
+                children: images,
+                isLoop: false,
               ),
             )),
-            SliverGrid(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  double disount =
-                      double.parse(products[index]["mrp"].toString()) -
-                          double.parse(products[index]["sellingprice"]
-                              .toString()
-                              .toString());
-                  double discountPercentage = (disount /
-                          double.parse(products[index]["mrp"].toString())) *
-                      100;
-                  return Card(
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    SellerProductDetailsScreen(
-                                        products[index]["_id"].toString())));
-                      },
-                      child: SizedBox(
-                        height: 220,
-                        width: 170,
-                        child: Column(
+            SliverPersistentHeader(
+                delegate: SliverAppBarDelegate(
+                    minHeight: 20,
+                    maxHeight: 20,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [],
+                    ))),
+            SliverPersistentHeader(
+                delegate: SliverAppBarDelegate(
+                    minHeight: 50,
+                    maxHeight: 50,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
                           children: [
-                            Container(
-                              height: 150,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage(
-                                      baseUrl +
-                                          products[index]["image"][0]
-                                              ["filename"],
-                                    )),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8.0)),
-                                color: Colors.redAccent,
-                              ),
+                            RaisedButton(
+                              onPressed: () async {
+                                SharedPreferences preferences =
+                                    await SharedPreferences.getInstance();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ResturentImagesScreen(preferences
+                                                .getString("userid")
+                                                .toString())));
+                              },
+                              child:
+                                  Text("Food (" + food.length.toString() + ")"),
                             ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Text(
-                                  "₹" +
-                                      products[index]["sellingprice"]
-                                          .toString(),
-                                  style: TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  "₹" + products[index]["mrp"].toString(),
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.grey,
-                                      decoration: TextDecoration.lineThrough),
-                                ),
-                                Text(
-                                  discountPercentage.toStringAsFixed(2) +
-                                      "% Off",
-                                  style: TextStyle(color: Colors.green),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(products[index]["productname"])
                           ],
                         ),
-                      ),
-                    ),
-                  );
-                },
-                childCount: products.length,
-              ),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 2,
-                mainAxisSpacing: 2,
-                mainAxisExtent: 230,
-              ),
-            ),
+                        Column(
+                          children: [
+                            RaisedButton(
+                              onPressed: () async {
+                                SharedPreferences preferences =
+                                    await SharedPreferences.getInstance();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ResturentImagesScreen(preferences
+                                                .getString("userid")
+                                                .toString())));
+                              },
+                              child: Text(
+                                  "Ambience (" + amb.length.toString() + ")"),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            RaisedButton(
+                              onPressed: () async {
+                                SharedPreferences preferences =
+                                    await SharedPreferences.getInstance();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ResturentImagesScreen(preferences
+                                                .getString("userid")
+                                                .toString())));
+                              },
+                              child:
+                                  Text("Menu (" + img.length.toString() + ")"),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ))),
+            SliverPersistentHeader(
+                delegate: SliverAppBarDelegate(
+                    minHeight: 150,
+                    maxHeight: 150,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "About Restaurant",
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ))),
           ],
         ),
       ),

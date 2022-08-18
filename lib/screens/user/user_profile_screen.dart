@@ -122,16 +122,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               child: Card(
                 child: Column(
                   children: [
-                    Padding(
-                      padding: EdgeInsets.only(top: 10, left: 310),
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.edit_rounded,
-                          color: Colors.black,
-                        ),
-                        onPressed: () {},
-                      ),
-                    ),
                     Row(
                       children: [
                         Padding(

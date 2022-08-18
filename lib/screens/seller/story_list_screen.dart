@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oim/constants/urls.dart';
 import 'package:oim/screens/seller/seller_story_details_screen.dart';
@@ -75,63 +76,52 @@ class _StoryListScreenState extends State<StoryListScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blue,
         elevation: 0.1,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 250.0, top: 10),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  width: 45.0,
-                  height: 45.0,
-                  decoration: BoxDecoration(
-                    color: const Color(0xff7c94b6),
-                    image: DecorationImage(
-                      image: AssetImage("images/photo1.png"),
-                      fit: BoxFit.cover,
-                    ),
-                    borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  "Stories",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ],
-            ),
-          )
-        ],
+        centerTitle: true,
+        title: Text("Stories"),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => StoryCreateScreen()));
-        },
-        isExtended: true,
-        backgroundColor: Colors.orange[800],
-        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        label: Text(
-          "Add Story",
-          style: TextStyle(fontSize: 19, color: Colors.white),
+      bottomNavigationBar: Container(
+        height: 70,
+        child: Column(
+          children: [
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  RaisedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => StoryCreateScreen()));
+                    },
+                    color: Colors.blue,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Add Stories',
+                          style: TextStyle(fontSize: 14, color: Colors.white),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            )
+          ],
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.only(
-              top: 8,
-            ),
+            padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
             child: CustomScrollView(
               slivers: [
                 SliverGrid(
@@ -176,8 +166,10 @@ class _StoryListScreenState extends State<StoryListScreen> {
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.only(
-                                            left: 8, right: 8, top: 160),
+                                            left: 8, right: 8, top: 180),
                                         child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
                                             Icon(
                                               Icons.remove_red_eye_outlined,
@@ -185,11 +177,13 @@ class _StoryListScreenState extends State<StoryListScreen> {
                                               size: 18,
                                             ),
                                             Text(
-                                              " Views : 0",
+                                              "Views : 0",
                                               style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 13,
-                                                  color: Colors.white),
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 13,
+                                                color: Colors.white,
+                                              ),
+                                              textAlign: TextAlign.center,
                                             ),
                                           ],
                                         ),
@@ -199,29 +193,65 @@ class _StoryListScreenState extends State<StoryListScreen> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 10, top: 10),
-                            child: InkWell(
-                              onTap: () {
-                                print(story[index]);
-                                deleteStory(story[index]["_id"].toString());
-                              },
-                              child: Card(
-                                elevation: 2,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(150),
-                                ),
-                                child: Container(
-                                  width: 30,
-                                  height: 30,
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Container(
                                   decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Icon(
-                                    Icons.delete,
-                                    color: Colors.black,
-                                  ),
+                                      color: Colors.white,
+                                      border: Border.all(
+                                        color: Colors.white,
+                                      ),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(25))),
+                                  child: PopupMenuButton(
+                                      itemBuilder: (context) => [
+                                            PopupMenuItem(
+                                              child: Text("Remove Story"),
+                                              value: 2,
+                                              onTap: () {
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        CupertinoAlertDialog(
+                                                          title: new Text(
+                                                              "Confirmation"),
+                                                          content: new Text(
+                                                              "Do you want to delete "),
+                                                          actions: <Widget>[
+                                                            CupertinoDialogAction(
+                                                              isDefaultAction:
+                                                                  true,
+                                                              child: Text(
+                                                                  "Delete Story"),
+                                                              onPressed:
+                                                                  () async {
+                                                                deleteStory(story[
+                                                                            index]
+                                                                        ["_id"]
+                                                                    .toString());
+                                                              },
+                                                            ),
+                                                            CupertinoDialogAction(
+                                                              child:
+                                                                  Text("Exit"),
+                                                              onPressed: () {
+                                                                Navigator.pop(
+                                                                    context);
+                                                              },
+                                                            )
+                                                          ],
+                                                        ));
+
+                                                //getRemoveItem(products[index]["_id"]
+                                                //    .toString());
+                                              },
+                                            )
+                                          ]),
                                 ),
-                              ),
+                              ],
                             ),
                           ),
                         ],

@@ -113,17 +113,30 @@ class _MyStoreScreenState extends State<MyStoreScreen> {
                                         fontWeight: FontWeight.bold,
                                         fontSize: 18),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(1.0),
-                                    child: Text(
-                                      stores[index]["sellerdetails"][0]
-                                                  ["category"] !=
-                                              null
-                                          ? stores[index]["sellerdetails"][0]
-                                              ["category"]
-                                          : "Null",
-                                      style: TextStyle(color: Colors.grey),
-                                    ),
+                                  Container(
+                                    child: Card(
+                                        color: Colors.blue[200],
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 15.0,
+                                              right: 15.0,
+                                              top: 1.0,
+                                              bottom: 1.0),
+                                          child: Text(
+                                            stores[index]["sellerdetails"][0]
+                                                        ["category"] !=
+                                                    null
+                                                ? stores[index]["sellerdetails"]
+                                                        [0]["category"]
+                                                    .toString()
+                                                    .toUpperCase()
+                                                : "Null",
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 13),
+                                          ),
+                                        )),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(1.0),
@@ -142,7 +155,7 @@ class _MyStoreScreenState extends State<MyStoreScreen> {
                                           ? stores[index]["sellerdetails"][0]
                                               ["nooffollowers"]
                                           : "Null",
-                                      style: TextStyle(color: Colors.grey),
+                                      style: TextStyle(color: Colors.black),
                                     ),
                                   ),
                                 ],

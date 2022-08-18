@@ -45,38 +45,90 @@ class _SellerBottomAppBarState extends State<SellerBottomAppBar> {
         physics: NeverScrollableScrollPhysics(),
       ),
       bottomNavigationBar: BottomAppBar(
+        color: Colors.blue,
         child: BottomNavigationBar(
+          selectedItemColor: Colors.blue,
           type: BottomNavigationBarType.fixed,
           onTap: _onItemTapped,
           items: [
             BottomNavigationBarItem(
-                icon: Icon(Icons.home_outlined,
-                    color: _selectedIndex == 0 ? Colors.blue : Colors.grey),
-                label: 'Home',
+                icon: Column(
+                  children: [
+                    Icon(Icons.home_outlined,
+                        color: _selectedIndex == 0 ? Colors.blue : Colors.grey),
+                    Text(
+                      "Home",
+                      style: TextStyle(
+                          color:
+                              _selectedIndex == 0 ? Colors.blue : Colors.grey),
+                    ),
+                  ],
+                ),
+                label: '',
                 backgroundColor:
                     _selectedIndex == 0 ? Colors.blue : Colors.grey),
             BottomNavigationBarItem(
-                icon: Icon(Icons.chat_outlined,
-                    color: _selectedIndex == 1 ? Colors.blue : Colors.grey),
-                label: 'Chat',
+                icon: Column(
+                  children: [
+                    Icon(Icons.chat_outlined,
+                        color: _selectedIndex == 1 ? Colors.blue : Colors.grey),
+                    Text(
+                      "Chat",
+                      style: TextStyle(
+                          color:
+                              _selectedIndex == 1 ? Colors.blue : Colors.grey),
+                    ),
+                  ],
+                ),
+                label: '',
                 backgroundColor:
                     _selectedIndex == 1 ? Colors.blue : Colors.grey),
             BottomNavigationBarItem(
-                icon: Icon(Icons.category_outlined,
-                    color: _selectedIndex == 2 ? Colors.blue : Colors.grey),
-                label: 'Products',
+                icon: Column(
+                  children: [
+                    Icon(Icons.category_outlined,
+                        color: _selectedIndex == 2 ? Colors.blue : Colors.grey),
+                    Text(
+                      "Product",
+                      style: TextStyle(
+                          color:
+                              _selectedIndex == 2 ? Colors.blue : Colors.grey),
+                    ),
+                  ],
+                ),
+                label: '',
                 backgroundColor:
                     _selectedIndex == 2 ? Colors.blue : Colors.grey),
             BottomNavigationBarItem(
-                icon: Icon(Icons.book_outlined,
-                    color: _selectedIndex == 3 ? Colors.blue : Colors.grey),
-                label: 'Story',
+                icon: Column(
+                  children: [
+                    Icon(Icons.book_outlined,
+                        color: _selectedIndex == 3 ? Colors.blue : Colors.grey),
+                    Text(
+                      "Story",
+                      style: TextStyle(
+                          color:
+                              _selectedIndex == 3 ? Colors.blue : Colors.grey),
+                    ),
+                  ],
+                ),
+                label: '',
                 backgroundColor:
                     _selectedIndex == 3 ? Colors.blue : Colors.grey),
             BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle_outlined,
-                    color: _selectedIndex == 4 ? Colors.blue : Colors.grey),
-                label: 'Account',
+                icon: Column(
+                  children: [
+                    Icon(Icons.account_circle_outlined,
+                        color: _selectedIndex == 4 ? Colors.blue : Colors.grey),
+                    Text(
+                      "Account",
+                      style: TextStyle(
+                          color:
+                              _selectedIndex == 4 ? Colors.blue : Colors.grey),
+                    ),
+                  ],
+                ),
+                label: '',
                 backgroundColor:
                     _selectedIndex == 4 ? Colors.blue : Colors.grey),
           ],

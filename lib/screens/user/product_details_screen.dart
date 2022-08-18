@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,8 @@ class ProductDetailsScreen extends StatefulWidget {
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   String productName = "";
+  String pid = "";
+
   List image = [];
   String productdetails = "";
   double mrp = 0;
@@ -367,6 +370,29 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       if (resp.statusCode == 200) {
         Map mnjson;
         mnjson = json.decode(resp.body);
+        if (mnjson["data"]["product"].containsKey("productid")) {
+          if (mnjson["data"]["product"]["productid"].length == 1) {
+            setState(() {
+              pid = "000" + mnjson["data"]["product"]["productid"].toString();
+            });
+          } else if (mnjson["data"]["product"]["productid"].length == 2) {
+            setState(() {
+              pid = "00" + mnjson["data"]["product"]["productid"].toString();
+            });
+          } else if (mnjson["data"]["product"]["productid"].length == 3) {
+            setState(() {
+              pid = "0" + mnjson["data"]["product"]["productid"].toString();
+            });
+          } else {
+            setState(() {
+              pid = mnjson["data"]["product"]["productid"].toString();
+            });
+          }
+        } else {
+          setState(() {
+            pid = widget.productid;
+          });
+        }
 
         setState(() {
           productName = mnjson["data"]["product"]["productname"];
@@ -377,6 +403,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               mnjson["data"]["product"]["sellingprice"].toString());
           sellerid = mnjson["data"]["product"]["sellerid"];
           spesifica = mnjson["data"]["product"]["sepecification"];
+
           double disount = mrp - sellingprice;
           discountPercentage = (disount / mrp) * 100;
         });
@@ -509,6 +536,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       body: isLoaded == true
           ? SingleChildScrollView(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
@@ -527,6 +556,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         Padding(
                           padding: const EdgeInsets.only(top: 8, left: 290),
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Card(
                                   elevation: 2,
@@ -594,42 +624,18 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     child: Text(
                       productName,
                       style:
-                          TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+                          TextStyle(fontWeight: FontWeight.w500, fontSize: 22),
                     ),
                   ),
                   Padding(
-                    padding:
-                        const EdgeInsets.only(left: 5.0, top: 1, bottom: 10),
-                    child: Row(
-                      children: [
-                        Text(
-                          productdetails,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 16),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 5, top: 15),
-                    child: Text(
-                      "Product Id:- " + widget.productid,
-                      style:
-                          TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 5),
+                    padding: const EdgeInsets.only(left: 5, top: 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
                           "₹ " + mrp.toString(),
                           style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 18,
                               fontWeight: FontWeight.bold,
                               color: Colors.grey,
                               decoration: TextDecoration.lineThrough),
@@ -640,7 +646,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         Text(
                           "₹ " + sellingprice.toString(),
                           style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                         SizedBox(
                           width: 10,
@@ -650,8 +656,51 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           style: TextStyle(
                               color: Colors.green,
                               fontWeight: FontWeight.bold,
-                              fontSize: 20),
+                              fontSize: 18),
                         )
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 5, top: 15),
+                    child: Center(
+                      child: Text(
+                        "Product Id:- " + pid,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 13),
+                      ),
+                    ),
+                  ),
+                  Divider(
+                    thickness: 1,
+                    color: Colors.grey[30],
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(5),
+                    child: Text(
+                      "Description",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Card(
+                            color: Color.fromARGB(255, 239, 237, 237),
+                            child: Container(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  productdetails,
+                                  style: TextStyle(fontSize: 14),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -670,20 +719,46 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     height: 10,
                   ),
                   Padding(
-                      padding: const EdgeInsets.only(left: 15, right: 15),
-                      child: ListView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: spesifications.length,
-                          itemBuilder: (context, index) {
-                            return Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(spesifications[index].key.toString()),
-                                Text(spesifications[index].value.toString())
-                              ],
-                            );
-                          })),
+                      padding: const EdgeInsets.all(15),
+                      child: Card(
+                        color: Color.fromARGB(255, 239, 237, 237),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width - 20,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ListView.builder(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: spesifications.length,
+                                itemBuilder: (context, index) {
+                                  return Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            width: 100,
+                                            child: Text(spesifications[index]
+                                                .key
+                                                .toString()
+                                                .toUpperCase()),
+                                          ),
+                                          Text(spesifications[index]
+                                              .value
+                                              .toString())
+                                        ],
+                                      ),
+                                      Divider(
+                                        thickness: 1,
+                                        color: Colors.grey[30],
+                                      ),
+                                    ],
+                                  );
+                                }),
+                          ),
+                        ),
+                      )),
                   Divider(
                     thickness: 1,
                   ),

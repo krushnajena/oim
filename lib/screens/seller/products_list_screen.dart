@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -12,6 +13,7 @@ import 'package:oim/screens/seller/product_edit_screen.dart';
 import 'package:oim/screens/seller/promote_your_business_screen.dart';
 import 'package:oim/screens/seller/seller_bottom_appbar.dart';
 import 'package:oim/screens/seller/seller_product_search_screen.dart';
+import 'package:oim/screens/seller/seller_subcategory_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math' as math;
 
@@ -33,6 +35,9 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String? categoryId = preferences.getString("businesscategory");
     var nencoded = Uri.parse(get_catelogues + categoryId!);
+    setState(() {
+      catelouges.clear();
+    });
     http.get(nencoded).then((resp) {
       if (resp.statusCode == 200) {
         Map mjson;
@@ -198,7 +203,7 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
             title: Text('Catalogue'),
             actions: [
               Padding(
-                padding: const EdgeInsets.all(.0),
+                padding: const EdgeInsets.all(8.0),
                 child: InkWell(
                     onTap: () {
                       Navigator.push(
@@ -210,18 +215,42 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                     child: Icon(Icons.search)),
               )
             ]),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () async {
-            var a = await Navigator.push(context,
-                MaterialPageRoute(builder: (context) => AddNewProductScreen()));
-            getProducts();
-          },
-          isExtended: true,
-          backgroundColor: Colors.orange[800],
-          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          label: Text(
-            "Add new product",
-            style: TextStyle(fontSize: 19, color: Colors.white),
+        floatingActionButton: Container(
+          height: 70,
+          child: Column(
+            children: [
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    RaisedButton(
+                      onPressed: () async {
+                        var a = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AddNewProductScreen()));
+                        getProducts();
+                      },
+                      color: Colors.blue,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Add new product',
+                            style: TextStyle(fontSize: 14, color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              )
+            ],
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -247,38 +276,71 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                               itemBuilder: (context, index) {
                                 return Container(
                                   margin: EdgeInsets.only(right: 30),
-                                  child: Column(
-                                    children: [
-                                      SizedBox(
-                                        height: 70,
-                                        width: 70,
-                                        child: Card(
-                                          clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(50.0),
-                                          ),
-                                          child: InkWell(
-                                            onTap: () {
-                                              //Navigator.push(context, MaterialPageRoute(builder: (context)=>Status()));
-                                            },
-                                            child: Image.network(
-                                              baseUrl +
-                                                  catelouges[index]["image"],
-                                              fit: BoxFit.cover,
+                                  child: InkWell(
+                                    onTap: () async {
+                                      SharedPreferences preferences =
+                                          await SharedPreferences.getInstance();
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  SellerSubCategoryScreen(
+                                                      catelouges[index]["_id"],
+                                                      "categoryId",
+                                                      catelouges,
+                                                      preferences
+                                                          .getString("userid")
+                                                          .toString())));
+                                    },
+                                    child: Column(
+                                      children: [
+                                        SizedBox(
+                                          height: 70,
+                                          width: 70,
+                                          child: Card(
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(50.0),
+                                            ),
+                                            child: InkWell(
+                                              onTap: () async {
+                                                SharedPreferences preferences =
+                                                    await SharedPreferences
+                                                        .getInstance();
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            SellerSubCategoryScreen(
+                                                                catelouges[
+                                                                        index]
+                                                                    ["_id"],
+                                                                "categoryId",
+                                                                catelouges,
+                                                                preferences
+                                                                    .getString(
+                                                                        "userid")
+                                                                    .toString())));
+                                              },
+                                              child: Image.network(
+                                                baseUrl +
+                                                    catelouges[index]["image"],
+                                                fit: BoxFit.cover,
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                      Text(
-                                        catelouges[index]["cataloguename"],
-                                        style: TextStyle(
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black),
-                                      ),
-                                    ],
+                                        Text(
+                                          catelouges[index]["cataloguename"],
+                                          style: TextStyle(
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 );
                               })),
@@ -305,273 +367,288 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                                       double.parse(
                                           products[index]["mrp"].toString())) *
                                   100;
-                              return Container(
-                                height: 300,
-                                child: Card(
-                                  child: Container(
-                                    height: 300,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Stack(children: [
-                                          Container(
-                                              margin: EdgeInsets.all(3),
-                                              height: 100,
-                                              width: (MediaQuery.of(context)
-                                                          .size
-                                                          .width -
-                                                      16) /
-                                                  2,
-                                              child: products[index]["image"]
-                                                          .length >
-                                                      0
-                                                  ? Image.network(
-                                                      baseUrl +
-                                                          products[index]
-                                                                  ["image"][0]
-                                                              ["filename"],
-                                                      fit: BoxFit.fill,
-                                                    )
-                                                  : SizedBox()),
+
+                              return InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ProductEditScreen(
+                                                  products[index]["_id"])));
+                                },
+                                child: Container(
+                                  height: 250,
+                                  child: Card(
+                                    child: Container(
+                                      height: 250,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          InkWell(
+                                            onTap: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ProductEditScreen(
+                                                              products[index]
+                                                                  ["_id"])));
+                                            },
+                                            child: Stack(children: [
+                                              Container(
+                                                  margin: EdgeInsets.all(3),
+                                                  height: 115,
+                                                  width: (MediaQuery.of(context)
+                                                              .size
+                                                              .width -
+                                                          16) /
+                                                      2,
+                                                  child: Image.network(
+                                                    baseUrl +
+                                                        products[index]["image"]
+                                                            [0]["filename"],
+                                                    fit: BoxFit.fill,
+                                                  )),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 15, top: 4),
+                                                child: Card(
+                                                    elevation: 2,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              150),
+                                                    ),
+                                                    child: Container(
+                                                      width: 30,
+                                                      height: 30,
+                                                      decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                      child: Icon(
+                                                        Icons.share,
+                                                        color: Colors.grey[400],
+                                                      ),
+                                                    )),
+                                              ),
+                                            ]),
+                                          ),
+                                          SizedBox(
+                                            height: 8,
+                                          ),
                                           Padding(
                                             padding: const EdgeInsets.only(
-                                                right: 15, top: 4),
-                                            child: Card(
-                                                elevation: 2,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          150),
-                                                ),
-                                                child: Container(
-                                                  width: 30,
-                                                  height: 30,
-                                                  decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
+                                                left: 8.0),
+                                            child: Row(
+                                              children: [
+                                                Expanded(
+                                                  child: Text(
+                                                    products[index]
+                                                        ["productname"],
+                                                    style: TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                    maxLines: 3,
                                                   ),
-                                                  child: Icon(
-                                                    Icons.share,
-                                                    color: Colors.grey[400],
-                                                  ),
-                                                )),
-                                          ),
-                                        ]),
-                                        SizedBox(
-                                          height: 8,
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 8.0),
-                                          child: Row(
-                                            children: [
-                                              Expanded(
-                                                child: Text(
-                                                  products[index]
-                                                      ["productname"],
-                                                  maxLines: 2,
-                                                  style: TextStyle(
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w500),
                                                 ),
-                                              ),
-                                              PopupMenuButton(
-                                                  onSelected: (newValue) {
-                                                    if (newValue == 1) {
-                                                      Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  ProductEditScreen(
-                                                                      products[
-                                                                              index]
-                                                                          [
-                                                                          "_id"])));
-                                                    }
-                                                  },
-                                                  itemBuilder: (context) => [
-                                                        PopupMenuItem(
-                                                          child: Text(
-                                                              "Edit Product"),
-                                                          value: 1,
-                                                        ),
-                                                        PopupMenuItem(
-                                                          child: Text(
-                                                              "Remove Product"),
-                                                          value: 2,
-                                                          onTap: () {
-                                                            showDialog(
-                                                                context:
-                                                                    context,
-                                                                builder: (BuildContext
-                                                                        context) =>
-                                                                    CupertinoAlertDialog(
-                                                                      title: new Text(
-                                                                          "Confirmation"),
-                                                                      content: new Text("Do you want to delete '" +
-                                                                          products[index]
-                                                                              [
-                                                                              "productname"] +
-                                                                          "' "),
-                                                                      actions: <
-                                                                          Widget>[
-                                                                        CupertinoDialogAction(
-                                                                          isDefaultAction:
-                                                                              true,
-                                                                          child:
-                                                                              Text("Delete Product"),
-                                                                          onPressed:
-                                                                              () async {
-                                                                            deleteProduct(products[index]["_id"]);
-                                                                          },
-                                                                        ),
-                                                                        CupertinoDialogAction(
-                                                                          child:
-                                                                              Text("Exit"),
-                                                                          onPressed:
-                                                                              () {
-                                                                            Navigator.pop(context);
-                                                                          },
-                                                                        )
-                                                                      ],
-                                                                    ));
-
-                                                            //getRemoveItem(products[index]["_id"]
-                                                            //    .toString());
-                                                          },
-                                                        )
-                                                      ]),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 8.0, top: 10),
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                  "₹" +
-                                                      products[index]["mrp"]
-                                                          .toString(),
-                                                  style: TextStyle(
-                                                      fontSize: 10,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color: Colors.grey,
-                                                      decoration: TextDecoration
-                                                          .lineThrough)),
-                                              SizedBox(width: 5),
-                                              Text(
-                                                  "₹" +
-                                                      products[index]
-                                                              ["sellingprice"]
-                                                          .toString(),
-                                                  style: TextStyle(
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w500)),
-                                              SizedBox(width: 5),
-                                              Text(
-                                                discountPercentage
-                                                        .toStringAsFixed(2) +
-                                                    "%",
-                                                style: TextStyle(
-                                                  color: Colors.green,
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 8.0),
-                                              child: Text(
-                                                products[index]["instock"]
-                                                    ? "In Stock"
-                                                    : "Stock Out",
-                                                style: TextStyle(
-                                                    fontSize: 10,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: products[index]
-                                                            ["instock"]
-                                                        ? Colors.green
-                                                        : Colors.red),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 28,
-                                              child: Switch(
-                                                value: products[index]
-                                                    ["instock"],
-                                                onChanged: (value) {
-                                                  updateStock(
-                                                      products[index]["_id"],
-                                                      value,
-                                                      index);
-                                                },
-                                                activeTrackColor:
-                                                    Colors.lightGreenAccent,
-                                                activeColor: Colors.green,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 8.0),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  const Icon(
-                                                    Icons
-                                                        .remove_red_eye_outlined,
-                                                    size: 10,
-                                                  ),
-                                                  Text(
-                                                      "  Views : " +
-                                                          products[index]
-                                                                  ["views"]
-                                                              .toString(),
-                                                      style: const TextStyle(
-                                                          fontSize: 12,
-                                                          fontWeight:
-                                                              FontWeight.w500)),
-                                                ],
-                                              ),
-                                              const SizedBox(
-                                                height: 5,
-                                              ),
-                                              Center(
-                                                child: OutlineButton(
-                                                    onPressed: () {
-                                                      Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  PromoteYourBusinessScreen()));
+                                                PopupMenuButton(
+                                                    onSelected: (newValue) {
+                                                      if (newValue == 1) {
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder: (context) =>
+                                                                    ProductEditScreen(
+                                                                        products[index]
+                                                                            [
+                                                                            "_id"])));
+                                                      }
                                                     },
-                                                    child: const Text(
-                                                        "Sell Faster Now",
-                                                        style: TextStyle(
-                                                            fontSize: 12))),
-                                              )
-                                            ],
+                                                    itemBuilder: (context) => [
+                                                          PopupMenuItem(
+                                                            child: Text(
+                                                                "Edit Product"),
+                                                            value: 1,
+                                                          ),
+                                                          PopupMenuItem(
+                                                            child: Text(
+                                                                "Remove Product"),
+                                                            value: 2,
+                                                            onTap: () {
+                                                              showDialog(
+                                                                  context:
+                                                                      context,
+                                                                  builder: (BuildContext
+                                                                          context) =>
+                                                                      CupertinoAlertDialog(
+                                                                        title: new Text(
+                                                                            "Confirmation"),
+                                                                        content: new Text("Do you want to delete '" +
+                                                                            products[index]["productname"] +
+                                                                            "' "),
+                                                                        actions: <
+                                                                            Widget>[
+                                                                          CupertinoDialogAction(
+                                                                            isDefaultAction:
+                                                                                true,
+                                                                            child:
+                                                                                Text("Delete Product"),
+                                                                            onPressed:
+                                                                                () async {
+                                                                              deleteProduct(products[index]["_id"]);
+                                                                            },
+                                                                          ),
+                                                                          CupertinoDialogAction(
+                                                                            child:
+                                                                                Text("Exit"),
+                                                                            onPressed:
+                                                                                () {
+                                                                              Navigator.pop(context);
+                                                                            },
+                                                                          )
+                                                                        ],
+                                                                      ));
+
+                                                              //getRemoveItem(products[index]["_id"]
+                                                              //    .toString());
+                                                            },
+                                                          )
+                                                        ]),
+                                              ],
+                                            ),
                                           ),
-                                        )
-                                      ],
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 8.0, top: 10),
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                    "₹" +
+                                                        products[index]["mrp"]
+                                                            .toString(),
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        color: Colors.grey,
+                                                        decoration:
+                                                            TextDecoration
+                                                                .lineThrough)),
+                                                SizedBox(width: 5),
+                                                Text(
+                                                    "₹" +
+                                                        products[index]
+                                                                ["sellingprice"]
+                                                            .toString(),
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w500)),
+                                                SizedBox(width: 5),
+                                                Text(
+                                                  discountPercentage
+                                                          .toStringAsFixed(2) +
+                                                      "%",
+                                                  style: TextStyle(
+                                                    color: Colors.green,
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 8.0,
+                                                top: 8.0,
+                                                right: 8.0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    const Icon(
+                                                      Icons
+                                                          .remove_red_eye_outlined,
+                                                      size: 10,
+                                                    ),
+                                                    Text(
+                                                        "  Views : " +
+                                                            products[index]
+                                                                    ["views"]
+                                                                .toString(),
+                                                        style: const TextStyle(
+                                                            fontSize: 13,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w500)),
+                                                  ],
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 8.0),
+                                                  child: Text(
+                                                    products[index]["instock"]
+                                                        ? "In Stock"
+                                                        : "Stock Out",
+                                                    style: TextStyle(
+                                                        fontSize: 13,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        color: products[index]
+                                                                ["instock"]
+                                                            ? Colors.green
+                                                            : Colors.red),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 8.0),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                const SizedBox(
+                                                  height: 5,
+                                                ),
+                                                Center(
+                                                  child: OutlineButton(
+                                                      onPressed: () {
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        PromoteYourBusinessScreen()));
+                                                      },
+                                                      child: Container(
+                                                        height: 15,
+                                                        width: 100,
+                                                        child: Center(
+                                                          child: const Text(
+                                                              "Sell Faster Now",
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      12)),
+                                                        ),
+                                                      )),
+                                                )
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),

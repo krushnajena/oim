@@ -54,10 +54,10 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
     return Scaffold(
       backgroundColor: scaffoldBgColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blue,
         title: const Text(
           "Account",
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
         actions: [
@@ -74,7 +74,7 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                 children: <Widget>[
                   new Icon(
                     Icons.notifications,
-                    color: Colors.black,
+                    color: Colors.white,
                   ),
                   new Positioned(
                     right: 0,
@@ -163,6 +163,10 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
               )
             ]),
           ),
+          Container(
+            height: 5,
+            color: Colors.grey,
+          ),
           SizedBox(
             height: 10,
           ),
@@ -191,7 +195,8 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                           Text(
                             "App Settings",
                             style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
+                              fontSize: 16,
+                            ),
                           ),
                           Expanded(
                               child: Column(
@@ -210,10 +215,6 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                       ),
                     ),
                   ),
-                ),
-                Divider(
-                  thickness: .5,
-                  color: Colors.grey,
                 ),
                 InkWell(
                   onTap: () {
@@ -235,7 +236,8 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                           Text(
                             "Help Center",
                             style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
+                              fontSize: 16,
+                            ),
                           ),
                           Expanded(
                               child: Column(
@@ -255,10 +257,6 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                     ),
                   ),
                 ),
-                Divider(
-                  thickness: .5,
-                  color: Colors.grey,
-                ),
                 Container(
                   height: 60,
                   child: Padding(
@@ -272,7 +270,8 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                         Text(
                           "Rate Us",
                           style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
+                            fontSize: 16,
+                          ),
                         ),
                         Expanded(
                             child: Column(
@@ -291,10 +290,6 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                     ),
                   ),
                 ),
-                Divider(
-                  thickness: .5,
-                  color: Colors.grey,
-                ),
                 InkWell(
                   onTap: () async {
                     showDialog(
@@ -305,7 +300,10 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                               actions: <Widget>[
                                 CupertinoDialogAction(
                                   isDefaultAction: true,
-                                  child: Text("Yes"),
+                                  child: Text(
+                                    "Yes",
+                                    style: TextStyle(color: Colors.black),
+                                  ),
                                   onPressed: () async {
                                     SharedPreferences preferences =
                                         await SharedPreferences.getInstance();
@@ -320,7 +318,10 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                                   },
                                 ),
                                 CupertinoDialogAction(
-                                  child: Text("Exit"),
+                                  child: Text(
+                                    "Exit",
+                                    style: TextStyle(color: Colors.black),
+                                  ),
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
@@ -341,7 +342,8 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                           Text(
                             "Log Out",
                             style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
+                              fontSize: 16,
+                            ),
                           ),
                           Expanded(
                               child: Column(

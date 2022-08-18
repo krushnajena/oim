@@ -3,18 +3,26 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:oim/constants/constant.dart';
 import 'package:oim/constants/urls.dart';
+import 'package:oim/screens/seller/seller_category_wise_product.dart';
+import 'package:oim/screens/user/all_categories_screen.dart';
 import 'package:oim/screens/user/seller_list_by_categoryid_screen.dart';
+import 'package:oim/screens/user/storedetailswithspecifiedcategoryproducts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-class SelectCategoryScreen extends StatefulWidget {
-  const SelectCategoryScreen({Key? key}) : super(key: key);
+class SellerSubCategoryScreen extends StatefulWidget {
+  final String categogryid;
+  final String bcategories, userid;
+  final List catagories;
+  const SellerSubCategoryScreen(
+      this.categogryid, this.bcategories, this.catagories, this.userid);
 
   @override
-  State<SelectCategoryScreen> createState() => _SelectCategoryScreenState();
+  State<SellerSubCategoryScreen> createState() =>
+      _SellerSubCategoryScreenState();
 }
 
-class _SelectCategoryScreenState extends State<SelectCategoryScreen> {
+class _SellerSubCategoryScreenState extends State<SellerSubCategoryScreen> {
   List categories = [];
   List cateloues = [];
   String categoryId = "";
@@ -36,11 +44,11 @@ class _SelectCategoryScreenState extends State<SelectCategoryScreen> {
         mjson = json.decode(value.body);
         print(mjson);
         for (int i = 0; i < mjson["data"]["categories"].length; i++) {
-          if (i == 0) {
+          if (widget.categogryid == mjson["data"]["categories"][i]["_id"]) {
             setState(() {
               categoryId = mjson["data"]["categories"][i]["_id"];
               categoryName = mjson["data"]["categories"][i]["categoryname"];
-              selecedIndex = 0;
+              selecedIndex = i;
             });
             getCatlouges();
           }
@@ -88,9 +96,8 @@ class _SelectCategoryScreenState extends State<SelectCategoryScreen> {
   }
 
   void getCatlouges() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    var nencoded =
-        Uri.parse(get_catelogues + preferences.getString("businesscategory")!);
+    /// SharedPreferences preferences = await SharedPreferences.getInstance();
+    var nencoded = Uri.parse(get_catelogues + widget.bcategories);
     print(get_catelogues + categoryId);
     http.get(nencoded).then((value) {
       print(value.statusCode);
@@ -100,15 +107,19 @@ class _SelectCategoryScreenState extends State<SelectCategoryScreen> {
         Map mnjson;
         mnjson = json.decode(value.body);
         setState(() {
-          catelouges = mnjson["data"]["catlog"];
+          catelouges = widget.catagories;
         });
         if (catelouges.length > 0) {
-          setState(() {
-            catelogId = catelouges[0]["_id"];
-            catelogName = catelouges[0]["cataloguename"];
-            selecedcatalogIndex = 0;
-          });
-          getsubcatgories();
+          for (int i = 0; i < catelouges.length; i++) {
+            if (widget.categogryid == catelouges[i]["_id"]) {
+              setState(() {
+                catelogId = catelouges[i]["_id"];
+                catelogName = catelouges[i]["cataloguename"];
+                selecedcatalogIndex = i;
+              });
+              getsubcatgories();
+            }
+          }
         }
       }
     });
@@ -137,64 +148,91 @@ class _SelectCategoryScreenState extends State<SelectCategoryScreen> {
               width: 100,
               height: MediaQuery.of(context).size.height,
               color: Colors.grey[50],
-              child: ListView.builder(
-                  itemCount: catelouges.length,
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                        onTap: () {
-                          setState(() {
-                            catelogId = catelouges[index]["_id"];
-                            catelogName = catelouges[index]["cataloguename"];
-                            selecedcatalogIndex = index;
-                          });
-                          getsubcatgories();
-                        },
-                        child: Container(
-                          margin: EdgeInsets.only(right: 10),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 65,
-                                width: 65,
-                                child: Card(
-                                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50.0),
-                                  ),
-                                  child: InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        catelogId = catelouges[index]["_id"];
-                                        catelogName =
-                                            catelouges[index]["cataloguename"];
-                                        selecedcatalogIndex = index;
-                                      });
-                                      getsubcatgories();
-                                    },
-                                    child: Image.network(
-                                      baseUrl + catelouges[index]["image"],
-                                      fit: BoxFit.cover,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                        itemCount: catelouges.length,
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                              onTap: () {
+                                setState(() {
+                                  catelogId = catelouges[index]["_id"];
+                                  catelogName =
+                                      catelouges[index]["cataloguename"];
+                                  selecedcatalogIndex = index;
+                                });
+                                getsubcatgories();
+                              },
+                              child: Container(
+                                color: selecedIndex == index
+                                    ? scaffoldBgColor
+                                    : Colors.white,
+                                //margin: EdgeInsets.only(right: 10),
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 65,
+                                      width: 65,
+                                      child: Card(
+                                        clipBehavior:
+                                            Clip.antiAliasWithSaveLayer,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(50.0),
+                                        ),
+                                        child: InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              catelogId =
+                                                  catelouges[index]["_id"];
+                                              catelogName = catelouges[index]
+                                                  ["cataloguename"];
+                                              selecedcatalogIndex = index;
+                                            });
+                                            getsubcatgories();
+                                          },
+                                          child: Image.network(
+                                            baseUrl +
+                                                catelouges[index]["image"],
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
+                                    Text(
+                                      catelouges[index]["cataloguename"],
+                                      style: TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              Text(
-                                catelouges[index]["cataloguename"],
-                                style: TextStyle(
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black),
-                              ),
-                            ],
-                          ),
-                        ));
-                  }),
+                              ));
+                        }),
+                  ),
+                ],
+              ),
             ),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Sub Categories",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Expanded(
                     child: Card(
                       child: Padding(
@@ -205,14 +243,8 @@ class _SelectCategoryScreenState extends State<SelectCategoryScreen> {
                               catelogName,
                               style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 16,
+                                  fontSize: 14,
                                   fontWeight: FontWeight.bold),
-                            ),
-                            Divider(
-                              thickness: 1,
-                            ),
-                            SizedBox(
-                              height: 20,
                             ),
                             Expanded(
                               child: GridView.builder(
@@ -221,29 +253,27 @@ class _SelectCategoryScreenState extends State<SelectCategoryScreen> {
                                           crossAxisCount: 3,
                                           //  maxCrossAxisExtent: 120,
                                           childAspectRatio: 3 / 3,
-                                          crossAxisSpacing: 10,
-                                          mainAxisSpacing: 10),
+                                          crossAxisSpacing: 20,
+                                          mainAxisSpacing: 20),
                                   itemCount: subcatelouges.length,
                                   itemBuilder: (BuildContext ctx, index) {
                                     return InkWell(
                                         onTap: () {
-                                          var adr = {
-                                            "categoryname": subcatelouges[index]
-                                                ["cataloguename"],
-                                            "categoryid": subcatelouges[index]
-                                                ["_id"],
-                                            "catelogName": catelogName
-                                          };
-                                          print(adr);
-                                          Navigator.pop(context, adr);
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      SellerCategoryWiseProduct(
+                                                          subcatelouges[index]
+                                                              ["_id"])));
                                         },
                                         child: Container(
                                           margin: EdgeInsets.only(right: 10),
                                           child: Column(
                                             children: [
                                               SizedBox(
-                                                height: 60,
-                                                width: 60,
+                                                height: 50,
+                                                width: 50,
                                                 child: Card(
                                                   clipBehavior: Clip
                                                       .antiAliasWithSaveLayer,
@@ -254,20 +284,15 @@ class _SelectCategoryScreenState extends State<SelectCategoryScreen> {
                                                   ),
                                                   child: InkWell(
                                                     onTap: () {
-                                                      var adr = {
-                                                        "categoryname":
-                                                            subcatelouges[index]
-                                                                [
-                                                                "cataloguename"],
-                                                        "categoryid":
-                                                            subcatelouges[index]
-                                                                ["_id"],
-                                                        "catelogName":
-                                                            catelogName
-                                                      };
-                                                      print(adr);
-                                                      Navigator.pop(
-                                                          context, adr);
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  SellerCategoryWiseProduct(
+                                                                      subcatelouges[
+                                                                              index]
+                                                                          [
+                                                                          "_id"])));
                                                     },
                                                     child: Image.network(
                                                       baseUrl +

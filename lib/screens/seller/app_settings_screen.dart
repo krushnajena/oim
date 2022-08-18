@@ -15,20 +15,21 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        shadowColor: Colors.white,
+        backgroundColor: Colors.blue,
+        shadowColor: Colors.blue,
         elevation: 0,
+        centerTitle: true,
         leading: IconButton(
             icon: Icon(Icons.arrow_back),
-            color: Colors.black,
+            color: Colors.white,
             onPressed: () {
               // Navigator.push(context,
               //   MaterialPageRoute(builder: (context) => AccounttPage()));
             }),
         title: Text(
-          "App Settingss",
+          "App Settings",
           style: TextStyle(
-              color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+              color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
         ),
       ),
       body: ListView(
@@ -68,12 +69,8 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
                         ],
                       ),
                     ),
-                    Container(
-                      margin: EdgeInsets.only(top: 5, left: 50),
-                      child: Divider(
-                        height: 10,
-                        color: Colors.grey,
-                      ),
+                    SizedBox(
+                      height: 10,
                     ),
                     InkWell(
                       onTap: () {
@@ -101,13 +98,6 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
                             ),
                           ),
                         ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: 5, left: 50),
-                      child: Divider(
-                        height: 10,
-                        color: Colors.grey,
                       ),
                     ),
                   ],

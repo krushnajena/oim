@@ -148,51 +148,6 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
               color: Colors.grey[50],
               child: Column(
                 children: [
-                  InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AllCategoryScreen()));
-                      },
-                      child: Container(
-                        color: Colors.white,
-                        //margin: EdgeInsets.only(right: 10),
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 65,
-                              width: 65,
-                              child: Card(
-                                clipBehavior: Clip.antiAliasWithSaveLayer,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50.0),
-                                ),
-                                child: InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                AllCategoryScreen()));
-                                  },
-                                  child: Image.asset(
-                                    "images/app.png",
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Text(
-                              "All Categories",
-                              style: TextStyle(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
-                          ],
-                        ),
-                      )),
                   Expanded(
                     child: ListView.builder(
                         itemCount: catelouges.length,
@@ -302,15 +257,14 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
                                   itemBuilder: (BuildContext ctx, index) {
                                     return InkWell(
                                         onTap: () {
-                                          var adr = {
-                                            "categoryname": subcatelouges[index]
-                                                ["cataloguename"],
-                                            "categoryid": subcatelouges[index]
-                                                ["_id"],
-                                            "catelogName": catelogName
-                                          };
-                                          print(adr);
-                                          Navigator.pop(context, adr);
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      StoreDetailsWithSpecifiedProductCatagoryId(
+                                                          widget.userid,
+                                                          subcatelouges[index]
+                                                              ["_id"])));
                                         },
                                         child: Container(
                                           margin: EdgeInsets.only(right: 10),

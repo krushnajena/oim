@@ -298,9 +298,9 @@ class _ResturentSettingScreenState extends State<ResturentSettingScreen> {
         slivers: [
           SliverPersistentHeader(
               delegate: SliverAppBarDelegate(
-            minHeight: 210,
-            maxHeight: 210,
-            child: Stack(
+            minHeight: 275,
+            maxHeight: 275,
+            child: Column(
               children: [
                 ImageSlideshow(
                   width: double.infinity,
@@ -312,60 +312,64 @@ class _ResturentSettingScreenState extends State<ResturentSettingScreen> {
                   isLoop: false,
                 ),
                 //   ImagesCarousel(imageSlider),
-                Center(
-                  child: InkWell(
-                    onTap: () {
-                      setState(() {
-                        selectedItem = "banner";
-                      });
-                      showModalBottomSheet(
-                          context: context,
-                          builder: (context) {
-                            return Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                ListTile(
-                                  leading: new Icon(Icons.photo),
-                                  title: new Text('Gallery'),
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                    _pickImage2("gallery", "banner");
-                                  },
-                                ),
-                                ListTile(
-                                  leading: new Icon(Icons.videocam),
-                                  title: new Text('Camera'),
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                    _pickImage2("camera", "banner");
-                                  },
-                                ),
-                              ],
-                            );
-                          });
-                    },
-                    child: Container(
-                      height: 100,
-                      width: 100,
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                        border: Border.all(
-                          color: Colors.black12,
+
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: InkWell(
+                      onTap: () {
+                        setState(() {
+                          selectedItem = "banner";
+                        });
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  ListTile(
+                                    leading: new Icon(Icons.photo),
+                                    title: new Text('Gallery'),
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                      _pickImage2("gallery", "banner");
+                                    },
+                                  ),
+                                  ListTile(
+                                    leading: new Icon(Icons.videocam),
+                                    title: new Text('Camera'),
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                      _pickImage2("camera", "banner");
+                                    },
+                                  ),
+                                ],
+                              );
+                            });
+                      },
+                      child: Container(
+                        height: 40,
+                        width: MediaQuery.of(context).size.width / 2,
+                        decoration: BoxDecoration(
+                          color: Colors.blue,
+                          border: Border.all(
+                            color: Colors.black12,
+                          ),
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Column(
-                        children: [
-                          Center(
-                              child: Icon(
-                            Icons.camera_alt_outlined,
-                            color: Colors.black,
-                          )),
-                        ],
+                        child: Center(
+                            child: Text(
+                          "Add Banner Image",
+                          style: TextStyle(color: Colors.white),
+                        )),
                       ),
                     ),
                   ),
-                )
+                ),
+                Divider(
+                  thickness: 1,
+                  color: Colors.grey[30],
+                ),
               ],
             ),
           )),
@@ -377,69 +381,82 @@ class _ResturentSettingScreenState extends State<ResturentSettingScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      InkWell(
-                          onTap: () {
+                      ElevatedButton(
+                          child: Text("Food (" + food.length.toString() + ")",
+                              style: TextStyle(
+                                  color: selectedItem == "food" || selectedItem == "banner"
+                                      ? Colors.white
+                                      : Colors.blue)),
+                          onPressed: () {
                             setState(() {
                               selectedItem = "food";
                             });
                           },
-                          child: Column(
-                            children: [
-                              Text("Food"),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              selectedItem == "food" || selectedItem == "banner"
-                                  ? Container(
-                                      height: 5,
-                                      color: Colors.red,
-                                      width: 50,
-                                    )
-                                  : SizedBox()
-                            ],
-                          )),
-                      InkWell(
-                          onTap: () {
+                          style: ButtonStyle(
+                              backgroundColor: selectedItem == "food" || selectedItem == "banner"
+                                  ? MaterialStateProperty.all<Color>(
+                                      Colors.blue)
+                                  : MaterialStateProperty.all<Color>(
+                                      Colors.white),
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(18.0),
+                                      side: BorderSide(
+                                          color: selectedItem == "food" ||
+                                                  selectedItem == "banner"
+                                              ? Colors.white
+                                              : Colors.blue))))),
+                      ElevatedButton(
+                          child: Text(
+                              "Ambience (" + amb.length.toString() + ")",
+                              style: TextStyle(
+                                  color: selectedItem == "ambience"
+                                      ? Colors.white
+                                      : Colors.blue)),
+                          onPressed: () {
                             setState(() {
                               selectedItem = "ambience";
                             });
                           },
-                          child: Column(
-                            children: [
-                              Text("Ambience"),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              selectedItem == "ambience"
-                                  ? Container(
-                                      height: 5,
-                                      color: Colors.red,
-                                      width: 50,
-                                    )
-                                  : SizedBox()
-                            ],
-                          )),
-                      InkWell(
-                          onTap: () {
+                          style: ButtonStyle(
+                              backgroundColor: selectedItem == "ambience"
+                                  ? MaterialStateProperty.all<Color>(
+                                      Colors.blue)
+                                  : MaterialStateProperty.all<Color>(
+                                      Colors.white),
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(18.0),
+                                      side: BorderSide(
+                                          color: selectedItem == "ambience"
+                                              ? Colors.white
+                                              : Colors.blue))))),
+                      ElevatedButton(
+                          child: Text("Menu (" + img.length.toString() + ")",
+                              style: TextStyle(
+                                  color: selectedItem == "menu"
+                                      ? Colors.white
+                                      : Colors.blue)),
+                          onPressed: () {
                             setState(() {
                               selectedItem = "menu";
                             });
                           },
-                          child: Column(
-                            children: [
-                              Text("Menu"),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              selectedItem == "menu"
-                                  ? Container(
-                                      height: 5,
-                                      color: Colors.red,
-                                      width: 50,
-                                    )
-                                  : SizedBox()
-                            ],
-                          ))
+                          style: ButtonStyle(
+                              backgroundColor: selectedItem == "menu"
+                                  ? MaterialStateProperty.all<Color>(
+                                      Colors.blue)
+                                  : MaterialStateProperty.all<Color>(
+                                      Colors.white),
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(18.0),
+                                      side: BorderSide(
+                                          color: selectedItem == "menu"
+                                              ? Colors.white
+                                              : Colors.blue))))),
                     ],
                   ))),
           selectedItem == "food" || selectedItem == "banner"

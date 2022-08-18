@@ -55,12 +55,8 @@ class _BuyAPlanOrMyOrderScreenState extends State<BuyAPlanOrMyOrderScreen> {
                     ],
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.only(top: 5, left: 50),
-                  child: Divider(
-                    height: 10,
-                    color: Colors.grey,
-                  ),
+                SizedBox(
+                  height: 10,
                 ),
                 InkWell(
                   onTap: () {
@@ -88,13 +84,6 @@ class _BuyAPlanOrMyOrderScreenState extends State<BuyAPlanOrMyOrderScreen> {
                         ),
                       ),
                     ],
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 5, left: 50),
-                  child: Divider(
-                    height: 10,
-                    color: Colors.grey,
                   ),
                 ),
               ],

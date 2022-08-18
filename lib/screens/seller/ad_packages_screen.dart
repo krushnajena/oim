@@ -45,25 +45,49 @@ class _AdPackageScreenState extends State<AdPackageScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => NormalAdScreen(totalPrice)));
-          },
-          isExtended: true,
-          backgroundColor: Colors.blue,
-          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          label: SizedBox(
-              width: 300,
-              child: Center(
-                  child: Text(
-                "Pay ₹" + totalPrice.toString(),
-                style: TextStyle(fontSize: 19, color: Colors.white),
-              ))),
+        bottomNavigationBar: Container(
+          height: 70,
+          width: MediaQuery.of(context).size.width - 20,
+          child: Column(
+            children: [
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    RaisedButton(
+                      onPressed: () async {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    NormalAdScreen(totalPrice)));
+                      },
+                      color: Colors.blue,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width - 50,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Pay ₹" + totalPrice.toStringAsFixed(2),
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              )
+            ],
+          ),
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         body: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Column(

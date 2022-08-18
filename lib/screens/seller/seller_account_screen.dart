@@ -67,7 +67,7 @@ class _SellerAccountScreenState extends State<SellerAccountScreen> {
           centerTitle: true,
           actions: [
             Padding(
-              padding: EdgeInsets.only(right: 8.0),
+              padding: EdgeInsets.only(right: 15.0),
               child: InkWell(
                 onTap: () {
                   Navigator.push(
@@ -77,7 +77,7 @@ class _SellerAccountScreenState extends State<SellerAccountScreen> {
                 },
                 child: Icon(
                   Icons.notifications,
-                  color: Colors.black,
+                  color: Colors.white,
                 ),
               ),
             )
@@ -114,17 +114,23 @@ class _SellerAccountScreenState extends State<SellerAccountScreen> {
                     ),
                   ),
                 ),
-                title: Text(
-                  businessName,
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                title: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    businessName,
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                subtitle: Text(
-                  "Change business account information",
-                  style: TextStyle(color: Colors.grey),
+                subtitle: Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Text(
+                    "Change business account information",
+                    style: TextStyle(color: Colors.grey),
+                  ),
                 ),
                 trailing: IconButton(
                   icon: Icon(
@@ -157,7 +163,7 @@ class _SellerAccountScreenState extends State<SellerAccountScreen> {
               },
               child: ListTile(
                 leading: Container(
-                    margin: EdgeInsets.only(top: 10, left: 13),
+                    margin: EdgeInsets.only(top: 10, left: 8),
                     child: Image.asset(
                       "images/8.jpeg",
                       height: 35,
@@ -187,10 +193,7 @@ class _SellerAccountScreenState extends State<SellerAccountScreen> {
                 ),
               ),
             ),
-            Divider(
-              height: 1,
-              color: Colors.black38,
-            ),
+
             GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -200,7 +203,7 @@ class _SellerAccountScreenState extends State<SellerAccountScreen> {
               },
               child: ListTile(
                 leading: Container(
-                    margin: EdgeInsets.only(top: 10, left: 13),
+                    margin: EdgeInsets.only(top: 10, left: 8),
                     child: Image.asset(
                       "images/card2.png",
                       height: 35,
@@ -235,7 +238,7 @@ class _SellerAccountScreenState extends State<SellerAccountScreen> {
 
 //                   leading: Container(
 
-//                             margin: EdgeInsets.only(top: 10, left: 13),
+//                             margin: EdgeInsets.only(top: 10, left: 8),
 
 //                             child: Image.asset(
 
@@ -291,7 +294,7 @@ class _SellerAccountScreenState extends State<SellerAccountScreen> {
                     },
                     child: ListTile(
                       leading: Container(
-                          margin: EdgeInsets.only(top: 10, left: 13),
+                          margin: EdgeInsets.only(top: 10, left: 8),
                           child: Image.asset(
                             "images/10.jpeg",
                             height: 35,
@@ -317,19 +320,6 @@ class _SellerAccountScreenState extends State<SellerAccountScreen> {
                     ),
                   )
                 : SizedBox(),
-            categoryName == "Restaurant"
-                ? Divider(
-                    height: 1,
-                    color: Colors.black38,
-                  )
-                : SizedBox(),
-
-            categoryName == "Restaurant"
-                ? Divider(
-                    height: 1,
-                    color: Colors.black38,
-                  )
-                : SizedBox(),
 
             categoryName == "Restaurant"
                 ? GestureDetector(
@@ -341,7 +331,7 @@ class _SellerAccountScreenState extends State<SellerAccountScreen> {
                     },
                     child: ListTile(
                       leading: Container(
-                          margin: EdgeInsets.only(top: 10, left: 13),
+                          margin: EdgeInsets.only(top: 10, left: 8),
                           child: Image.asset(
                             "images/11.jpeg",
                             height: 35,
@@ -367,17 +357,7 @@ class _SellerAccountScreenState extends State<SellerAccountScreen> {
                     ),
                   )
                 : const SizedBox(),
-            categoryName == "Restaurant"
-                ? const Divider(
-                    height: 1,
-                    color: Colors.black38,
-                  )
-                : const SizedBox(),
 
-            Divider(
-              height: 1,
-              color: Colors.black38,
-            ),
             GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -387,7 +367,7 @@ class _SellerAccountScreenState extends State<SellerAccountScreen> {
               },
               child: ListTile(
                 leading: Container(
-                    margin: EdgeInsets.only(top: 10, left: 13),
+                    margin: EdgeInsets.only(top: 10, left: 8),
                     child: Image.asset(
                       "images/3.jpeg",
                       height: 35,
@@ -413,13 +393,9 @@ class _SellerAccountScreenState extends State<SellerAccountScreen> {
               ),
             ),
 
-            Divider(
-              height: 1,
-              color: Colors.black38,
-            ),
             ListTile(
                 leading: Container(
-                    margin: EdgeInsets.only(top: 10, left: 13),
+                    margin: EdgeInsets.only(top: 10, left: 8),
                     child: Image.asset(
                       "images/4.jpeg",
                       height: 35,
@@ -442,10 +418,6 @@ class _SellerAccountScreenState extends State<SellerAccountScreen> {
                   ),
                   onPressed: () {},
                 )),
-            Divider(
-              height: 1,
-              color: Colors.black38,
-            ),
 
             GestureDetector(
               onTap: () {
@@ -457,7 +429,8 @@ class _SellerAccountScreenState extends State<SellerAccountScreen> {
                           actions: <Widget>[
                             CupertinoDialogAction(
                               isDefaultAction: true,
-                              child: Text("Yes"),
+                              child: Text("Yes",
+                                  style: TextStyle(color: Colors.black)),
                               onPressed: () async {
                                 SharedPreferences preferences =
                                     await SharedPreferences.getInstance();
@@ -472,7 +445,8 @@ class _SellerAccountScreenState extends State<SellerAccountScreen> {
                               },
                             ),
                             CupertinoDialogAction(
-                              child: Text("Exit"),
+                              child: Text("Exit",
+                                  style: TextStyle(color: Colors.black)),
                               onPressed: () {
                                 Navigator.pop(context);
                               },
@@ -482,7 +456,7 @@ class _SellerAccountScreenState extends State<SellerAccountScreen> {
               },
               child: ListTile(
                   leading: Container(
-                      margin: EdgeInsets.only(top: 10, left: 13),
+                      margin: EdgeInsets.only(top: 10, left: 8),
                       child: Image.asset(
                         "images/2.jpeg",
                         height: 35,
@@ -508,7 +482,7 @@ class _SellerAccountScreenState extends State<SellerAccountScreen> {
             ),
 
             Padding(
-              padding: EdgeInsets.only(top: 100),
+              padding: EdgeInsets.only(top: 230),
               child: Center(
                 child: Text("Oim- v 1.0122"),
               ),

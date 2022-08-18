@@ -84,7 +84,7 @@ class _UpdateBusinessHourScreenState extends State<UpdateBusinessHourScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Update Business Hour"),
+        title: Text("Business Hour"),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -95,11 +95,14 @@ class _UpdateBusinessHourScreenState extends State<UpdateBusinessHourScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Day",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black87,
-                        fontSize: 16)),
+                Container(
+                  width: 85,
+                  child: Text("Day",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black87,
+                          fontSize: 16)),
+                ),
 
                 Text("Status",
                     style: TextStyle(
@@ -128,11 +131,14 @@ class _UpdateBusinessHourScreenState extends State<UpdateBusinessHourScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Sunday",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black87,
-                        fontSize: 16)),
+                Container(
+                  width: 85,
+                  child: Text("Sunday",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black87,
+                          fontSize: 16)),
+                ),
 
                 Transform.scale(
                     scale: 1,
@@ -208,11 +214,14 @@ class _UpdateBusinessHourScreenState extends State<UpdateBusinessHourScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Monday",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black87,
-                        fontSize: 16)),
+                Container(
+                  width: 85,
+                  child: Text("Monday",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black87,
+                          fontSize: 16)),
+                ),
 
                 Transform.scale(
                     scale: 1,
@@ -288,11 +297,14 @@ class _UpdateBusinessHourScreenState extends State<UpdateBusinessHourScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Tuesday",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black87,
-                        fontSize: 16)),
+                Container(
+                  width: 85,
+                  child: Text("Tuesday",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black87,
+                          fontSize: 16)),
+                ),
 
                 Transform.scale(
                     scale: 1,
@@ -368,11 +380,14 @@ class _UpdateBusinessHourScreenState extends State<UpdateBusinessHourScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Wednesday",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black87,
-                        fontSize: 16)),
+                Container(
+                  width: 85,
+                  child: Text("Wednesday",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black87,
+                          fontSize: 16)),
+                ),
 
                 Transform.scale(
                     scale: 1,
@@ -448,11 +463,14 @@ class _UpdateBusinessHourScreenState extends State<UpdateBusinessHourScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Thursday",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black87,
-                        fontSize: 16)),
+                Container(
+                  width: 85,
+                  child: Text("Thursday",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black87,
+                          fontSize: 16)),
+                ),
 
                 Transform.scale(
                     scale: 1,
@@ -528,11 +546,14 @@ class _UpdateBusinessHourScreenState extends State<UpdateBusinessHourScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Friday",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black87,
-                        fontSize: 16)),
+                Container(
+                  width: 85,
+                  child: Text("Friday",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black87,
+                          fontSize: 16)),
+                ),
 
                 Transform.scale(
                     scale: 1,
@@ -608,11 +629,14 @@ class _UpdateBusinessHourScreenState extends State<UpdateBusinessHourScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Saturday",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black87,
-                        fontSize: 16)),
+                Container(
+                  width: 85,
+                  child: Text("Saturday",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black87,
+                          fontSize: 16)),
+                ),
 
                 Transform.scale(
                     scale: 1,

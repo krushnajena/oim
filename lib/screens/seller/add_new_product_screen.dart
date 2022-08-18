@@ -21,7 +21,7 @@ class AddNewProductScreen extends StatefulWidget {
 }
 
 class _AddNewProductScreenState extends State<AddNewProductScreen> {
-  String selectedUnit = "";
+  String selectedUnit = "piece";
   //String _initialValue;
   String _valueChanged = '';
   String categoryname = '';
@@ -931,7 +931,7 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                 ),
               ),
               SizedBox(
-                height: 30,
+                height: 10,
               ),
               Text(
                 "You can add 7 images.",
@@ -1073,7 +1073,16 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                         }
                       },
                       decoration: InputDecoration(
-                          labelText: 'Discounted Price',
+                          label: Row(
+                            children: [
+                              Text('Discounted Price '),
+                              Text(
+                                "*",
+                                style:
+                                    TextStyle(color: Colors.red, fontSize: 20),
+                              ),
+                            ],
+                          ),
                           labelStyle: TextStyle(color: Colors.black38)),
                       keyboardType: TextInputType.number,
                     ),
@@ -1664,6 +1673,13 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                 height: 30,
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [Text("KEY"), Text("VALUE")],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
                 children: [
                   Expanded(
                     child: TextFormField(
@@ -1703,53 +1719,53 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                   SizedBox(
                     width: 5,
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      add();
-                    },
-                    child: Text(
-                      'Add',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12), // <-- Radius
-                      ),
-                    ),
-                  )
                 ],
               ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [Text("KEY"), Text("VALUE")],
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    add();
+                  },
+                  child: Text(
+                    'Add Specification',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12), // <-- Radius
+                    ),
+                  ),
+                ),
               ),
               SizedBox(
                 height: 20,
               ),
               ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text(specifications[index]["key"].toString()),
-                          Text(specifications[index]["value"].toString())
-                        ],
-                      ),
-                      Divider(
-                        thickness: 1,
-                      )
-                    ],
-                  );
-                },
-                itemCount: specifications.length,
-              ),
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: specifications.length,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: 100,
+                              child: Text(specifications[index]["key"]
+                                  .toString()
+                                  .toUpperCase()),
+                            ),
+                            Text(specifications[index]["value"].toString())
+                          ],
+                        ),
+                        Divider(
+                          thickness: 1,
+                          color: Colors.grey[30],
+                        ),
+                      ],
+                    );
+                  }),
               SizedBox(
                 height: 20,
               ),

@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:oim/screens/seller/products_list_screen.dart';
 import 'package:oim/screens/user/product_details_screen.dart';
 import 'package:oim/screens/widgets/imagesilder.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OfferScreen extends StatefulWidget {
   const OfferScreen({Key? key}) : super(key: key);
@@ -63,31 +64,55 @@ class _OfferScreenState extends State<OfferScreen> {
     }).catchError((onError) {});
   }
 
+  List sellers = [];
+  String username = "";
+  getStores() async {
+    var encoded = Uri.parse(get_seller_and_products + "/d");
+
+    http.get(encoded).then((value) async {
+      if (value.statusCode == 200) {
+        Map mjson;
+        mjson = json.decode(value.body);
+        print(mjson["data"]["result"]);
+        setState(() {
+          sellers = mjson["data"]["seller"];
+        });
+        getCategories();
+      }
+    }).catchError((onError) {});
+  }
+
   void getCategories() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
     var encoded = Uri.parse(get_categoris);
-    print(get_categoris);
     http.get(encoded).then((value) {
       print(value.statusCode);
       if (value.statusCode == 200) {
         Map mjson;
         mjson = json.decode(value.body);
         print(mjson);
+
         for (int i = 0; i < mjson["data"]["categories"].length; i++) {
-          setState(() {
-            categories.add(
-              {
-                'value': mjson["data"]["categories"][i]["_id"],
-                'label': mjson["data"]["categories"][i]["categoryname"],
-                'icon': mjson["data"]["categories"][i]["icon"]
-              },
-            );
-          });
+          int s = 0;
+          for (int k = 0; k < sellers.length; k++) {
+            if (mjson["data"]["categories"][i]["_id"] ==
+                sellers[k]["businesscatagories"]) {
+              s = s + 1;
+            }
+          }
+          if (s > 0) {
+            setState(() {
+              categories.add(
+                {
+                  'value': mjson["data"]["categories"][i]["_id"],
+                  'label': mjson["data"]["categories"][i]["categoryname"],
+                  'icon': mjson["data"]["categories"][i]["icon"]
+                },
+              );
+            });
+          }
         }
-        setState(() {
-          categories.add(
-            {'value': 'Restaurant', 'label': 'Restaurant', 'icon': ""},
-          );
-        });
       }
     });
   }
@@ -96,7 +121,7 @@ class _OfferScreenState extends State<OfferScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getCategories();
+    getStores();
     getImageSlider();
     getProducts();
   }
@@ -108,6 +133,15 @@ class _OfferScreenState extends State<OfferScreen> {
       appBar: AppBar(
         title: Text("Offer Zone"),
         centerTitle: true,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: new Icon(
+              Icons.search,
+              color: Colors.white,
+            ),
+          ),
+        ],
       ),
       body: CustomScrollView(
         slivers: [

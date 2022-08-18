@@ -57,20 +57,26 @@ class _ImagesCarouselState extends State<ImagesCarousel> {
   }
 
   Widget carouselItemBuilder(BuildContext context, String image, Size size) {
-    return InkWell(
-      child: Image.network(
-        image,
-        width: MediaQuery.of(context).size.width,
+    return Card(
+      elevation: 5,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+      // Change this
+      shadowColor: Colors.black,
+      child: InkWell(
+        child: Image.network(
+          image,
+          width: MediaQuery.of(context).size.width,
+        ),
+        onTap: () {
+          // Navigator.pushNamed(context, onClickedRoute);
+        },
       ),
-      onTap: () {
-        // Navigator.pushNamed(context, onClickedRoute);
-      },
     );
   }
 
   Widget dotIndicatorBuilder(activeIndex, currentIndex) {
     return Container(
-      width: 14.0,
+      width: 5.0,
       height: 5.0,
       margin: EdgeInsets.fromLTRB(8.0, 5.0, 5.0, 5.0),
       decoration: BoxDecoration(
