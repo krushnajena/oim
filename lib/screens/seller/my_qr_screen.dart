@@ -6,6 +6,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:oim/constants/constant.dart';
 import 'package:path_provider/path_provider.dart';
@@ -50,6 +51,42 @@ class _MyQrScreenState extends State<MyQrScreen> {
   Future<void> downloadQr(
     Uint8List capturedImage,
   ) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return Dialog(
+          elevation: 0.0,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          child: Wrap(
+            children: [
+              Container(
+                padding: EdgeInsets.all(20.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: const <Widget>[
+                    SpinKitRing(
+                      color: primaryColor,
+                      size: 40.0,
+                      lineWidth: 1.2,
+                    ),
+                    SizedBox(height: 25.0),
+                    Text(
+                      'Please Wait..',
+                      style: grey14MediumTextStyle,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+
     Directory tempDir = await getApplicationDocumentsDirectory();
     String tempPath = tempDir.path;
     final ts = DateTime.now().millisecondsSinceEpoch.toString();
@@ -64,6 +101,7 @@ class _MyQrScreenState extends State<MyQrScreen> {
 
     /// Share Plugin
     // await Share.shareFiles([imagePath.path]);
+    Navigator.of(context).pop();
   }
 
   Widget CustomWidget() {
@@ -83,19 +121,25 @@ class _MyQrScreenState extends State<MyQrScreen> {
                   children: [
                     Container(
                         height: 220,
-                        color: Colors.blue,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Color.fromARGB(255, 17, 93, 156),
+                            ),
+                            color: Color.fromARGB(255, 17, 93, 156),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
                         child: Center(
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Image(
-                                image: AssetImage("images/splash_logo.png"),
-                                height: 100,
-                                width: 100,
-                              ),
                               SizedBox(
                                 height: 10,
+                              ),
+                              Image(
+                                image: AssetImage("images/oimlogo.png"),
+                                height: 130,
+                                width: 130,
                               ),
                               Text(
                                 "Scan QR to check our products",
@@ -110,27 +154,21 @@ class _MyQrScreenState extends State<MyQrScreen> {
                     Center(
                       child: Container(
                         margin: EdgeInsets.only(
-                          top: 180,
+                          top: 150,
                         ),
-                        height: 180,
-                        width: 150,
+                        height: 205,
+                        width: 170,
                         child: userid != ""
                             ? Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Card(
                                     child: QrImage(
+                                      padding: EdgeInsets.all(15),
                                       data: userid,
                                       version: QrVersions.auto,
-                                      size: 130.0,
+                                      //  size: 170.0,
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    storename,
-                                    style: TextStyle(
-                                        fontSize: 25, color: Colors.black),
                                   ),
                                 ],
                               )
@@ -140,33 +178,54 @@ class _MyQrScreenState extends State<MyQrScreen> {
                   ],
                 ),
               ),
+              Container(
+                decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Color.fromARGB(255, 17, 93, 156),
+                    ),
+                    color: Color.fromARGB(255, 17, 93, 156),
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                width: MediaQuery.of(context).size.width,
+                child: Text(
+                  storename,
+                  style: TextStyle(fontSize: 25, color: Colors.white),
+                  textAlign: TextAlign.center,
+                ),
+              ),
               SizedBox(
                 height: 10,
               ),
-              Text("To Know Our Upcomming Offers "),
+              Text(
+                "To Know Our Upcoming Offers ",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+              ),
+              SizedBox(
+                height: 10,
+              ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  RaisedButton(
-                    onPressed: () {},
-                    child: Text(
-                      "Follow",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    color: Colors.blue,
-                  ),
                   Expanded(
                     child: Text(
-                      " Our Store On OffersinMarket App",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      "Follow Our Store On OffersinMarket App",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                      textAlign: TextAlign.center,
                     ),
                   )
                 ],
               ),
-              Text("Download The App Now"),
+              SizedBox(
+                height: 10,
+              ),
               Container(
-                height: 40,
+                height: 30,
                 child:
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Text("Download The App Now"),
+                  SizedBox(
+                    width: 10,
+                  ),
                   Image(
                     image: AssetImage("images/playstore.png"),
                     fit: BoxFit.fill,
@@ -236,98 +295,7 @@ class _MyQrScreenState extends State<MyQrScreen> {
           child: SingleChildScrollView(
         child: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.all(16),
-              child: Card(
-                  child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      child: Stack(
-                        children: [
-                          Container(
-                              height: 320,
-                              color: Colors.blue,
-                              child: Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Image(
-                                      image:
-                                          AssetImage("images/splash_logo.png"),
-                                      height: 150,
-                                      width: 150,
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      "Scan QR to check our products",
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                  ],
-                                ),
-                              )),
-                          Center(
-                            child: Container(
-                              margin: EdgeInsets.only(
-                                top: 250,
-                              ),
-                              height: 250,
-                              width: 250,
-                              child: userid != ""
-                                  ? Column(
-                                      children: [
-                                        Card(
-                                          child: QrImage(
-                                            data: userid,
-                                            version: QrVersions.auto,
-                                            size: 200.0,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text(
-                                          storename,
-                                          style: TextStyle(
-                                              fontSize: 25,
-                                              color: Colors.black),
-                                        ),
-                                      ],
-                                    )
-                                  : SizedBox(),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.store,
-                          color: Colors.blue,
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text("Digital ShowRoom By OIM")
-                      ],
-                    )
-                  ],
-                ),
-              )),
-            ),
+            CustomWidget(),
             SizedBox(
               height: 20,
             ),

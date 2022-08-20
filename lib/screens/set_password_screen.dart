@@ -66,18 +66,27 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
               const SizedBox(
                 height: 30,
               ),
-              Center(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                        "You are creating a password for +91(" +
-                            widget.mobileNo +
-                            ")\nThis will help you login faster next time",
-                        style: const TextStyle(
-                            color: Colors.black38, fontSize: 16)),
-                  ],
+              Container(
+                height: 70,
+                margin: EdgeInsets.only(left: 13, right: 13),
+                child: Center(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          "You are creating a password for +91(" +
+                              widget.mobileNo +
+                              ")\nThis will help you login faster next time",
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 3,
+                          style: const TextStyle(
+                              color: Colors.black38, fontSize: 16),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(
@@ -146,7 +155,7 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
                 ],
               ),
               Container(
-                margin: EdgeInsets.only(left: 20, top: 250,right: 20),
+                margin: EdgeInsets.only(left: 20, top: 50, right: 20),
                 height: 45,
                 width: MediaQuery.of(context).size.width,
                 child: RaisedButton(
@@ -161,7 +170,7 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
                                   widget.userType,
                                   txt_password.text)));
                     } else {
-                      showInSnackBar("Confirm Password Missmatch");
+                      showInSnackBar("Confirm Password Mismatch");
                     }
                   },
                   child: Text(

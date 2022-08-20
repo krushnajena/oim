@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geolocator/geolocator.dart';
@@ -12,6 +13,7 @@ import 'package:oim/constants/urls.dart';
 import 'package:oim/provider/location_provider.dart';
 import 'package:oim/screens/common/privacy_policy_screen.dart';
 import 'package:oim/screens/common/terms_condistion_screen.dart';
+import 'package:oim/screens/flash_screen.dart';
 import 'package:oim/screens/seller/add_business_hour.dart';
 import 'package:oim/screens/seller/add_business_location.dart';
 import 'package:oim/screens/seller/create_business_hour_screen.dart';
@@ -36,7 +38,7 @@ class _SellerAccountCreateScreenState extends State<SellerAccountCreateScreen> {
   TextEditingController txt_businessname = new TextEditingController();
 
   TextEditingController txt_contactinfo = new TextEditingController();
-
+  bool contactnoValidationFailed = false;
   String? streetaddress;
   String? city;
   String? statename;
@@ -93,7 +95,7 @@ class _SellerAccountCreateScreenState extends State<SellerAccountCreateScreen> {
 
   void getCategories() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    txt_name.text = preferences.getString("name")!;
+
     var encoded = Uri.parse(get_categoris);
     http.get(encoded).then((value) {
       print(value.statusCode);
@@ -130,135 +132,146 @@ class _SellerAccountCreateScreenState extends State<SellerAccountCreateScreen> {
   }
 
   void registerSi() async {
+    setState(() {
+      contactnoValidationFailed = false;
+    });
     if (txt_contactinfo.text != "") {
       if (txt_businessname.text != "") {
         if (txt_name.text != "") {
           if (txt_contactinfo.text.length == 10) {
-            SharedPreferences preferences =
-                await SharedPreferences.getInstance();
-            showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (BuildContext context) {
-                // return object of type Dialog
-                return Dialog(
-                  elevation: 0.0,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0)),
-                  child: Wrap(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.all(20.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: const <Widget>[
-                            SpinKitRing(
-                              color: primaryColor,
-                              size: 40.0,
-                              lineWidth: 1.2,
-                            ),
-                            SizedBox(height: 25.0),
-                            Text(
-                              'Please Wait..',
-                              style: grey14MediumTextStyle,
-                            ),
-                          ],
+            if (address != null) {
+              SharedPreferences preferences =
+                  await SharedPreferences.getInstance();
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (BuildContext context) {
+                  // return object of type Dialog
+                  return Dialog(
+                    elevation: 0.0,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0)),
+                    child: Wrap(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(20.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: const <Widget>[
+                              SpinKitRing(
+                                color: primaryColor,
+                                size: 40.0,
+                                lineWidth: 1.2,
+                              ),
+                              SizedBox(height: 25.0),
+                              Text(
+                                'Please Wait..',
+                                style: grey14MediumTextStyle,
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            );
+                      ],
+                    ),
+                  );
+                },
+              );
 
-            String? userid = preferences.getString("userid");
-            final mimeTypeData = lookupMimeType(_pickedImage!.path.toString(),
-                    headerBytes: [0xFF, 0xD8])!
-                .split('/');
-            final imageUploadRequest =
-                http.MultipartRequest('POST', Uri.parse(post_seller_register));
-            final file = await http.MultipartFile.fromPath(
-                'logo', _pickedImage!.path,
-                contentType: MediaType(mimeTypeData[0], mimeTypeData[1]));
-            imageUploadRequest.files.add(file);
-            imageUploadRequest.fields['userid'] = userid.toString();
-            imageUploadRequest.fields['businessname'] = txt_businessname.text;
-            imageUploadRequest.fields['businesscatagories'] = _valueChanged;
-            imageUploadRequest.fields['ownername'] = txt_name.text;
-            imageUploadRequest.fields['businesscontactinfo'] =
-                txt_contactinfo.text;
-            imageUploadRequest.fields['streetaddress'] =
-                streetaddress.toString();
-            imageUploadRequest.fields['city'] = city.toString();
-            imageUploadRequest.fields['pincode'] = pincode.toString();
-            imageUploadRequest.fields['latitude'] = lat.toString();
-            imageUploadRequest.fields['longitude'] = lang.toString();
-            imageUploadRequest.fields['landmark'] = landmark.toString();
-            imageUploadRequest.fields['address'] = address.toString();
-            if (bisinesshour != null) {
-              //imageUploadRequest.fields['sunday'] = bisinesshour["sunday"].toString();
-              imageUploadRequest.fields['sundayopeningtime'] =
-                  bisinesshour["sundayopeningtime"];
-              imageUploadRequest.fields['sundayclosingtime'] =
-                  bisinesshour["sundayclosingtime"];
+              String? userid = preferences.getString("userid");
+              final mimeTypeData = lookupMimeType(_pickedImage!.path.toString(),
+                      headerBytes: [0xFF, 0xD8])!
+                  .split('/');
+              final imageUploadRequest = http.MultipartRequest(
+                  'POST', Uri.parse(post_seller_register));
+              final file = await http.MultipartFile.fromPath(
+                  'logo', _pickedImage!.path,
+                  contentType: MediaType(mimeTypeData[0], mimeTypeData[1]));
+              imageUploadRequest.files.add(file);
+              imageUploadRequest.fields['userid'] = userid.toString();
+              imageUploadRequest.fields['businessname'] = txt_businessname.text;
+              imageUploadRequest.fields['businesscatagories'] = _valueChanged;
+              imageUploadRequest.fields['ownername'] = txt_name.text;
+              imageUploadRequest.fields['businesscontactinfo'] =
+                  txt_contactinfo.text;
+              imageUploadRequest.fields['streetaddress'] =
+                  streetaddress.toString();
+              imageUploadRequest.fields['city'] = city.toString();
+              imageUploadRequest.fields['pincode'] = pincode.toString();
+              imageUploadRequest.fields['latitude'] = lat.toString();
+              imageUploadRequest.fields['longitude'] = lang.toString();
+              imageUploadRequest.fields['landmark'] = landmark.toString();
+              imageUploadRequest.fields['address'] = address.toString();
+              if (bisinesshour != null) {
+                //imageUploadRequest.fields['sunday'] = bisinesshour["sunday"].toString();
+                imageUploadRequest.fields['sundayopeningtime'] =
+                    bisinesshour["sundayopeningtime"];
+                imageUploadRequest.fields['sundayclosingtime'] =
+                    bisinesshour["sundayclosingtime"];
 
-              //imageUploadRequest.fields['monday'] = bisinesshour["monday"].toString();
-              imageUploadRequest.fields['mondayopeningtime'] =
-                  bisinesshour["mondayopeningtime"];
-              imageUploadRequest.fields['mondayclosinmonday'] =
-                  bisinesshour["mondayclosingtime"];
+                //imageUploadRequest.fields['monday'] = bisinesshour["monday"].toString();
+                imageUploadRequest.fields['mondayopeningtime'] =
+                    bisinesshour["mondayopeningtime"];
+                imageUploadRequest.fields['mondayclosinmonday'] =
+                    bisinesshour["mondayclosingtime"];
 
-              //imageUploadRequest.fields['tuesday'] = bisinesshour["tuesday"].toString();
-              imageUploadRequest.fields['tuesdayopeningtime'] =
-                  bisinesshour["tuesdayopeningtime"];
-              imageUploadRequest.fields['tuesdayclosintuesday'] =
-                  bisinesshour["tuesdayclosingtime"];
+                //imageUploadRequest.fields['tuesday'] = bisinesshour["tuesday"].toString();
+                imageUploadRequest.fields['tuesdayopeningtime'] =
+                    bisinesshour["tuesdayopeningtime"];
+                imageUploadRequest.fields['tuesdayclosintuesday'] =
+                    bisinesshour["tuesdayclosingtime"];
 
-              //imageUploadRequest.fields['wednesday'] = bisinesshour["wednessday"].toString();
-              imageUploadRequest.fields['wednesdayopeningtime'] =
-                  bisinesshour["wednessdayopeningtime"];
-              imageUploadRequest.fields['wednesdayclosingtiwednes'] =
-                  bisinesshour["wednessdayclosingtime"];
+                //imageUploadRequest.fields['wednesday'] = bisinesshour["wednessday"].toString();
+                imageUploadRequest.fields['wednesdayopeningtime'] =
+                    bisinesshour["wednessdayopeningtime"];
+                imageUploadRequest.fields['wednesdayclosingtiwednes'] =
+                    bisinesshour["wednessdayclosingtime"];
 
-              //imageUploadRequest.fields['thursday'] = bisinesshour["thursday"];
-              imageUploadRequest.fields['thursdayopeningtime'] =
-                  bisinesshour["thursdayopeningtime"];
-              imageUploadRequest.fields['thursdayclosingtime'] =
-                  bisinesshour["thursdayclosingtime"];
+                //imageUploadRequest.fields['thursday'] = bisinesshour["thursday"];
+                imageUploadRequest.fields['thursdayopeningtime'] =
+                    bisinesshour["thursdayopeningtime"];
+                imageUploadRequest.fields['thursdayclosingtime'] =
+                    bisinesshour["thursdayclosingtime"];
 
-              //imageUploadRequest.fields['friday'] = bisinesshour["friday"];
-              imageUploadRequest.fields['fridayopeningtime'] =
-                  bisinesshour["fridayopeningtime"];
-              imageUploadRequest.fields['fridayclosingtime'] =
-                  bisinesshour["fridayclosingtime"];
+                //imageUploadRequest.fields['friday'] = bisinesshour["friday"];
+                imageUploadRequest.fields['fridayopeningtime'] =
+                    bisinesshour["fridayopeningtime"];
+                imageUploadRequest.fields['fridayclosingtime'] =
+                    bisinesshour["fridayclosingtime"];
 
-              //imageUploadRequest.fields['saturday'] = bisinesshour["saturday"];
-              imageUploadRequest.fields['saturdayopeningtime'] =
-                  bisinesshour["saturdayopeningtime"];
-              imageUploadRequest.fields['saturdayclosingtime'] =
-                  bisinesshour["saturdayclosingtime"];
-            }
-            try {
-              final streamedResponse = await imageUploadRequest.send();
-              final response = await http.Response.fromStream(streamedResponse);
-              print(response.statusCode);
-
-              if (response.statusCode == 200) {
-                preferences.setString("businessname", txt_businessname.text);
-                preferences.setString("businesscategory", _valueChanged);
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            SellerRegistrationSuccessScreen()),
-                    (Route<dynamic> route) => false);
+                //imageUploadRequest.fields['saturday'] = bisinesshour["saturday"];
+                imageUploadRequest.fields['saturdayopeningtime'] =
+                    bisinesshour["saturdayopeningtime"];
+                imageUploadRequest.fields['saturdayclosingtime'] =
+                    bisinesshour["saturdayclosingtime"];
               }
-            } catch (e) {
-              print(e);
-              Navigator.of(context).pop();
+              try {
+                final streamedResponse = await imageUploadRequest.send();
+                final response =
+                    await http.Response.fromStream(streamedResponse);
+                print(response.statusCode);
+
+                if (response.statusCode == 200) {
+                  preferences.setString("businessname", txt_businessname.text);
+                  preferences.setString("businesscategory", _valueChanged);
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              SellerRegistrationSuccessScreen()),
+                      (Route<dynamic> route) => false);
+                }
+              } catch (e) {
+                print(e);
+                Navigator.of(context).pop();
+              }
+            } else {
+              showInSnackBar("Please Add Business Address.");
             }
           } else {
+            setState(() {
+              contactnoValidationFailed = true;
+            });
             showInSnackBar("Contact No Should Be 10 Digits");
           }
         } else {
@@ -268,6 +281,9 @@ class _SellerAccountCreateScreenState extends State<SellerAccountCreateScreen> {
         showInSnackBar("Please Enter Business Name");
       }
     } else {
+      setState(() {
+        contactnoValidationFailed = true;
+      });
       showInSnackBar("Please Enter Contact No.");
     }
   }
@@ -300,12 +316,50 @@ class _SellerAccountCreateScreenState extends State<SellerAccountCreateScreen> {
     final locationData = Provider.of<LocationProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () async {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) => CupertinoAlertDialog(
+                        title: new Text("Confirmation"),
+                        content: new Text(
+                            "Do you want to Exit Registartion Process?"),
+                        actions: <Widget>[
+                          CupertinoDialogAction(
+                            isDefaultAction: true,
+                            child: Text("Yes",
+                                style: TextStyle(color: Colors.black)),
+                            onPressed: () async {
+                              SharedPreferences preferences =
+                                  await SharedPreferences.getInstance();
+                              preferences.clear();
+
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          FlashScreen()),
+                                  (Route<dynamic> route) => false);
+                            },
+                          ),
+                          CupertinoDialogAction(
+                            child: Text("Exit",
+                                style: TextStyle(color: Colors.black)),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          )
+                        ],
+                      ));
+            }),
         backgroundColor: Colors.white,
         title: Text(
           "Make your business profile",
           style: TextStyle(color: Colors.black),
         ),
         centerTitle: true,
+        actions: [],
       ),
       body: SafeArea(
           child: SingleChildScrollView(
@@ -516,10 +570,20 @@ class _SellerAccountCreateScreenState extends State<SellerAccountCreateScreen> {
                   child: TextField(
                 keyboardType: TextInputType.phone,
                 controller: txt_contactinfo,
+                maxLength: 10,
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: contactnoValidationFailed == false
+                          ? Colors.grey
+                          : Colors.red,
+                    ),
+                  ),
                   hintText: 'Contact Phone Number',
-                  hintStyle: TextStyle(color: Colors.grey),
+                  hintStyle: TextStyle(
+                      color: contactnoValidationFailed == false
+                          ? Colors.grey
+                          : Colors.red),
                 ),
                 autofocus: false,
                 obscureText: false,
@@ -545,7 +609,7 @@ class _SellerAccountCreateScreenState extends State<SellerAccountCreateScreen> {
                   });
                 },
                 child: Container(
-                  padding: EdgeInsets.only(right: 30),
+                  // padding: EdgeInsets.only(right: 30),
                   height: 40,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
@@ -700,18 +764,6 @@ class _SellerAccountCreateScreenState extends State<SellerAccountCreateScreen> {
                     "By continuing, you're agreeing to these",
                     style: TextStyle(fontSize: 16),
                   ),
-                  InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    TermsAndCoditionScreen()));
-                      },
-                      child: Text(
-                        " Terms and",
-                        style: TextStyle(color: Colors.blue, fontSize: 16),
-                      ))
                 ],
               ),
             ),
@@ -722,6 +774,18 @@ class _SellerAccountCreateScreenState extends State<SellerAccountCreateScreen> {
               padding: const EdgeInsets.only(left: 30),
               child: Row(
                 children: [
+                  InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    TermsAndCoditionScreen()));
+                      },
+                      child: Text(
+                        "Terms and ",
+                        style: TextStyle(color: Colors.blue, fontSize: 16),
+                      )),
                   InkWell(
                       onTap: () {
                         Navigator.push(

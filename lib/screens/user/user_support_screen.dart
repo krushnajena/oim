@@ -112,13 +112,14 @@ class _UserSupportScreenState extends State<UserSupportScreen> {
               height: 200,
               color: Colors.blue,
               child: Padding(
-                padding: EdgeInsets.only(left: 20, top: 40),
+                padding: EdgeInsets.only(left: 20, top: 40, right: 20),
                 child: Text(
-                  "Please fill out the form below and we\nwill get back to you as soon as possible.",
+                  "Please fill out the form below and we will get back to you as soon as possible.",
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 19,
                       fontWeight: FontWeight.w500),
+                  textAlign: TextAlign.justify,
                 ),
               ),
             ),
@@ -127,7 +128,7 @@ class _UserSupportScreenState extends State<UserSupportScreen> {
               child: Padding(
                 padding: EdgeInsets.only(top: 110, left: 30, right: 30),
                 child: SizedBox(
-                    height: 450,
+                    height: 567,
                     width: 350,
                     child: Card(
                       child: Column(
@@ -172,6 +173,7 @@ class _UserSupportScreenState extends State<UserSupportScreen> {
                               margin: EdgeInsets.only(top: 20),
                               width: 300,
                               child: TextField(
+                                maxLines: 8,
                                 controller: txt_message,
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(),

@@ -360,40 +360,21 @@ class _SellerStoreViewScreenState extends State<SellerStoreViewScreen> {
                         ],
                       ),
                       SizedBox(
-                        height: 30,
-                        width: 130,
-                        child: follewed != null
-                            ? follewed == false
-                                ? RaisedButton(
-                                    onPressed: () {},
-                                    color: Colors.blue,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: Text(
-                                      'Follow',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  )
-                                : RaisedButton(
-                                    onPressed: () {},
-                                    color: Colors.blue,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: Text(
-                                      'Un Follow',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  )
-                            : SizedBox(),
-                      ),
+                          height: 30,
+                          width: 130,
+                          child: RaisedButton(
+                            onPressed: () {},
+                            color: Colors.blue,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Text(
+                              'Follow',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.white,
+                              ),
+                            ),
+                          )),
                     ],
                   ),
                   SizedBox(
@@ -403,13 +384,7 @@ class _SellerStoreViewScreenState extends State<SellerStoreViewScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       InkWell(
-                        onTap: () async {
-                          final Uri launchUri = Uri(
-                            scheme: 'tel',
-                            path: mobileNo,
-                          );
-                          await launchUrl(launchUri);
-                        },
+                        onTap: () async {},
                         child: Column(
                           children: [
                             Container(
@@ -437,7 +412,7 @@ class _SellerStoreViewScreenState extends State<SellerStoreViewScreen> {
                       ),
                       InkWell(
                         onTap: () async {
-                          String name = Uri.encodeComponent(storename);
+                          /* String name = Uri.encodeComponent(storename);
                           name = name.replaceAll('%20', '+');
 
                           String googleUrl =
@@ -445,7 +420,7 @@ class _SellerStoreViewScreenState extends State<SellerStoreViewScreen> {
 
                           print(googleUrl);
 
-                          await launch(googleUrl);
+                          await launch(googleUrl);*/
                         },
                         child: Column(
                           children: [

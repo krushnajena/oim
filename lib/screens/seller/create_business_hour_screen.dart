@@ -11,13 +11,13 @@ class CreateBusinessHourScreen extends StatefulWidget {
 class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
   bool switchControl = false;
   var textHolder = 'Closed';
-  bool sunday = true;
-  bool monday = true;
-  bool tuesday = true;
-  bool wednessday = true;
-  bool thursday = true;
-  bool friday = true;
-  bool satday = true;
+  bool sunday = false;
+  bool monday = false;
+  bool tuesday = false;
+  bool wednessday = false;
+  bool thursday = false;
+  bool friday = false;
+  bool satday = false;
 
   TimeOfDay sundayselectedTime = TimeOfDay.now();
   TimeOfDay mondayselectedTime = TimeOfDay.now();
@@ -95,11 +95,14 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Day",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black87,
-                        fontSize: 16)),
+                Container(
+                  width: 100,
+                  child: Text("Day",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black87,
+                          fontSize: 16)),
+                ),
 
                 Text("Status",
                     style: TextStyle(
@@ -108,50 +111,68 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
                         fontSize: 16)),
                 //Text('$onChanged', style: TextStyle(fontSize: 24),),
                 SizedBox(
+                  width: 50,
+                ),
+                Text("Open At",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black87,
+                        fontSize: 16)),
+                SizedBox(
+                  width: 15,
+                ),
+                Text("Close At",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black87,
+                        fontSize: 16)),
+                SizedBox(
                   width: 5,
                 ),
-                Text("Opening Time",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black87,
-                        fontSize: 16)),
-                Text("Closing Time",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black87,
-                        fontSize: 16)),
               ],
             ),
             Divider(
               thickness: 2,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text("Sunday",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black87,
-                        fontSize: 16)),
-
-                Transform.scale(
-                    scale: 1,
-                    child: Switch(
-                      onChanged: (value) {
-                        setState(() {
-                          sunday = value;
-                        });
-                      },
-                      value: sunday,
-                      activeColor: Colors.blue,
-                      activeTrackColor: Colors.blueAccent,
-                      inactiveThumbColor: Colors.white,
-                      inactiveTrackColor: Colors.grey,
-                    )),
-                //Text('$onChanged', style: TextStyle(fontSize: 24),),
-                SizedBox(
-                  width: 5,
+                Container(
+                  width: 110,
+                  child: Text("Sunday",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black87,
+                          fontSize: 16)),
                 ),
+
+                Container(
+                  width: 30,
+                  child: Transform.scale(
+                      scale: 1,
+                      child: Switch(
+                        onChanged: (value) {
+                          setState(() {
+                            sunday = value;
+                          });
+                        },
+                        value: sunday,
+                        activeColor: Colors.blue,
+                        activeTrackColor: Colors.blueAccent,
+                        inactiveThumbColor: Colors.white,
+                        inactiveTrackColor: Colors.grey,
+                      )),
+                ),
+
+                SizedBox(
+                  width: 70,
+                ),
+                //Text('$onChanged', style: TextStyle(fontSize: 24),),
+                sunday
+                    ? SizedBox(
+                        width: 5,
+                      )
+                    : Expanded(child: Container()),
                 sunday == true
                     ? ElevatedButton(
                         onPressed: () async {
@@ -171,11 +192,12 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
                         },
                         child: Text(sundayselectedTime.hour.toString() +
                             ":" +
-                            sundayselectedTime.minute.toString() +
-                            " " +
-                            sundayselectedTime.period.name),
+                            sundayselectedTime.minute.toString()),
                       )
                     : SizedBox(),
+                SizedBox(
+                  width: 10,
+                ),
                 sunday == true
                     ? ElevatedButton(
                         onPressed: () async {
@@ -195,9 +217,7 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
                         },
                         child: Text(sundayselectedTimecl.hour.toString() +
                             ":" +
-                            sundayselectedTimecl.minute.toString() +
-                            " " +
-                            sundayselectedTimecl.period.name),
+                            sundayselectedTimecl.minute.toString()),
                       )
                     : SizedBox(),
               ],
@@ -208,11 +228,14 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Monday",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black87,
-                        fontSize: 16)),
+                Container(
+                  width: 85,
+                  child: Text("Monday",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black87,
+                          fontSize: 16)),
+                ),
 
                 Transform.scale(
                     scale: 1,
@@ -229,9 +252,11 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
                       inactiveTrackColor: Colors.grey,
                     )),
                 //Text('$onChanged', style: TextStyle(fontSize: 24),),
-                SizedBox(
-                  width: 5,
-                ),
+                monday
+                    ? SizedBox(
+                        width: 5,
+                      )
+                    : Expanded(child: Container()),
                 monday == true
                     ? ElevatedButton(
                         onPressed: () async {
@@ -251,9 +276,7 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
                         },
                         child: Text(mondayselectedTime.hour.toString() +
                             ":" +
-                            mondayselectedTime.minute.toString() +
-                            " " +
-                            mondayselectedTime.period.name),
+                            mondayselectedTime.minute.toString()),
                       )
                     : SizedBox(),
                 monday == true
@@ -275,9 +298,7 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
                         },
                         child: Text(mondayselectedTimecl.hour.toString() +
                             ":" +
-                            mondayselectedTimecl.minute.toString() +
-                            " " +
-                            mondayselectedTimecl.period.name),
+                            mondayselectedTimecl.minute.toString()),
                       )
                     : SizedBox(),
               ],
@@ -288,11 +309,14 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Tuesday",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black87,
-                        fontSize: 16)),
+                Container(
+                  width: 85,
+                  child: Text("Tuesday",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black87,
+                          fontSize: 16)),
+                ),
 
                 Transform.scale(
                     scale: 1,
@@ -309,9 +333,11 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
                       inactiveTrackColor: Colors.grey,
                     )),
                 //Text('$onChanged', style: TextStyle(fontSize: 24),),
-                SizedBox(
-                  width: 5,
-                ),
+                tuesday
+                    ? SizedBox(
+                        width: 5,
+                      )
+                    : Expanded(child: Container()),
                 tuesday == true
                     ? ElevatedButton(
                         onPressed: () async {
@@ -331,9 +357,7 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
                         },
                         child: Text(tuesdayselectedTime.hour.toString() +
                             ":" +
-                            tuesdayselectedTime.minute.toString() +
-                            " " +
-                            tuesdayselectedTime.period.name),
+                            tuesdayselectedTime.minute.toString()),
                       )
                     : SizedBox(),
                 tuesday == true
@@ -355,9 +379,7 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
                         },
                         child: Text(tuesdayselectedTimecl.hour.toString() +
                             ":" +
-                            tuesdayselectedTimecl.minute.toString() +
-                            " " +
-                            tuesdayselectedTimecl.period.name),
+                            tuesdayselectedTimecl.minute.toString()),
                       )
                     : SizedBox(),
               ],
@@ -368,11 +390,14 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Wednesday",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black87,
-                        fontSize: 16)),
+                Container(
+                  width: 85,
+                  child: Text("Wednesday",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black87,
+                          fontSize: 16)),
+                ),
 
                 Transform.scale(
                     scale: 1,
@@ -389,9 +414,11 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
                       inactiveTrackColor: Colors.grey,
                     )),
                 //Text('$onChanged', style: TextStyle(fontSize: 24),),
-                SizedBox(
-                  width: 5,
-                ),
+                wednessday
+                    ? SizedBox(
+                        width: 5,
+                      )
+                    : Expanded(child: Container()),
                 wednessday == true
                     ? ElevatedButton(
                         onPressed: () async {
@@ -411,9 +438,7 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
                         },
                         child: Text(weddayselectedTime.hour.toString() +
                             ":" +
-                            weddayselectedTime.minute.toString() +
-                            " " +
-                            weddayselectedTime.period.name),
+                            weddayselectedTime.minute.toString()),
                       )
                     : SizedBox(),
                 wednessday == true
@@ -435,9 +460,7 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
                         },
                         child: Text(weddayselectedTimecl.hour.toString() +
                             ":" +
-                            weddayselectedTimecl.minute.toString() +
-                            " " +
-                            weddayselectedTimecl.period.name),
+                            weddayselectedTimecl.minute.toString()),
                       )
                     : SizedBox(),
               ],
@@ -448,11 +471,14 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Thursday",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black87,
-                        fontSize: 16)),
+                Container(
+                  width: 85,
+                  child: Text("Thursday",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black87,
+                          fontSize: 16)),
+                ),
 
                 Transform.scale(
                     scale: 1,
@@ -469,9 +495,11 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
                       inactiveTrackColor: Colors.grey,
                     )),
                 //Text('$onChanged', style: TextStyle(fontSize: 24),),
-                SizedBox(
-                  width: 5,
-                ),
+                thursday
+                    ? SizedBox(
+                        width: 5,
+                      )
+                    : Expanded(child: Container()),
                 thursday == true
                     ? ElevatedButton(
                         onPressed: () async {
@@ -491,9 +519,7 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
                         },
                         child: Text(thudayselectedTime.hour.toString() +
                             ":" +
-                            thudayselectedTime.minute.toString() +
-                            " " +
-                            thudayselectedTime.period.name),
+                            thudayselectedTime.minute.toString()),
                       )
                     : SizedBox(),
                 thursday == true
@@ -515,9 +541,7 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
                         },
                         child: Text(thudayselectedTimecl.hour.toString() +
                             ":" +
-                            thudayselectedTimecl.minute.toString() +
-                            " " +
-                            thudayselectedTimecl.period.name),
+                            thudayselectedTimecl.minute.toString()),
                       )
                     : SizedBox(),
               ],
@@ -528,11 +552,14 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Friday",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black87,
-                        fontSize: 16)),
+                Container(
+                  width: 85,
+                  child: Text("Friday",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black87,
+                          fontSize: 16)),
+                ),
 
                 Transform.scale(
                     scale: 1,
@@ -549,9 +576,12 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
                       inactiveTrackColor: Colors.grey,
                     )),
                 //Text('$onChanged', style: TextStyle(fontSize: 24),),
-                SizedBox(
-                  width: 5,
-                ),
+                friday
+                    ? SizedBox(
+                        width: 5,
+                      )
+                    : Expanded(child: Container()),
+
                 friday == true
                     ? ElevatedButton(
                         onPressed: () async {
@@ -571,9 +601,7 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
                         },
                         child: Text(fridayselectedTime.hour.toString() +
                             ":" +
-                            fridayselectedTime.minute.toString() +
-                            " " +
-                            fridayselectedTime.period.name),
+                            fridayselectedTime.minute.toString()),
                       )
                     : SizedBox(),
                 friday == true
@@ -595,9 +623,7 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
                         },
                         child: Text(fridayselectedTimecl.hour.toString() +
                             ":" +
-                            fridayselectedTimecl.minute.toString() +
-                            " " +
-                            fridayselectedTimecl.period.name),
+                            fridayselectedTimecl.minute.toString()),
                       )
                     : SizedBox(),
               ],
@@ -608,11 +634,14 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Saturday",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black87,
-                        fontSize: 16)),
+                Container(
+                  width: 85,
+                  child: Text("Saturday",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black87,
+                          fontSize: 16)),
+                ),
 
                 Transform.scale(
                     scale: 1,
@@ -629,9 +658,11 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
                       inactiveTrackColor: Colors.grey,
                     )),
                 //Text('$onChanged', style: TextStyle(fontSize: 24),),
-                SizedBox(
-                  width: 5,
-                ),
+                satday
+                    ? SizedBox(
+                        width: 5,
+                      )
+                    : Expanded(child: Container()),
                 satday == true
                     ? ElevatedButton(
                         onPressed: () async {
@@ -651,9 +682,7 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
                         },
                         child: Text(satdayselectedTime.hour.toString() +
                             ":" +
-                            satdayselectedTime.minute.toString() +
-                            " " +
-                            satdayselectedTime.period.name),
+                            satdayselectedTime.minute.toString()),
                       )
                     : SizedBox(),
                 satday == true
@@ -675,9 +704,7 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
                         },
                         child: Text(satdayselectedTimecl.hour.toString() +
                             ":" +
-                            satdayselectedTimecl.minute.toString() +
-                            " " +
-                            satdayselectedTimecl.period.name),
+                            satdayselectedTimecl.minute.toString()),
                       )
                     : SizedBox(),
               ],

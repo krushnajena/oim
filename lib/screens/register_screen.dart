@@ -141,7 +141,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       hintText: 'Enter your Full name',
                       hintStyle: TextStyle(color: Colors.black38),
                       filled: true,
-                      fillColor: Colors.white70,
+                      fillColor: Colors.transparent,
                       focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.blue),
                       ),
@@ -156,7 +156,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       hintText: 'Email(Optional)',
                       hintStyle: TextStyle(color: Colors.black38),
                       filled: true,
-                      fillColor: Colors.white70,
+                      fillColor: Colors.transparent,
                       focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.blue),
                       ),

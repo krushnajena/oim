@@ -14,6 +14,7 @@ import 'package:oim/screens/common/privacy_policy_screen.dart';
 import 'package:oim/screens/common/terms_condistion_screen.dart';
 import 'package:oim/screens/seller/add_business_hour.dart';
 import 'package:oim/screens/seller/add_business_location.dart';
+import 'package:oim/screens/seller/create_business_hour_screen.dart';
 import 'package:oim/screens/seller/seller_bottom_appbar.dart';
 import 'package:oim/screens/seller/seller_registration_success_screen.dart';
 import 'package:oim/screens/seller/update_business_hour_screen.dart';
@@ -589,81 +590,16 @@ class _SellerProfileUpdateScreenState extends State<SellerProfileUpdateScreen> {
               padding: const EdgeInsets.only(left: 30, top: 30, right: 30),
               child: InkWell(
                 onTap: () async {
-                  showModalBottomSheet(
-                      context: context,
-                      builder: (context) {
-                        return new Container(
-                            height: 800.0,
-                            color: Colors.white,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    "Business Hours",
-                                    style: TextStyle(fontSize: 22),
-                                  ),
-                                  Container(
-                                    height: 5,
-                                    width: 35,
-                                    color: Colors.blue,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 30, top: 30, right: 30),
-                                    child: InkWell(
-                                      onTap: () async {
-                                        final result = await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  UpdateBusinessHourScreen()),
-                                        );
-                                        setState(() {
-                                          bisinesshour = result;
-                                        });
-                                      },
-                                      child: Container(
-                                        padding: EdgeInsets.only(right: 30),
-                                        height: 40,
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        decoration: BoxDecoration(
-                                            border:
-                                                Border.all(color: Colors.grey),
-                                            borderRadius:
-                                                BorderRadius.circular(5)),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Icon(
-                                              Icons.access_time_outlined,
-                                              color: Colors.blue,
-                                            ),
-                                            Text(
-                                              "Add business hours",
-                                              style: TextStyle(
-                                                  color: Colors.blue,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ));
-                      });
+                  final result = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CreateBusinessHourScreen()),
+                  );
+                  setState(() {
+                    bisinesshour = result;
+                  });
                 },
                 child: Container(
-                  padding: EdgeInsets.only(right: 30),
                   height: 40,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(

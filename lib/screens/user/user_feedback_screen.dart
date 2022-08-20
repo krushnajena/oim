@@ -109,25 +109,26 @@ class _UserFeedBackScreenState extends State<UserFeedBackScreen> {
           children: [
             Container(
               width: double.infinity,
-              height: 300,
+              height: 200,
               color: Colors.blue,
               child: Padding(
-                padding: EdgeInsets.only(left: 41, top: 40, right: 40),
+                padding: EdgeInsets.only(left: 20, top: 40, right: 20),
                 child: Text(
-                  "Please fill out the form below and we\nwill get back to you as soon as possible.",
+                  "We would like your feedback to improve our application.",
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 19,
                       fontWeight: FontWeight.w500),
+                  textAlign: TextAlign.justify,
                 ),
               ),
             ),
             SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Padding(
-                padding: EdgeInsets.only(top: 160, left: 30, right: 30),
+                padding: EdgeInsets.only(top: 110, left: 30, right: 30),
                 child: SizedBox(
-                    height: 500,
+                    height: 510,
                     width: 350,
                     child: Card(
                       child: Column(
@@ -172,6 +173,7 @@ class _UserFeedBackScreenState extends State<UserFeedBackScreen> {
                               margin: EdgeInsets.only(top: 20),
                               width: 300,
                               child: TextField(
+                                maxLines: 5,
                                 controller: txt_message,
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(),

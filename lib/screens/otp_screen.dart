@@ -66,15 +66,21 @@ class _OtpScreenState extends State<OtpScreen> {
     return Scaffold(
       body: SafeArea(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 15, top: 15),
-              child: InkWell(
-                  onTap: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Icon(Icons.arrow_back_rounded)),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 15, top: 15),
+                  child: InkWell(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Icon(Icons.arrow_back_rounded)),
+                ),
+                Expanded(child: Container())
+              ],
             ),
             const SizedBox(
               height: 40,
@@ -90,9 +96,11 @@ class _OtpScreenState extends State<OtpScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 80, right: 70),
               child: Text(
-                  "Please enter the verification code send to +91" +
-                      widget.mobileNo,
-                  style: const TextStyle(color: Colors.black38, fontSize: 16)),
+                "Please enter the verification  code  send   to   +91" +
+                    widget.mobileNo,
+                style: const TextStyle(color: Colors.black38, fontSize: 16),
+                textAlign: TextAlign.justify,
+              ),
             ),
             const SizedBox(
               height: 60,
@@ -138,6 +146,7 @@ class _OtpScreenState extends State<OtpScreen> {
                           cursorColor: primaryColor,
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.all(18.0),
+                            counterText: "",
                             //   border: InputBorder.none,
                           ),
                           textAlign: TextAlign.center,
@@ -172,6 +181,7 @@ class _OtpScreenState extends State<OtpScreen> {
                           cursorColor: primaryColor,
                           decoration: const InputDecoration(
                             contentPadding: EdgeInsets.all(18.0),
+                            counterText: "",
                             // border: InputBorder.none,
                           ),
                           textAlign: TextAlign.center,
@@ -205,6 +215,7 @@ class _OtpScreenState extends State<OtpScreen> {
                           cursorColor: primaryColor,
                           decoration: const InputDecoration(
                             contentPadding: EdgeInsets.all(18.0),
+                            counterText: "",
                             // border: InputBorder.none,
                           ),
                           textAlign: TextAlign.center,
@@ -239,6 +250,7 @@ class _OtpScreenState extends State<OtpScreen> {
                           cursorColor: primaryColor,
                           decoration: const InputDecoration(
                             contentPadding: EdgeInsets.all(18.0),
+                            counterText: "",
                             // border: InputBorder.none,
                           ),
                           textAlign: TextAlign.center,
@@ -255,7 +267,7 @@ class _OtpScreenState extends State<OtpScreen> {
               ],
             )),
             Padding(
-              padding: const EdgeInsets.only(left: 115, top: 20),
+              padding: const EdgeInsets.only(top: 20),
               child: InkWell(
                 onTap: () {
                   if (_start == 0) {

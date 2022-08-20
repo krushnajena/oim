@@ -454,10 +454,13 @@ class Seller_DashBoardScreenState extends State<SellerDashBoardScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      "Overview",
-                      style:
-                          TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      child: const Text(
+                        "Overview",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 16),
+                      ),
                     ),
                     Row(
                       children: [

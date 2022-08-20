@@ -98,6 +98,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
                                   notifications[index]["tittle"].toString(),

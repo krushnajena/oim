@@ -6,14 +6,14 @@ import 'package:oim/constants/urls.dart';
 import 'package:oim/screens/seller/ads_payment_screen.dart';
 import 'package:oim/screens/seller/pay_featured_ad_screen.dart';
 
-class FeaturedAdPackages extends StatefulWidget {
-  const FeaturedAdPackages({Key? key}) : super(key: key);
+class BoostYourStoreToTop extends StatefulWidget {
+  const BoostYourStoreToTop({Key? key}) : super(key: key);
 
   @override
-  State<FeaturedAdPackages> createState() => _FeaturedAdPackagesState();
+  State<BoostYourStoreToTop> createState() => _BoostYourStoreToTopState();
 }
 
-class _FeaturedAdPackagesState extends State<FeaturedAdPackages> {
+class _BoostYourStoreToTopState extends State<BoostYourStoreToTop> {
   List ads = [];
   int sindex = 0;
   double totalPrice = 0;
@@ -86,13 +86,13 @@ class _FeaturedAdPackagesState extends State<FeaturedAdPackages> {
                 child: SizedBox(
                   height: 120,
                   width: 120,
-                  child: Image.asset("images/advimg5.jpg"),
+                  child: Image.asset("images/advimg6.jpg"),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
                 child: Text(
-                  "Sell faster by Promoting your products in 'Offer Zone' Sction with 'FEATURED' tag in top Position to reach more buyers in your city.",
+                  "Increase footfall to your store by promoting your Store with 'Ad' tag in top position.",
                   style: TextStyle(
                       fontSize: 17, fontWeight: FontWeight.w700, height: 1.5),
                   textAlign: TextAlign.justify,
@@ -130,7 +130,7 @@ class _FeaturedAdPackagesState extends State<FeaturedAdPackages> {
                     width: 10,
                   ),
                   Icon(Icons.check, color: Colors.black54),
-                  Text('  Get your product noticed with "FEATURED" tag',
+                  Text('  Get your Store to the "Top Rankings".',
                       style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,

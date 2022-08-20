@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oim/constants/urls.dart';
+import 'package:oim/screens/seller/camera.dart';
 import 'package:oim/screens/seller/seller_story_details_screen.dart';
 import 'package:oim/screens/seller/story_create_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -76,6 +78,7 @@ class _StoryListScreenState extends State<StoryListScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.white, size: 10.0),
         backgroundColor: Colors.blue,
         elevation: 0.1,
         centerTitle: true,
@@ -90,7 +93,12 @@ class _StoryListScreenState extends State<StoryListScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   RaisedButton(
-                    onPressed: () {
+                    onPressed: () async {
+                      List<CameraDescription> cameras;
+                      cameras = await availableCameras();
+                      print("*************(())())");
+                      print(cameras.length);
+                      print("*************(())())");
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -193,64 +201,59 @@ class _StoryListScreenState extends State<StoryListScreen> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.only(right: 4.0, top: 8),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                Container(
-                                  decoration: BoxDecoration(
+                                PopupMenuButton(
+                                    color: Colors.white,
+                                    icon: Icon(
+                                      Icons.more_vert,
                                       color: Colors.white,
-                                      border: Border.all(
-                                        color: Colors.white,
-                                      ),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(25))),
-                                  child: PopupMenuButton(
-                                      itemBuilder: (context) => [
-                                            PopupMenuItem(
-                                              child: Text("Remove Story"),
-                                              value: 2,
-                                              onTap: () {
-                                                showDialog(
-                                                    context: context,
-                                                    builder: (BuildContext
-                                                            context) =>
-                                                        CupertinoAlertDialog(
-                                                          title: new Text(
-                                                              "Confirmation"),
-                                                          content: new Text(
-                                                              "Do you want to delete "),
-                                                          actions: <Widget>[
-                                                            CupertinoDialogAction(
-                                                              isDefaultAction:
-                                                                  true,
-                                                              child: Text(
-                                                                  "Delete Story"),
-                                                              onPressed:
-                                                                  () async {
-                                                                deleteStory(story[
-                                                                            index]
-                                                                        ["_id"]
-                                                                    .toString());
-                                                              },
-                                                            ),
-                                                            CupertinoDialogAction(
-                                                              child:
-                                                                  Text("Exit"),
-                                                              onPressed: () {
-                                                                Navigator.pop(
-                                                                    context);
-                                                              },
-                                                            )
-                                                          ],
-                                                        ));
+                                    ),
+                                    itemBuilder: (context) => [
+                                          PopupMenuItem(
+                                            child: Text("Remove Story"),
+                                            value: 2,
+                                            onTap: () {
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (BuildContext
+                                                          context) =>
+                                                      CupertinoAlertDialog(
+                                                        title: new Text(
+                                                            "Confirmation"),
+                                                        content: new Text(
+                                                            "Do you want to delete "),
+                                                        actions: <Widget>[
+                                                          CupertinoDialogAction(
+                                                            isDefaultAction:
+                                                                true,
+                                                            child: Text(
+                                                                "Delete Story"),
+                                                            onPressed:
+                                                                () async {
+                                                              deleteStory(story[
+                                                                          index]
+                                                                      ["_id"]
+                                                                  .toString());
+                                                            },
+                                                          ),
+                                                          CupertinoDialogAction(
+                                                            child: Text("Exit"),
+                                                            onPressed: () {
+                                                              Navigator.pop(
+                                                                  context);
+                                                            },
+                                                          )
+                                                        ],
+                                                      ));
 
-                                                //getRemoveItem(products[index]["_id"]
-                                                //    .toString());
-                                              },
-                                            )
-                                          ]),
-                                ),
+                                              //getRemoveItem(products[index]["_id"]
+                                              //    .toString());
+                                            },
+                                          )
+                                        ]),
                               ],
                             ),
                           ),

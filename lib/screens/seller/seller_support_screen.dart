@@ -23,13 +23,14 @@ class _SellerSupportScreenState extends State<SellerSupportScreen> {
               height: 200,
               color: Colors.blue,
               child: Padding(
-                padding: EdgeInsets.only(left: 41, top: 40,right: 40),
+                padding: EdgeInsets.only(left: 41, top: 40, right: 40),
                 child: Text(
                   "Please fill out the form below and we\nwill get back to you as soon as possible.",
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 19,
                       fontWeight: FontWeight.w500),
+                  textAlign: TextAlign.justify,
                 ),
               ),
             ),
@@ -79,7 +80,9 @@ class _SellerSupportScreenState extends State<SellerSupportScreen> {
                           Container(
                               margin: EdgeInsets.only(top: 20),
                               width: 300,
+                              height: 150,
                               child: TextField(
+                                maxLength: 8,
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(),
                                   labelText: '* Message',

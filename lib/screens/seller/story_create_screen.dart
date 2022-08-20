@@ -187,53 +187,84 @@ class _StoryCreateScreenState extends State<StoryCreateScreen> {
                     }),
               ),
               SizedBox(
-                height: 20,
+                height: 100,
               ),
               Center(
                 child: _pickedImage1 == null
-                    ? InkWell(
-                        onTap: () {
-                          showModalBottomSheet(
-                              context: context,
-                              builder: (context) {
-                                return Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    ListTile(
-                                      leading: new Icon(Icons.photo),
-                                      title: new Text('Gallery'),
-                                      onTap: () {
-                                        Navigator.pop(context);
-                                        _pickImage1("gallery");
-                                      },
-                                    ),
-                                    ListTile(
-                                      leading: new Icon(Icons.videocam),
-                                      title: new Text('Camera'),
-                                      onTap: () {
-                                        Navigator.pop(context);
-                                        _pickImage1("camera");
-                                      },
-                                    ),
-                                  ],
-                                );
-                              });
-                        },
-                        child: Container(
-                          height: 200,
-                          width: 200,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.black12,
+                    ? Row(
+                        children: [
+                          Expanded(
+                            child: InkWell(
+                              onTap: () {
+                                _pickImage1("gallery");
+                              },
+                              child: Container(
+                                height: 130,
+                                decoration: BoxDecoration(
+                                  color: Colors.pink,
+                                  border: Border.all(
+                                    color: Colors.black12,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                child: Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.photo,
+                                        color: Colors.white,
+                                        size: 30,
+                                      ),
+                                      Text(
+                                        "Gallery",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 18),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
                             ),
-                            borderRadius: BorderRadius.circular(10.0),
                           ),
-                          child: Center(
-                              child: Icon(
-                            Icons.camera_alt_outlined,
-                            color: Colors.grey,
-                          )),
-                        ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Expanded(
+                            child: InkWell(
+                              onTap: () {
+                                _pickImage1("camera");
+                              },
+                              child: Container(
+                                height: 130,
+                                decoration: BoxDecoration(
+                                  color: Colors.blue,
+                                  border: Border.all(
+                                    color: Colors.black12,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                child: Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.camera,
+                                        color: Colors.white,
+                                        size: 30,
+                                      ),
+                                      Text(
+                                        "Camera",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 18),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       )
                     : InkWell(
                         onTap: () {},

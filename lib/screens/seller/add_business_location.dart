@@ -156,10 +156,10 @@ class _AddBusinessLocationScreenState extends State<AddBusinessLocationScreen> {
             Container(
               height: val == 3
                   ? showAllParameters == true
-                      ? 550
+                      ? 590
                       : 245
                   : showAllParameters == true
-                      ? 400
+                      ? 442
                       : 185,
               child: Padding(
                 padding: const EdgeInsets.only(left: 15, right: 15),
@@ -223,6 +223,134 @@ class _AddBusinessLocationScreenState extends State<AddBusinessLocationScreen> {
                                                   Text(
                                                     statename == ""
                                                         ? "Select State"
+                                                        : statename +
+                                                            "," +
+                                                            cityname +
+                                                            ", " +
+                                                            areaname,
+                                                    style: TextStyle(
+                                                        color: Colors.grey,
+                                                        fontSize: 16),
+                                                  ),
+                                                  InkWell(
+                                                      onTap: () async {
+                                                        final result =
+                                                            await Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                    builder:
+                                                                        (context) =>
+                                                                            const SellerLocationSeacrhScreen()));
+                                                        setState(() {
+                                                          statename = result[
+                                                              "statename"];
+                                                          cityname =
+                                                              result["city"];
+                                                          areaname = result[
+                                                              "areaname"];
+                                                        });
+                                                      },
+                                                      child: Icon(Icons
+                                                          .keyboard_arrow_down))
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                height: 12,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              : const SizedBox(),
+                          showAllParameters == true
+                              ? Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: 8, right: 8),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: <Widget>[
+                                      Expanded(
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 9.0),
+                                          child: Column(
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    statename == ""
+                                                        ? "Select City"
+                                                        : statename +
+                                                            "," +
+                                                            cityname +
+                                                            ", " +
+                                                            areaname,
+                                                    style: TextStyle(
+                                                        color: Colors.grey,
+                                                        fontSize: 16),
+                                                  ),
+                                                  InkWell(
+                                                      onTap: () async {
+                                                        final result =
+                                                            await Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                    builder:
+                                                                        (context) =>
+                                                                            const SellerLocationSeacrhScreen()));
+                                                        setState(() {
+                                                          statename = result[
+                                                              "statename"];
+                                                          cityname =
+                                                              result["city"];
+                                                          areaname = result[
+                                                              "areaname"];
+                                                        });
+                                                      },
+                                                      child: Icon(Icons
+                                                          .keyboard_arrow_down))
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                height: 12,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              : const SizedBox(),
+                          showAllParameters == true
+                              ? Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: 8, right: 8),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: <Widget>[
+                                      Expanded(
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 9.0),
+                                          child: Column(
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    statename == ""
+                                                        ? "Select Area"
                                                         : statename +
                                                             "," +
                                                             cityname +

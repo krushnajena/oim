@@ -32,58 +32,48 @@ class _SellerProductSearchScreenState extends State<SellerProductSearchScreen> {
     return Scaffold(
         backgroundColor: scaffoldBgColor,
         appBar: AppBar(
-          actionsIconTheme: IconThemeData(color: Colors.black),
-          iconTheme: IconThemeData(color: Colors.grey),
-          backgroundColor: Colors.white,
-          title: Theme(
-              data: ThemeData(
-                hintColor: Colors.transparent,
-              ),
-              child: Container(
-                height: 42,
-                child: TextField(
-                  controller: txt_searchbar,
-                  onChanged: (value) {
-                    if (value == "") {
-                      setState(() {
-                        show = false;
-                      });
-                    } else {
-                      setState(() {
-                        show = true;
-                      });
-                    }
-                    locationData.searchProdcutSeller(value);
-                  },
-                  decoration: InputDecoration(
-                      hintText: "Search from Product...",
-                      hintStyle: TextStyle(color: Colors.grey, fontSize: 16),
-                      suffixIcon: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      SellerProductSearchDetailsScreen(
-                                          txt_searchbar.text)));
-                        },
-                        child: (Icon(
-                          Icons.search,
-                          color: Colors.grey,
-                        )),
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      contentPadding: EdgeInsets.symmetric(vertical: 0),
-                      fillColor: Color(0XFFEEEEEE),
-                      filled: true),
-                ),
-              )),
-        ),
+            actionsIconTheme: IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.grey),
+            backgroundColor: Colors.white,
+            title: TextField(
+              autofocus: true,
+              controller: txt_searchbar,
+              onChanged: (value) {
+                if (value == "") {
+                  setState(() {
+                    show = false;
+                  });
+                } else {
+                  setState(() {
+                    show = true;
+                  });
+                }
+                locationData.searchProdcutSeller(value);
+              },
+              decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: "Search for Product...",
+                  hintStyle: TextStyle(color: Colors.grey, fontSize: 16),
+                  suffixIcon: InkWell(
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    SellerProductSearchDetailsScreen(
+                                        txt_searchbar.text)));
+                      },
+                      child: (Icon(
+                        Icons.search,
+                        color: Colors.grey,
+                      )),
+                    ),
+                  ),
+                  contentPadding: EdgeInsets.only(top: 15),
+                  fillColor: Colors.white,
+                  filled: true),
+            )),
         body: locationData.psearchResults != null &&
                 locationData.psearchResults!.length != 0 &&
                 show == true

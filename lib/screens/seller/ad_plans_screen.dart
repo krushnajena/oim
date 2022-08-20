@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oim/screens/seller/BoostYourStoreToTopScreen.dart';
 import 'package:oim/screens/seller/banner_ad_screen.dart';
 import 'package:oim/screens/seller/brand_outlet_screen.dart';
 import 'package:oim/screens/seller/featured_ad_package.dart';
@@ -36,7 +37,7 @@ class _AdPlanScreenState extends State<AdPlanScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Add Plans"),
+        title: Text("Advertisement Plans"),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -56,8 +57,7 @@ class _AdPlanScreenState extends State<AdPlanScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      SelectAdToMakeFeaturedScreen()));
+                                  builder: (context) => FeaturedAdPackages()));
                         },
                         child: Card(
                           elevation: 5,
@@ -106,7 +106,7 @@ class _AdPlanScreenState extends State<AdPlanScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => FeaturedAdPackages()));
+                              builder: (context) => BoostYourStoreToTop()));
                       //Navigator.push(context,
                       //  MaterialPageRoute(builder: (context) => BuyPlans1()));
                     },
