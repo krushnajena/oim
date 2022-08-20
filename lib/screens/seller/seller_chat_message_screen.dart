@@ -169,12 +169,14 @@ class _SellerChatMessageScreenState extends State<SellerChatMessageScreen> {
       setState(() {
         _pickedImage2 = File(pickedImageFile!.path.toString());
       });
+      sendImageMessage();
     } else {
       final pickedImageFile =
           await ImagePicker().pickImage(source: ImageSource.camera);
       setState(() {
         _pickedImage2 = File(pickedImageFile!.path.toString());
       });
+      sendImageMessage();
     }
   }
 
@@ -218,7 +220,7 @@ class _SellerChatMessageScreenState extends State<SellerChatMessageScreen> {
           print("dedddddddddddddddddddddddddddddddddddd");
           String upimageurl = mnjson["data"]["upfilename"].toString();
           MessageModel _players = MessageModel(
-              type: "text",
+              type: "image",
               message: upimageurl,
               time: DateTime.now().hour.toString() +
                   ":" +
@@ -439,57 +441,7 @@ class _SellerChatMessageScreenState extends State<SellerChatMessageScreen> {
                                             IconButton(
                                               icon: Icon(Icons.camera_alt),
                                               onPressed: () {
-                                                showModalBottomSheet(
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return Column(
-                                                        mainAxisSize:
-                                                            MainAxisSize.min,
-                                                        children: <Widget>[
-                                                          SizedBox(
-                                                            height: 10,
-                                                          ),
-                                                          Text(
-                                                            "Send Image",
-                                                            style: TextStyle(
-                                                                fontSize: 18,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                          ListTile(
-                                                            leading: new Icon(
-                                                                Icons.photo),
-                                                            title: new Text(
-                                                                'Gallery'),
-                                                            onTap: () {
-                                                              _pickImage2(
-                                                                  "gallery",
-                                                                  "");
-                                                            },
-                                                          ),
-                                                          ListTile(
-                                                            leading: new Icon(
-                                                                Icons.videocam),
-                                                            title: new Text(
-                                                                'Camera'),
-                                                            onTap: () {
-                                                              _pickImage2(
-                                                                  "camera", "");
-                                                            },
-                                                          ),
-                                                          RaisedButton(
-                                                            onPressed: () {
-                                                              sendImageMessage();
-                                                            },
-                                                            child: Text("Send"),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 10,
-                                                          ),
-                                                        ],
-                                                      );
-                                                    });
+                                                _pickImage2("camera", "");
                                               },
                                             ),
                                           ],
@@ -566,34 +518,25 @@ class _SellerChatMessageScreenState extends State<SellerChatMessageScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  iconCreation(
-                      Icons.insert_drive_file, Colors.indigo, "Document"),
+                  InkWell(
+                      onTap: () {
+                        _pickImage2("camera", "");
+                      },
+                      child: iconCreation(
+                          Icons.camera_alt, Colors.pink, "Camera")),
                   SizedBox(
                     width: 40,
                   ),
-                  iconCreation(Icons.camera_alt, Colors.pink, "Camera"),
-                  SizedBox(
-                    width: 40,
-                  ),
-                  iconCreation(Icons.insert_photo, Colors.purple, "Gallery"),
+                  InkWell(
+                      onTap: () {
+                        _pickImage2("gallery", "");
+                      },
+                      child: iconCreation(
+                          Icons.insert_photo, Colors.purple, "Gallery")),
                 ],
               ),
               SizedBox(
                 height: 30,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  iconCreation(Icons.headset, Colors.orange, "Audio"),
-                  SizedBox(
-                    width: 40,
-                  ),
-                  iconCreation(Icons.location_pin, Colors.teal, "Location"),
-                  SizedBox(
-                    width: 40,
-                  ),
-                  iconCreation(Icons.person, Colors.blue, "Contact"),
-                ],
               ),
             ],
           ),
