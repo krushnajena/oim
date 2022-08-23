@@ -182,7 +182,7 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
     // TODO: implement initState
     super.initState();
     // getCatelouges();
-    // getProducts();
+    getProducts();
   }
 
   @override
