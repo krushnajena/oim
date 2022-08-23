@@ -17,6 +17,7 @@ import 'package:oim/screens/seller/add_business_location.dart';
 import 'package:oim/screens/seller/create_business_hour_screen.dart';
 import 'package:oim/screens/seller/seller_bottom_appbar.dart';
 import 'package:oim/screens/seller/seller_registration_success_screen.dart';
+import 'package:oim/screens/seller/update_business_category_screen.dart';
 import 'package:oim/screens/seller/update_business_hour_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:select_form_field/select_form_field.dart';
@@ -391,7 +392,13 @@ class _SellerProfileUpdateScreenState extends State<SellerProfileUpdateScreen> {
         actions: [
           PopupMenuButton(
               onSelected: (newValue) {
-                if (newValue == 1) {}
+                if (newValue == 1) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => UpdateBusinessCategoryScreen()),
+                  );
+                }
               },
               itemBuilder: (context) => [
                     PopupMenuItem(

@@ -226,10 +226,10 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
               height: 20,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  width: 85,
+                  width: 110,
                   child: Text("Monday",
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
@@ -237,21 +237,27 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
                           fontSize: 16)),
                 ),
 
-                Transform.scale(
-                    scale: 1,
-                    child: Switch(
-                      onChanged: (value) {
-                        setState(() {
-                          monday = value;
-                        });
-                      },
-                      value: monday,
-                      activeColor: Colors.blue,
-                      activeTrackColor: Colors.blueAccent,
-                      inactiveThumbColor: Colors.white,
-                      inactiveTrackColor: Colors.grey,
-                    )),
+                Container(
+                  width: 30,
+                  child: Transform.scale(
+                      scale: 1,
+                      child: Switch(
+                        onChanged: (value) {
+                          setState(() {
+                            monday = value;
+                          });
+                        },
+                        value: monday,
+                        activeColor: Colors.blue,
+                        activeTrackColor: Colors.blueAccent,
+                        inactiveThumbColor: Colors.white,
+                        inactiveTrackColor: Colors.grey,
+                      )),
+                ),
                 //Text('$onChanged', style: TextStyle(fontSize: 24),),
+                SizedBox(
+                  width: 70,
+                ),
                 monday
                     ? SizedBox(
                         width: 5,
@@ -279,6 +285,9 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
                             mondayselectedTime.minute.toString()),
                       )
                     : SizedBox(),
+                SizedBox(
+                  width: 10,
+                ),
                 monday == true
                     ? ElevatedButton(
                         onPressed: () async {
@@ -307,10 +316,10 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
               height: 20,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  width: 85,
+                  width: 110,
                   child: Text("Tuesday",
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
@@ -318,21 +327,27 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
                           fontSize: 16)),
                 ),
 
-                Transform.scale(
-                    scale: 1,
-                    child: Switch(
-                      onChanged: (value) {
-                        setState(() {
-                          tuesday = value;
-                        });
-                      },
-                      value: tuesday,
-                      activeColor: Colors.blue,
-                      activeTrackColor: Colors.blueAccent,
-                      inactiveThumbColor: Colors.white,
-                      inactiveTrackColor: Colors.grey,
-                    )),
+                Container(
+                  width: 30,
+                  child: Transform.scale(
+                      scale: 1,
+                      child: Switch(
+                        onChanged: (value) {
+                          setState(() {
+                            tuesday = value;
+                          });
+                        },
+                        value: tuesday,
+                        activeColor: Colors.blue,
+                        activeTrackColor: Colors.blueAccent,
+                        inactiveThumbColor: Colors.white,
+                        inactiveTrackColor: Colors.grey,
+                      )),
+                ),
                 //Text('$onChanged', style: TextStyle(fontSize: 24),),
+                SizedBox(
+                  width: 70,
+                ),
                 tuesday
                     ? SizedBox(
                         width: 5,
@@ -360,6 +375,9 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
                             tuesdayselectedTime.minute.toString()),
                       )
                     : SizedBox(),
+                SizedBox(
+                  width: 10,
+                ),
                 tuesday == true
                     ? ElevatedButton(
                         onPressed: () async {
@@ -388,10 +406,10 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
               height: 20,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  width: 85,
+                  width: 110,
                   child: Text("Wednesday",
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
@@ -399,21 +417,27 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
                           fontSize: 16)),
                 ),
 
-                Transform.scale(
-                    scale: 1,
-                    child: Switch(
-                      onChanged: (value) {
-                        setState(() {
-                          wednessday = value;
-                        });
-                      },
-                      value: wednessday,
-                      activeColor: Colors.blue,
-                      activeTrackColor: Colors.blueAccent,
-                      inactiveThumbColor: Colors.white,
-                      inactiveTrackColor: Colors.grey,
-                    )),
+                Container(
+                  width: 30,
+                  child: Transform.scale(
+                      scale: 1,
+                      child: Switch(
+                        onChanged: (value) {
+                          setState(() {
+                            wednessday = value;
+                          });
+                        },
+                        value: wednessday,
+                        activeColor: Colors.blue,
+                        activeTrackColor: Colors.blueAccent,
+                        inactiveThumbColor: Colors.white,
+                        inactiveTrackColor: Colors.grey,
+                      )),
+                ),
                 //Text('$onChanged', style: TextStyle(fontSize: 24),),
+                SizedBox(
+                  width: 70,
+                ),
                 wednessday
                     ? SizedBox(
                         width: 5,
@@ -441,6 +465,9 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
                             weddayselectedTime.minute.toString()),
                       )
                     : SizedBox(),
+                SizedBox(
+                  width: 10,
+                ),
                 wednessday == true
                     ? ElevatedButton(
                         onPressed: () async {
@@ -469,10 +496,10 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
               height: 20,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  width: 85,
+                  width: 110,
                   child: Text("Thursday",
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
@@ -480,21 +507,27 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
                           fontSize: 16)),
                 ),
 
-                Transform.scale(
-                    scale: 1,
-                    child: Switch(
-                      onChanged: (value) {
-                        setState(() {
-                          thursday = value;
-                        });
-                      },
-                      value: thursday,
-                      activeColor: Colors.blue,
-                      activeTrackColor: Colors.blueAccent,
-                      inactiveThumbColor: Colors.white,
-                      inactiveTrackColor: Colors.grey,
-                    )),
+                Container(
+                  width: 30,
+                  child: Transform.scale(
+                      scale: 1,
+                      child: Switch(
+                        onChanged: (value) {
+                          setState(() {
+                            thursday = value;
+                          });
+                        },
+                        value: thursday,
+                        activeColor: Colors.blue,
+                        activeTrackColor: Colors.blueAccent,
+                        inactiveThumbColor: Colors.white,
+                        inactiveTrackColor: Colors.grey,
+                      )),
+                ),
                 //Text('$onChanged', style: TextStyle(fontSize: 24),),
+                SizedBox(
+                  width: 70,
+                ),
                 thursday
                     ? SizedBox(
                         width: 5,
@@ -522,6 +555,9 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
                             thudayselectedTime.minute.toString()),
                       )
                     : SizedBox(),
+                SizedBox(
+                  width: 10,
+                ),
                 thursday == true
                     ? ElevatedButton(
                         onPressed: () async {
@@ -553,7 +589,7 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  width: 85,
+                  width: 110,
                   child: Text("Friday",
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
@@ -561,21 +597,27 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
                           fontSize: 16)),
                 ),
 
-                Transform.scale(
-                    scale: 1,
-                    child: Switch(
-                      onChanged: (value) {
-                        setState(() {
-                          friday = value;
-                        });
-                      },
-                      value: friday,
-                      activeColor: Colors.blue,
-                      activeTrackColor: Colors.blueAccent,
-                      inactiveThumbColor: Colors.white,
-                      inactiveTrackColor: Colors.grey,
-                    )),
+                Container(
+                  width: 30,
+                  child: Transform.scale(
+                      scale: 1,
+                      child: Switch(
+                        onChanged: (value) {
+                          setState(() {
+                            friday = value;
+                          });
+                        },
+                        value: friday,
+                        activeColor: Colors.blue,
+                        activeTrackColor: Colors.blueAccent,
+                        inactiveThumbColor: Colors.white,
+                        inactiveTrackColor: Colors.grey,
+                      )),
+                ),
                 //Text('$onChanged', style: TextStyle(fontSize: 24),),
+                SizedBox(
+                  width: 70,
+                ),
                 friday
                     ? SizedBox(
                         width: 5,
@@ -604,6 +646,9 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
                             fridayselectedTime.minute.toString()),
                       )
                     : SizedBox(),
+                SizedBox(
+                  width: 10,
+                ),
                 friday == true
                     ? ElevatedButton(
                         onPressed: () async {
@@ -635,7 +680,7 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  width: 85,
+                  width: 110,
                   child: Text("Saturday",
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
@@ -643,21 +688,29 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
                           fontSize: 16)),
                 ),
 
-                Transform.scale(
-                    scale: 1,
-                    child: Switch(
-                      onChanged: (value) {
-                        setState(() {
-                          satday = value;
-                        });
-                      },
-                      value: satday,
-                      activeColor: Colors.blue,
-                      activeTrackColor: Colors.blueAccent,
-                      inactiveThumbColor: Colors.white,
-                      inactiveTrackColor: Colors.grey,
-                    )),
+                Container(
+                  width: 30,
+                  child: Transform.scale(
+                      scale: 1,
+                      child: Switch(
+                        onChanged: (value) {
+                          setState(() {
+                            satday = value;
+                          });
+                        },
+                        value: satday,
+                        activeColor: Colors.blue,
+                        activeTrackColor: Colors.blueAccent,
+                        inactiveThumbColor: Colors.white,
+                        inactiveTrackColor: Colors.grey,
+                      )),
+                ),
                 //Text('$onChanged', style: TextStyle(fontSize: 24),),
+
+                SizedBox(
+                  width: 70,
+                ),
+
                 satday
                     ? SizedBox(
                         width: 5,
@@ -685,6 +738,9 @@ class _CreateBusinessHourScreenState extends State<CreateBusinessHourScreen> {
                             satdayselectedTime.minute.toString()),
                       )
                     : SizedBox(),
+                SizedBox(
+                  width: 10,
+                ),
                 satday == true
                     ? ElevatedButton(
                         onPressed: () async {

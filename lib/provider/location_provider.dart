@@ -20,6 +20,7 @@ class LocationProvider with ChangeNotifier {
   Placemark? selectedAddress;
   List<NewPlaceSearch>? searchResults;
   List<NewProductSearch>? psearchResults;
+  List<NewSellerSearch>? sellersearchResults;
 
   Future<void> getCurrentPosition() async {
     LocationPermission permission;
@@ -96,6 +97,12 @@ class LocationProvider with ChangeNotifier {
   searchProdcut(String searchTerm) async {
     final placesService = PlacesService();
     psearchResults = await placesService.getAutocompleteProduct(searchTerm);
+    notifyListeners();
+  }
+
+  searchSeller(String searchTerm) async {
+    final placesService = PlacesService();
+    sellersearchResults = await placesService.getAutocompleteSeller(searchTerm);
     notifyListeners();
   }
 

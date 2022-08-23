@@ -30,6 +30,15 @@ class PlacesService {
         .toList();
   }
 
+  Future<List<NewSellerSearch>> getAutocompleteSeller(String search) async {
+    var url = Uri.parse(getsellersearch + '$search');
+    var response = await http.get(url);
+    var json = convert.jsonDecode(response.body);
+    print(json);
+    var jsonResults = json["data"]['sellers'] as List;
+    return jsonResults.map((place) => NewSellerSearch.fromJson(place)).toList();
+  }
+
   Future<List<NewProductSearch>> getAutocompleteSellerProduct(
       String search, String sellerid) async {
     var url = Uri.parse(getproductsearchseller + '$search' + '/$sellerid');

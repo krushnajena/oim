@@ -16,7 +16,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class SellerLocationSeacrhScreen extends StatefulWidget {
-  const SellerLocationSeacrhScreen({Key? key}) : super(key: key);
+  final String stateid, cityid;
+  const SellerLocationSeacrhScreen(this.stateid, this.cityid);
 
   @override
   State<SellerLocationSeacrhScreen> createState() =>
@@ -37,7 +38,26 @@ class _SellerLocationSeacrhScreenState
   @override
   void initState() {
     super.initState();
-    getstates();
+    if (widget.stateid == "") {
+      getstates();
+    }
+    if (widget.cityid == "") {
+      setState(() {
+        stateid = widget.stateid;
+        statename = "O";
+      });
+      getcity();
+    }
+    if (widget.cityid != "") {
+      print("ghjk");
+      setState(() {
+        stateid = "gthj";
+        statename = "O";
+        cityname = "B";
+        cityid = widget.cityid;
+      });
+      getarea();
+    }
   }
 
   void getstates() {
@@ -78,9 +98,11 @@ class _SellerLocationSeacrhScreenState
       if (resp.statusCode == 200) {
         Map mnjson;
         mnjson = json.decode(resp.body);
+
         setState(() {
           area = mnjson["data"]["area"];
         });
+        print(area.length);
       }
     });
   }
@@ -99,35 +121,7 @@ class _SellerLocationSeacrhScreenState
         body: SafeArea(
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          SizedBox(
-            height: 10,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: statename != "" && cityname == ""
-                ? InkWell(
-                    onTap: () {
-                      setState(() {
-                        statename = "";
-                      });
-                    },
-                    child: Icon(Icons.arrow_back),
-                  )
-                : cityname != ""
-                    ? InkWell(
-                        onTap: () {
-                          setState(() {
-                            cityname = "";
-                          });
-                        },
-                        child: Icon(Icons.arrow_back),
-                      )
-                    : SizedBox(),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          statename == ""
+          stateid == ""
               ? Expanded(
                   child: Container(
                     color: Colors.white,
@@ -145,7 +139,11 @@ class _SellerLocationSeacrhScreenState
                                 statename =
                                     states[index]["statename"].toString();
                               });
-                              getcity();
+                              var adr = {
+                                "stateid": stateid,
+                                "statename": statename,
+                              };
+                              Navigator.pop(context, adr);
                             },
                           );
                         }),
@@ -169,7 +167,12 @@ class _SellerLocationSeacrhScreenState
                                     cityname =
                                         city[index]["cityname"].toString();
                                   });
-                                  getarea();
+
+                                  var adr = {
+                                    "cityid": stateid,
+                                    "cityname": cityname,
+                                  };
+                                  Navigator.pop(context, adr);
                                 },
                               );
                             }),
@@ -188,10 +191,6 @@ class _SellerLocationSeacrhScreenState
                                 ),
                                 onTap: () async {
                                   var adr = {
-                                    "city": cityname,
-                                    "cityid": cityid,
-                                    "stateid": stateid,
-                                    "statename": statename,
                                     "areaid": area[index]["_id"].toString(),
                                     "areaname":
                                         area[index]["areaname"].toString()

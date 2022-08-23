@@ -67,3 +67,5 @@ const getproductsearchseller = baseUrl + "getproductsearchseller/";
 const postview = baseUrl + "postview";
 const getlifetimeviews = baseUrl + "getlifetimeviews/";
 const postDcumentUploadForMessage = baseUrl + "postDcumentUploadForMessage";
+
+const getsellersearch = baseUrl + "getsellersearch/";

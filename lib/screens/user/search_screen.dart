@@ -118,6 +118,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 });
               }
               locationData.searchProdcut(value);
+              locationData.searchSeller(value);
             },
             decoration: InputDecoration(
                 border: InputBorder.none,
@@ -142,28 +143,74 @@ class _SearchScreenState extends State<SearchScreen> {
                 fillColor: Colors.white,
                 filled: true),
           )),
-      body: locationData.psearchResults != null &&
-              locationData.psearchResults!.length != 0 &&
-              show == true
-          ? ListView.builder(
-              itemCount: locationData.psearchResults!.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(
-                    locationData.psearchResults![index].productname.toString(),
-                    style: TextStyle(color: Colors.black),
+      body: show == true &&
+                  (locationData.psearchResults != null &&
+                      locationData.psearchResults!.length != 0) ||
+              (locationData.sellersearchResults != null &&
+                  locationData.sellersearchResults!.length != 0)
+          ? Container(
+              child: Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                        itemCount: locationData.psearchResults!.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            title: Text(
+                              locationData.psearchResults![index].productname
+                                  .toString(),
+                              style: TextStyle(color: Colors.black),
+                            ),
+                            onTap: () async {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SearchDetailsScreen(
+                                          locationData.psearchResults![index]
+                                              .productname
+                                              .toString())));
+                              //exit(0);
+                            },
+                          );
+                        }),
                   ),
-                  onTap: () async {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SearchDetailsScreen(
-                                locationData.psearchResults![index].productname
-                                    .toString())));
-                    //exit(0);
-                  },
-                );
-              })
+                  Container(
+                    color: Colors.blue,
+                    width: MediaQuery.of(context).size.width,
+                    height: 36,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Sellers",
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
+                    ),
+                  ),
+                  locationData.sellersearchResults != null &&
+                          locationData.sellersearchResults!.length != 0
+                      ? Container(
+                          height: 200,
+                          child: ListView.builder(
+                              itemCount:
+                                  locationData.sellersearchResults!.length,
+                              itemBuilder: (context, index) {
+                                return ListTile(
+                                  title: Text(
+                                    locationData.sellersearchResults![index]
+                                        .businessname
+                                        .toString(),
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                  onTap: () async {
+                                    //exit(0);
+                                  },
+                                );
+                              }),
+                        )
+                      : SizedBox(),
+                ],
+              ),
+            )
           : CustomScrollView(
               slivers: [
                 SliverGrid(

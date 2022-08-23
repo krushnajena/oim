@@ -43,7 +43,9 @@ class _AddBusinessLocationScreenState extends State<AddBusinessLocationScreen> {
   int? val = -1;
   bool showAllParameters = true;
   //String statename = '';
-  String stateid = '';
+  String stateid = "";
+  String areaid = "";
+  String cityid = "";
   @override
   void initState() {
     // TODO: implement initState
@@ -223,31 +225,25 @@ class _AddBusinessLocationScreenState extends State<AddBusinessLocationScreen> {
                                                   Text(
                                                     statename == ""
                                                         ? "Select State"
-                                                        : statename +
-                                                            "," +
-                                                            cityname +
-                                                            ", " +
-                                                            areaname,
+                                                        : statename,
                                                     style: TextStyle(
                                                         color: Colors.grey,
                                                         fontSize: 16),
                                                   ),
                                                   InkWell(
                                                       onTap: () async {
-                                                        final result =
-                                                            await Navigator.push(
-                                                                context,
-                                                                MaterialPageRoute(
-                                                                    builder:
-                                                                        (context) =>
-                                                                            const SellerLocationSeacrhScreen()));
+                                                        final result = await Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder: (context) =>
+                                                                    const SellerLocationSeacrhScreen(
+                                                                        "",
+                                                                        "")));
                                                         setState(() {
+                                                          stateid =
+                                                              result["stateid"];
                                                           statename = result[
                                                               "statename"];
-                                                          cityname =
-                                                              result["city"];
-                                                          areaname = result[
-                                                              "areaname"];
                                                         });
                                                       },
                                                       child: Icon(Icons
@@ -265,7 +261,7 @@ class _AddBusinessLocationScreenState extends State<AddBusinessLocationScreen> {
                                   ),
                                 )
                               : const SizedBox(),
-                          showAllParameters == true
+                          showAllParameters == true && stateid != ""
                               ? Padding(
                                   padding:
                                       const EdgeInsets.only(left: 8, right: 8),
@@ -285,33 +281,28 @@ class _AddBusinessLocationScreenState extends State<AddBusinessLocationScreen> {
                                                         .spaceBetween,
                                                 children: [
                                                   Text(
-                                                    statename == ""
+                                                    cityname == ""
                                                         ? "Select City"
-                                                        : statename +
-                                                            "," +
-                                                            cityname +
-                                                            ", " +
-                                                            areaname,
+                                                        : cityname,
                                                     style: TextStyle(
                                                         color: Colors.grey,
                                                         fontSize: 16),
                                                   ),
                                                   InkWell(
                                                       onTap: () async {
-                                                        final result =
-                                                            await Navigator.push(
-                                                                context,
-                                                                MaterialPageRoute(
-                                                                    builder:
-                                                                        (context) =>
-                                                                            const SellerLocationSeacrhScreen()));
+                                                        final result = await Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder: (context) =>
+                                                                    SellerLocationSeacrhScreen(
+                                                                        stateid
+                                                                            .toString(),
+                                                                        "")));
                                                         setState(() {
-                                                          statename = result[
-                                                              "statename"];
-                                                          cityname =
-                                                              result["city"];
-                                                          areaname = result[
-                                                              "areaname"];
+                                                          cityid =
+                                                              result["cityid"];
+                                                          cityname = result[
+                                                              "cityname"];
                                                         });
                                                       },
                                                       child: Icon(Icons
@@ -329,7 +320,7 @@ class _AddBusinessLocationScreenState extends State<AddBusinessLocationScreen> {
                                   ),
                                 )
                               : const SizedBox(),
-                          showAllParameters == true
+                          showAllParameters == true && cityid != ""
                               ? Padding(
                                   padding:
                                       const EdgeInsets.only(left: 8, right: 8),
@@ -349,31 +340,27 @@ class _AddBusinessLocationScreenState extends State<AddBusinessLocationScreen> {
                                                         .spaceBetween,
                                                 children: [
                                                   Text(
-                                                    statename == ""
+                                                    areaname == ""
                                                         ? "Select Area"
-                                                        : statename +
-                                                            "," +
-                                                            cityname +
-                                                            ", " +
-                                                            areaname,
+                                                        : areaname,
                                                     style: TextStyle(
                                                         color: Colors.grey,
                                                         fontSize: 16),
                                                   ),
                                                   InkWell(
                                                       onTap: () async {
-                                                        final result =
-                                                            await Navigator.push(
-                                                                context,
-                                                                MaterialPageRoute(
-                                                                    builder:
-                                                                        (context) =>
-                                                                            const SellerLocationSeacrhScreen()));
+                                                        print(cityid);
+                                                        final result = await Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder: (context) =>
+                                                                    SellerLocationSeacrhScreen(
+                                                                        stateid
+                                                                            .toString(),
+                                                                        cityid)));
                                                         setState(() {
-                                                          statename = result[
-                                                              "statename"];
-                                                          cityname =
-                                                              result["city"];
+                                                          areaid =
+                                                              result["areaid"];
                                                           areaname = result[
                                                               "areaname"];
                                                         });
