@@ -77,7 +77,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
       subcatelouges = [];
     });
 
-    var nencoded = Uri.parse(getSubcategoriesByCatelogid + catelogId!);
+    var nencoded = Uri.parse(getSubcategoriesByCatelogid + catelogId);
     print(get_catelogues + categoryId);
     http.get(nencoded).then((value) {
       print(value.statusCode);

@@ -438,432 +438,439 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    double deviceHeight = MediaQuery.of(context).size.height;
+    double deviceWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Add New Product"),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height: 80,
-                child: ListView(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    _pickedImage6 != null
-                        ? _pickedImage7 == null
-                            ? InkWell(
-                                onTap: () {
-                                  showModalBottomSheet(
-                                      context: context,
-                                      builder: (context) {
-                                        return Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: <Widget>[
-                                            ListTile(
-                                              leading: new Icon(Icons.photo),
-                                              title: new Text('Gallery'),
-                                              onTap: () {
-                                                Navigator.pop(context);
-                                                _pickImage7("gallery");
-                                              },
-                                            ),
-                                            ListTile(
-                                              leading: new Icon(Icons.videocam),
-                                              title: new Text('Camera'),
-                                              onTap: () {
-                                                Navigator.pop(context);
-                                                _pickImage7("camera");
-                                              },
-                                            ),
-                                          ],
-                                        );
-                                      });
-                                },
-                                child: Container(
-                                  height: 100,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.black12,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                  child: Center(
-                                      child: Icon(
+        child: Column(
+          children: [
+
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 80,
+
+                    child:
+                    Align(
+                      alignment: Alignment(-1.60, 0),
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        children: [
+                          _pickedImage6 != null
+                              ? _pickedImage7 == null
+                              ? InkWell(
+                            onTap: () {
+                              showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) {
+                                    return Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        ListTile(
+                                          leading: new Icon(Icons.photo),
+                                          title: new Text('Gallery'),
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                            _pickImage7("gallery");
+                                          },
+                                        ),
+                                        ListTile(
+                                          leading: new Icon(Icons.videocam),
+                                          title: new Text('Camera'),
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                            _pickImage7("camera");
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            },
+                            child: Container(
+                              height: 100,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.black12,
+                                ),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Center(
+                                  child: Icon(
                                     Icons.camera_alt_outlined,
                                     color: Colors.grey,
                                   )),
+                            ),
+                          )
+                              : InkWell(
+                            onTap: () {},
+                            child: Container(
+                              height: 100,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.black12,
                                 ),
-                              )
-                            : InkWell(
-                                onTap: () {},
-                                child: Container(
-                                  height: 100,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.black12,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                  child: Center(
-                                      child: Image.file(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Center(
+                                  child: Image.file(
                                     File(_pickedImage7!.path.toString()),
                                   )),
+                            ),
+                          )
+                              : SizedBox(),
+                          SizedBox(width: 10,),
+                          _pickedImage5 != null
+                              ? _pickedImage6 == null
+                              ? InkWell(
+                            onTap: () {
+                              showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) {
+                                    return Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        ListTile(
+                                          leading: new Icon(Icons.photo),
+                                          title: new Text('Gallery'),
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                            _pickImage6("gallery");
+                                          },
+                                        ),
+                                        ListTile(
+                                          leading: new Icon(Icons.videocam),
+                                          title: new Text('Camera'),
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                            _pickImage6("camera");
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            },
+                            child: Container(
+                              height: 100,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.black12,
                                 ),
-                              )
-                        : SizedBox(),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    _pickedImage5 != null
-                        ? _pickedImage6 == null
-                            ? InkWell(
-                                onTap: () {
-                                  showModalBottomSheet(
-                                      context: context,
-                                      builder: (context) {
-                                        return Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: <Widget>[
-                                            ListTile(
-                                              leading: new Icon(Icons.photo),
-                                              title: new Text('Gallery'),
-                                              onTap: () {
-                                                Navigator.pop(context);
-                                                _pickImage6("gallery");
-                                              },
-                                            ),
-                                            ListTile(
-                                              leading: new Icon(Icons.videocam),
-                                              title: new Text('Camera'),
-                                              onTap: () {
-                                                Navigator.pop(context);
-                                                _pickImage6("camera");
-                                              },
-                                            ),
-                                          ],
-                                        );
-                                      });
-                                },
-                                child: Container(
-                                  height: 100,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.black12,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                  child: Center(
-                                      child: Icon(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Center(
+                                  child: Icon(
                                     Icons.camera_alt_outlined,
                                     color: Colors.grey,
                                   )),
+                            ),
+                          )
+                              : InkWell(
+                            onTap: () {},
+                            child: Container(
+                              height: 100,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.black12,
                                 ),
-                              )
-                            : InkWell(
-                                onTap: () {},
-                                child: Container(
-                                  height: 100,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.black12,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                  child: Center(
-                                      child: Image.file(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Center(
+                                  child: Image.file(
                                     File(_pickedImage6!.path.toString()),
                                   )),
+                            ),
+                          )
+                              : SizedBox(),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          _pickedImage4 != null
+                              ? _pickedImage5 == null
+                              ? InkWell(
+                            onTap: () {
+                              showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) {
+                                    return Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        ListTile(
+                                          leading: new Icon(Icons.photo),
+                                          title: new Text('Gallery'),
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                            _pickImage5("gallery");
+                                          },
+                                        ),
+                                        ListTile(
+                                          leading: new Icon(Icons.videocam),
+                                          title: new Text('Camera'),
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                            _pickImage5("camera");
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            },
+                            child: Container(
+                              height: 100,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.black12,
                                 ),
-                              )
-                        : SizedBox(),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    _pickedImage4 != null
-                        ? _pickedImage5 == null
-                            ? InkWell(
-                                onTap: () {
-                                  showModalBottomSheet(
-                                      context: context,
-                                      builder: (context) {
-                                        return Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: <Widget>[
-                                            ListTile(
-                                              leading: new Icon(Icons.photo),
-                                              title: new Text('Gallery'),
-                                              onTap: () {
-                                                Navigator.pop(context);
-                                                _pickImage5("gallery");
-                                              },
-                                            ),
-                                            ListTile(
-                                              leading: new Icon(Icons.videocam),
-                                              title: new Text('Camera'),
-                                              onTap: () {
-                                                Navigator.pop(context);
-                                                _pickImage5("camera");
-                                              },
-                                            ),
-                                          ],
-                                        );
-                                      });
-                                },
-                                child: Container(
-                                  height: 100,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.black12,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                  child: Center(
-                                      child: Icon(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Center(
+                                  child: Icon(
                                     Icons.camera_alt_outlined,
                                     color: Colors.grey,
                                   )),
+                            ),
+                          )
+                              : InkWell(
+                            onTap: () {},
+                            child: Container(
+                              height: 100,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.black12,
                                 ),
-                              )
-                            : InkWell(
-                                onTap: () {},
-                                child: Container(
-                                  height: 100,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.black12,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                  child: Center(
-                                      child: Image.file(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Center(
+                                  child: Image.file(
                                     File(_pickedImage5!.path.toString()),
                                   )),
+                            ),
+                          )
+                              : SizedBox(),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          _pickedImage3 != null
+                              ? _pickedImage4 == null
+                              ? InkWell(
+                            onTap: () {
+                              showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) {
+                                    return Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        ListTile(
+                                          leading: new Icon(Icons.photo),
+                                          title: new Text('Gallery'),
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                            _pickImage4("gallery");
+                                          },
+                                        ),
+                                        ListTile(
+                                          leading: new Icon(Icons.videocam),
+                                          title: new Text('Camera'),
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                            _pickImage4("camera");
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            },
+                            child: Container(
+                              height: 100,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.black12,
                                 ),
-                              )
-                        : SizedBox(),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    _pickedImage3 != null
-                        ? _pickedImage4 == null
-                            ? InkWell(
-                                onTap: () {
-                                  showModalBottomSheet(
-                                      context: context,
-                                      builder: (context) {
-                                        return Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: <Widget>[
-                                            ListTile(
-                                              leading: new Icon(Icons.photo),
-                                              title: new Text('Gallery'),
-                                              onTap: () {
-                                                Navigator.pop(context);
-                                                _pickImage4("gallery");
-                                              },
-                                            ),
-                                            ListTile(
-                                              leading: new Icon(Icons.videocam),
-                                              title: new Text('Camera'),
-                                              onTap: () {
-                                                Navigator.pop(context);
-                                                _pickImage4("camera");
-                                              },
-                                            ),
-                                          ],
-                                        );
-                                      });
-                                },
-                                child: Container(
-                                  height: 100,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.black12,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                  child: Center(
-                                      child: Icon(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Center(
+                                  child: Icon(
                                     Icons.camera_alt_outlined,
                                     color: Colors.grey,
                                   )),
+                            ),
+                          )
+                              : InkWell(
+                            onTap: () {},
+                            child: Container(
+                              height: 100,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.black12,
                                 ),
-                              )
-                            : InkWell(
-                                onTap: () {},
-                                child: Container(
-                                  height: 100,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.black12,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                  child: Center(
-                                      child: Image.file(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Center(
+                                  child: Image.file(
                                     File(_pickedImage4!.path.toString()),
                                   )),
+                            ),
+                          )
+                              : SizedBox(),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          _pickedImage2 != null
+                              ? _pickedImage3 == null
+                              ? InkWell(
+                            onTap: () {
+                              showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) {
+                                    return Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        ListTile(
+                                          leading: new Icon(Icons.photo),
+                                          title: new Text('Gallery'),
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                            _pickImage3("gallery");
+                                          },
+                                        ),
+                                        ListTile(
+                                          leading: new Icon(Icons.videocam),
+                                          title: new Text('Camera'),
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                            _pickImage3("camera");
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            },
+                            child: Container(
+                              height: 100,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.black12,
                                 ),
-                              )
-                        : SizedBox(),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    _pickedImage2 != null
-                        ? _pickedImage3 == null
-                            ? InkWell(
-                                onTap: () {
-                                  showModalBottomSheet(
-                                      context: context,
-                                      builder: (context) {
-                                        return Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: <Widget>[
-                                            ListTile(
-                                              leading: new Icon(Icons.photo),
-                                              title: new Text('Gallery'),
-                                              onTap: () {
-                                                Navigator.pop(context);
-                                                _pickImage3("gallery");
-                                              },
-                                            ),
-                                            ListTile(
-                                              leading: new Icon(Icons.videocam),
-                                              title: new Text('Camera'),
-                                              onTap: () {
-                                                Navigator.pop(context);
-                                                _pickImage3("camera");
-                                              },
-                                            ),
-                                          ],
-                                        );
-                                      });
-                                },
-                                child: Container(
-                                  height: 100,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.black12,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                  child: Center(
-                                      child: Icon(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Center(
+                                  child: Icon(
                                     Icons.camera_alt_outlined,
                                     color: Colors.grey,
                                   )),
+                            ),
+                          )
+                              : InkWell(
+                            onTap: () {},
+                            child: Container(
+                              height: 100,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.black12,
                                 ),
-                              )
-                            : InkWell(
-                                onTap: () {},
-                                child: Container(
-                                  height: 100,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.black12,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                  child: Center(
-                                      child: Image.file(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Center(
+                                  child: Image.file(
                                     File(_pickedImage3!.path.toString()),
                                   )),
+                            ),
+                          )
+                              : SizedBox(),
+                          SizedBox(width: 10,),
+                          _pickedImage1 != null
+                              ? _pickedImage2 == null
+                              ? InkWell(
+                            onTap: () {
+                              showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) {
+                                    return Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        ListTile(
+                                          leading: new Icon(Icons.photo),
+                                          title: new Text('Gallery'),
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                            _pickImage2("gallery");
+                                          },
+                                        ),
+                                        ListTile(
+                                          leading: new Icon(Icons.videocam),
+                                          title: new Text('Camera'),
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                            _pickImage2("camera");
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            },
+                            child: Container(
+                              height: 100,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                //color: Colors.grey,
+                                border: Border.all(
+                                  color: Colors.black12,
                                 ),
-                              )
-                        : SizedBox(),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    _pickedImage1 != null
-                        ? _pickedImage2 == null
-                            ? InkWell(
-                                onTap: () {
-                                  showModalBottomSheet(
-                                      context: context,
-                                      builder: (context) {
-                                        return Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: <Widget>[
-                                            ListTile(
-                                              leading: new Icon(Icons.photo),
-                                              title: new Text('Gallery'),
-                                              onTap: () {
-                                                Navigator.pop(context);
-                                                _pickImage2("gallery");
-                                              },
-                                            ),
-                                            ListTile(
-                                              leading: new Icon(Icons.videocam),
-                                              title: new Text('Camera'),
-                                              onTap: () {
-                                                Navigator.pop(context);
-                                                _pickImage2("camera");
-                                              },
-                                            ),
-                                          ],
-                                        );
-                                      });
-                                },
-                                child: Container(
-                                  height: 100,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.black12,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                  child: Stack(
-                                    children: [
-                                      Text("Main Image"),
-                                      Center(
-                                          child: Icon(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Stack(
+                                children: [
+                                  Text("Main Image"),
+                                  Center(
+                                      child: Icon(
                                         Icons.camera_alt_outlined,
                                         color: Colors.grey,
                                       )),
-                                    ],
-                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                              : InkWell(
+                            onTap: () {},
+                            child: Container(
+                              height: 100,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.black12,
                                 ),
-                              )
-                            : InkWell(
-                                onTap: () {},
-                                child: Container(
-                                  height: 100,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.black12,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                  child: Center(
-                                      child: Image.file(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Center(
+                                  child: Image.file(
                                     File(_pickedImage2!.path.toString()),
                                   )),
-                                ),
-                              )
-                        : SizedBox(),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    _pickedImage1 == null
-                        ? InkWell(
+                            ),
+                          )
+                              : SizedBox(),
+                          SizedBox(width: 10,),
+
+                          _pickedImage1 == null
+                              ? InkWell(
                             onTap: () {
                               showModalBottomSheet(
                                   context: context,
@@ -900,14 +907,13 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                                 ),
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
-                              child: Center(
-                                  child: Icon(
+                              child: Icon(
                                 Icons.camera_alt_outlined,
                                 color: Colors.grey,
-                              )),
+                              ),
                             ),
                           )
-                        : InkWell(
+                              : InkWell(
                             onTap: () {},
                             child: Container(
                               height: 100,
@@ -920,874 +926,872 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                               ),
                               child: Center(
                                   child: Image.file(
-                                File(_pickedImage1!.path.toString()),
-                              )),
+                                    File(_pickedImage1!.path.toString()),
+                                  )),
                             ),
                           ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "You can add 7 images.",
-                style: TextStyle(color: Colors.black38, fontSize: 18),
-              ),
-              TextFormField(
-                controller: txt_productname,
-                decoration: InputDecoration(
-                    label: Row(
-                      children: [
-                        Text("Product Name "),
-                        Text(
-                          "*",
-                          style: TextStyle(color: Colors.red, fontSize: 20),
-                        ),
-                      ],
-                    ),
-                    labelStyle: TextStyle(color: Colors.black38),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.blue),
-                    ),
-                    border: UnderlineInputBorder()),
-                keyboardType: TextInputType.text,
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 9.0),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                categoryname == ""
-                                    ? "Select Category"
-                                    : catelogName + '/' + categoryname,
-                                style:
-                                    TextStyle(color: Colors.grey, fontSize: 16),
-                              ),
-                              InkWell(
-                                  onTap: () async {
-                                    final result = await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const SelectCategoryScreen()));
-                                    setState(() {
-                                      categoryname = result["categoryname"];
-                                      _valueChanged = result["categoryid"];
-                                      catelogName = result["catelogName"];
-                                    });
-                                  },
-                                  child: Icon(Icons.keyboard_arrow_down))
-                            ],
-                          ),
-                          SizedBox(
-                            height: 12,
-                          ),
+                          SizedBox(width: 10),
                         ],
                       ),
                     ),
-                  )
-                ],
-              ),
-              /*   Row(
-                children: [
-                  RaisedButton(
-                    onPressed: () async {
-                      final result = await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const SelectCategoryScreen()));
-                      setState(() {
-                        categoryname = result["categoryname"];
-                        _valueChanged = result["categoryid"];
-                      });
-                    },
-                    child: Text("Select Category"),
+                  ),
+                  const SizedBox(height: 10,),
+                  const Text("You can add 7 images.",
+                    style: TextStyle(color: Colors.black38, fontSize: 16),
+                  ),
+                  TextFormField(
+                    controller: txt_productname,
+                    decoration: InputDecoration(
+                        label: Row(
+                          children: [
+                            Text("Product Name "),
+                            Text(
+                              "*",
+                              style: TextStyle(color: Colors.red, fontSize: 20),
+                            ),
+                          ],
+                        ),
+                        labelStyle: TextStyle(color: Colors.black38),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue),
+                        ),
+                        border: UnderlineInputBorder()),
+                    keyboardType: TextInputType.text,
                   ),
                   SizedBox(
-                    width: 10,
+                    height: 30,
                   ),
-                  Text(categoryname,
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 14))
-                ],
-              ),*/
-              SizedBox(
-                height: 30,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Expanded(
-                    child: TextFormField(
-                      controller: txt_mrp,
-                      decoration: InputDecoration(
-                          label: Row(
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 9.0),
+                          child: Column(
                             children: [
-                              Text('MRP '),
-                              Text(
-                                "*",
-                                style:
-                                    TextStyle(color: Colors.red, fontSize: 20),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    categoryname == ""
+                                        ? "Select Category"
+                                        : catelogName + '/' + categoryname,
+                                    style:
+                                        TextStyle(color: Colors.grey, fontSize: 16),
+                                  ),
+                                  InkWell(
+                                      onTap: () async {
+                                        final result = await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const SelectCategoryScreen()));
+                                        setState(() {
+                                          categoryname = result["categoryname"];
+                                          _valueChanged = result["categoryid"];
+                                          catelogName = result["catelogName"];
+                                        });
+                                      },
+                                      child: Icon(Icons.keyboard_arrow_down))
+                                ],
+                              ),
+                              SizedBox(
+                                height: 12,
                               ),
                             ],
                           ),
-                          labelStyle: TextStyle(color: Colors.black38)),
-                      keyboardType: TextInputType.number,
-                    ),
+                        ),
+                      )
+                    ],
                   ),
-                  SizedBox(width: 10.0),
-                  Expanded(
-                    child: TextFormField(
-                      controller: txt_discountedprice,
-                      onChanged: (value) {
-                        if (txt_mrp.text == "") {
-                          showInSnackBar("Please Enter Mrp");
-                          txt_discountedprice.text = "";
-                        } else {
-                          double mrp = double.parse(txt_mrp.text);
-                          double dis = double.parse(value);
-                          if (dis > mrp) {
-                            showInSnackBar(
-                                "Discounted Price Should Be less then MRP");
-                            txt_discountedprice.text = "";
-                            FocusScope.of(context).previousFocus();
-                          }
-                        }
-                      },
-                      decoration: InputDecoration(
-                          label: Row(
-                            children: [
-                              Text('Discounted Price '),
-                              Text(
-                                "*",
-                                style:
-                                    TextStyle(color: Colors.red, fontSize: 20),
-                              ),
-                            ],
-                          ),
-                          labelStyle: TextStyle(color: Colors.black38)),
-                      keyboardType: TextInputType.number,
-                    ),
+                  /*   Row(
+                    children: [
+                      RaisedButton(
+                        onPressed: () async {
+                          final result = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const SelectCategoryScreen()));
+                          setState(() {
+                            categoryname = result["categoryname"];
+                            _valueChanged = result["categoryid"];
+                          });
+                        },
+                        child: Text("Select Category"),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(categoryname,
+                          style:
+                              TextStyle(fontWeight: FontWeight.bold, fontSize: 14))
+                    ],
+                  ),*/
+                  SizedBox(
+                    height: 30,
                   ),
-                ],
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 9.0),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                selectedUnit == ""
-                                    ? "Select Unit"
-                                    : selectedUnit,
-                                style:
-                                    TextStyle(color: Colors.grey, fontSize: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Expanded(
+                        child: TextFormField(
+                          controller: txt_mrp,
+                          decoration: InputDecoration(
+                              label: Row(
+                                children: [
+                                  Text('MRP '),
+                                  Text(
+                                    "*",
+                                    style:
+                                        TextStyle(color: Colors.red, fontSize: 20),
+                                  ),
+                                ],
                               ),
-                              InkWell(
-                                  onTap: () {
-                                    showModalBottomSheet(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.only(
-                                            topLeft:
-                                                const Radius.circular(25.0),
-                                            topRight:
-                                                const Radius.circular(25.0),
-                                          ),
-                                        ),
-                                        context: context,
-                                        builder: (context) {
-                                          return Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 30,
-                                                    left: 100,
-                                                    bottom: 10),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceAround,
-                                                  children: [
-                                                    Text(
-                                                      "Choose Product Unit",
-                                                      style: TextStyle(
-                                                          fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.w500),
+                              labelStyle: TextStyle(color: Colors.black38)),
+                          keyboardType: TextInputType.number,
+                        ),
+                      ),
+                      SizedBox(width: 10.0),
+                      Expanded(
+                        child: TextFormField(
+                          controller: txt_discountedprice,
+                          onChanged: (value) {
+                            if (txt_mrp.text == "") {
+                              showInSnackBar("Please Enter Mrp");
+                              txt_discountedprice.text = "";
+                            } else {
+                              double mrp = double.parse(txt_mrp.text);
+                              double dis = double.parse(value);
+                              if (dis > mrp) {
+                                showInSnackBar(
+                                    "Discounted Price Should Be less then MRP");
+                                txt_discountedprice.text = "";
+                                FocusScope.of(context).previousFocus();
+                              }
+                            }
+                          },
+                          decoration: InputDecoration(
+                              label: Row(
+                                children: [
+                                  Text('Discounted Price '),
+                                  Text(
+                                    "*",
+                                    style:
+                                        TextStyle(color: Colors.red, fontSize: 20),
+                                  ),
+                                ],
+                              ),
+                              labelStyle: TextStyle(color: Colors.black38)),
+                          keyboardType: TextInputType.number,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 9.0),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    selectedUnit == ""
+                                        ? "Select Unit"
+                                        : selectedUnit,
+                                    style:
+                                        TextStyle(color: Colors.grey, fontSize: 16),
+                                  ),
+                                  InkWell(
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.only(
+                                                topLeft:
+                                                    const Radius.circular(25.0),
+                                                topRight:
+                                                    const Radius.circular(25.0),
+                                              ),
+                                            ),
+                                            context: context,
+                                            builder: (context) {
+                                              return Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets.only(
+                                                        top: 30,
+                                                        left: 100,
+                                                        bottom: 10),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceAround,
+                                                      children: [
+                                                        Text(
+                                                          "Choose Product Unit",
+                                                          style: TextStyle(
+                                                              fontSize: 18,
+                                                              fontWeight:
+                                                                  FontWeight.w500),
+                                                        ),
+                                                        InkWell(
+                                                            onTap: () {
+                                                              Navigator.of(context)
+                                                                  .pop();
+                                                            },
+                                                            child: Icon(Icons
+                                                                .clear_rounded)),
+                                                      ],
                                                     ),
-                                                    InkWell(
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      InkWell(
                                                         onTap: () {
+                                                          setState(() {
+                                                            selectedUnit = "piece";
+                                                          });
                                                           Navigator.of(context)
                                                               .pop();
                                                         },
-                                                        child: Icon(Icons
-                                                            .clear_rounded)),
-                                                  ],
-                                                ),
-                                              ),
-                                              Row(
-                                                children: [
-                                                  InkWell(
-                                                    onTap: () {
-                                                      setState(() {
-                                                        selectedUnit = "piece";
-                                                      });
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    },
-                                                    child: Container(
-                                                      margin: EdgeInsets.only(
-                                                          top: 10, left: 10),
-                                                      height: 40,
-                                                      width: 80,
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.blue[50],
-                                                        border: Border.all(
-                                                          color: Colors.blue,
+                                                        child: Container(
+                                                          margin: EdgeInsets.only(
+                                                              top: 10, left: 10),
+                                                          height: 40,
+                                                          width: 80,
+                                                          decoration: BoxDecoration(
+                                                            color: Colors.blue[50],
+                                                            border: Border.all(
+                                                              color: Colors.blue,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(10.0),
+                                                          ),
+                                                          child: Center(
+                                                              child: Text(
+                                                            "piece",
+                                                            style: TextStyle(
+                                                                color: Colors.blue),
+                                                          )),
                                                         ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.0),
                                                       ),
-                                                      child: Center(
-                                                          child: Text(
-                                                        "piece",
-                                                        style: TextStyle(
-                                                            color: Colors.blue),
-                                                      )),
-                                                    ),
+                                                      SizedBox(width: 10),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            selectedUnit = "gm";
+                                                          });
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child: Container(
+                                                          margin: EdgeInsets.only(
+                                                            top: 10,
+                                                          ),
+                                                          height: 40,
+                                                          width: 80,
+                                                          decoration: BoxDecoration(
+                                                            border: Border.all(
+                                                              color: Colors.black38,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(10.0),
+                                                          ),
+                                                          child: Center(
+                                                              child: Text("gm")),
+                                                        ),
+                                                      ),
+                                                      SizedBox(width: 10),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            selectedUnit = "ml";
+                                                          });
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child: Container(
+                                                          margin: EdgeInsets.only(
+                                                            top: 10,
+                                                          ),
+                                                          height: 40,
+                                                          width: 80,
+                                                          decoration: BoxDecoration(
+                                                            border: Border.all(
+                                                              color: Colors.black38,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(10.0),
+                                                          ),
+                                                          child: Center(
+                                                              child: Text("ml")),
+                                                        ),
+                                                      ),
+                                                      SizedBox(width: 10),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            selectedUnit = "liter";
+                                                          });
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child: Container(
+                                                          margin: EdgeInsets.only(
+                                                            top: 10,
+                                                          ),
+                                                          height: 40,
+                                                          width: 80,
+                                                          decoration: BoxDecoration(
+                                                            border: Border.all(
+                                                              color: Colors.black38,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(10.0),
+                                                          ),
+                                                          child: Center(
+                                                              child: Text("liter")),
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
-                                                  SizedBox(width: 10),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      setState(() {
-                                                        selectedUnit = "gm";
-                                                      });
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    },
-                                                    child: Container(
-                                                      margin: EdgeInsets.only(
-                                                        top: 10,
-                                                      ),
-                                                      height: 40,
-                                                      width: 80,
-                                                      decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                          color: Colors.black38,
+                                                  SizedBox(height: 10),
+                                                  Row(
+                                                    children: [
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            selectedUnit = "mm";
+                                                          });
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child: Container(
+                                                          margin: EdgeInsets.only(
+                                                            left: 10,
+                                                          ),
+                                                          height: 40,
+                                                          width: 80,
+                                                          decoration: BoxDecoration(
+                                                            border: Border.all(
+                                                              color: Colors.black38,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(10.0),
+                                                          ),
+                                                          child: Center(
+                                                              child: Text("mm")),
                                                         ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.0),
                                                       ),
-                                                      child: Center(
-                                                          child: Text("gm")),
-                                                    ),
+                                                      SizedBox(width: 10),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            selectedUnit = "kg";
+                                                          });
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child: Container(
+                                                          height: 40,
+                                                          width: 80,
+                                                          decoration: BoxDecoration(
+                                                            border: Border.all(
+                                                              color: Colors.black38,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(10.0),
+                                                          ),
+                                                          child: Center(
+                                                              child: Text("kg")),
+                                                        ),
+                                                      ),
+                                                      SizedBox(width: 10),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            selectedUnit = "ft";
+                                                          });
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child: Container(
+                                                          height: 40,
+                                                          width: 80,
+                                                          decoration: BoxDecoration(
+                                                            border: Border.all(
+                                                              color: Colors.black38,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(10.0),
+                                                          ),
+                                                          child: Center(
+                                                              child: Text("ft")),
+                                                        ),
+                                                      ),
+                                                      SizedBox(width: 10),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            selectedUnit = "meter";
+                                                          });
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child: Container(
+                                                          height: 40,
+                                                          width: 80,
+                                                          decoration: BoxDecoration(
+                                                            border: Border.all(
+                                                              color: Colors.black38,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(10.0),
+                                                          ),
+                                                          child: Center(
+                                                              child: Text("meter")),
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
-                                                  SizedBox(width: 10),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      setState(() {
-                                                        selectedUnit = "ml";
-                                                      });
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    },
-                                                    child: Container(
-                                                      margin: EdgeInsets.only(
-                                                        top: 10,
-                                                      ),
-                                                      height: 40,
-                                                      width: 80,
-                                                      decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                          color: Colors.black38,
+                                                  SizedBox(height: 10),
+                                                  Row(
+                                                    children: [
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            selectedUnit = "sq.ft";
+                                                          });
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child: Container(
+                                                          margin: EdgeInsets.only(
+                                                            left: 10,
+                                                          ),
+                                                          height: 40,
+                                                          width: 80,
+                                                          decoration: BoxDecoration(
+                                                            border: Border.all(
+                                                              color: Colors.black38,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(10.0),
+                                                          ),
+                                                          child: Center(
+                                                              child: Text("sq.ft")),
                                                         ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.0),
                                                       ),
-                                                      child: Center(
-                                                          child: Text("ml")),
-                                                    ),
+                                                      SizedBox(width: 10),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            selectedUnit = "set";
+                                                          });
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child: Container(
+                                                          height: 40,
+                                                          width: 80,
+                                                          decoration: BoxDecoration(
+                                                            border: Border.all(
+                                                              color: Colors.black38,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(10.0),
+                                                          ),
+                                                          child: Center(
+                                                              child: Text("set")),
+                                                        ),
+                                                      ),
+                                                      SizedBox(width: 10),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            selectedUnit = "bunch";
+                                                          });
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child: Container(
+                                                          height: 40,
+                                                          width: 80,
+                                                          decoration: BoxDecoration(
+                                                            border: Border.all(
+                                                              color: Colors.black38,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(10.0),
+                                                          ),
+                                                          child: Center(
+                                                              child: Text("bunch")),
+                                                        ),
+                                                      ),
+                                                      SizedBox(width: 10),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            selectedUnit = "bundle";
+                                                          });
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child: Container(
+                                                          height: 40,
+                                                          width: 80,
+                                                          decoration: BoxDecoration(
+                                                            border: Border.all(
+                                                              color: Colors.black38,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(10.0),
+                                                          ),
+                                                          child: Center(
+                                                              child:
+                                                                  Text("bundle")),
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
-                                                  SizedBox(width: 10),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      setState(() {
-                                                        selectedUnit = "liter";
-                                                      });
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    },
-                                                    child: Container(
-                                                      margin: EdgeInsets.only(
-                                                        top: 10,
-                                                      ),
-                                                      height: 40,
-                                                      width: 80,
-                                                      decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                          color: Colors.black38,
+                                                  SizedBox(height: 10),
+                                                  Row(
+                                                    children: [
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            selectedUnit = "packet";
+                                                          });
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child: Container(
+                                                          margin: EdgeInsets.only(
+                                                            left: 10,
+                                                          ),
+                                                          height: 40,
+                                                          width: 80,
+                                                          decoration: BoxDecoration(
+                                                            border: Border.all(
+                                                              color: Colors.black38,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(10.0),
+                                                          ),
+                                                          child: Center(
+                                                              child:
+                                                                  Text("packet")),
                                                         ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.0),
                                                       ),
-                                                      child: Center(
-                                                          child: Text("liter")),
-                                                    ),
+                                                      SizedBox(width: 10),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            selectedUnit = "box";
+                                                          });
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child: Container(
+                                                          height: 40,
+                                                          width: 80,
+                                                          decoration: BoxDecoration(
+                                                            border: Border.all(
+                                                              color: Colors.black38,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(10.0),
+                                                          ),
+                                                          child: Center(
+                                                              child: Text("box")),
+                                                        ),
+                                                      ),
+                                                      SizedBox(width: 10),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            selectedUnit = "pound";
+                                                          });
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child: Container(
+                                                          height: 40,
+                                                          width: 80,
+                                                          decoration: BoxDecoration(
+                                                            border: Border.all(
+                                                              color: Colors.black38,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(10.0),
+                                                          ),
+                                                          child: Center(
+                                                              child: Text("pound")),
+                                                        ),
+                                                      ),
+                                                      SizedBox(width: 10),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            selectedUnit = "dozen";
+                                                          });
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child: Container(
+                                                          height: 40,
+                                                          width: 80,
+                                                          decoration: BoxDecoration(
+                                                            border: Border.all(
+                                                              color: Colors.black38,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(10.0),
+                                                          ),
+                                                          child: Center(
+                                                              child: Text("dozen")),
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
-                                                ],
-                                              ),
-                                              SizedBox(height: 10),
-                                              Row(
-                                                children: [
-                                                  InkWell(
-                                                    onTap: () {
-                                                      setState(() {
-                                                        selectedUnit = "mm";
-                                                      });
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    },
-                                                    child: Container(
-                                                      margin: EdgeInsets.only(
-                                                        left: 10,
-                                                      ),
-                                                      height: 40,
-                                                      width: 80,
-                                                      decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                          color: Colors.black38,
+                                                  SizedBox(height: 10),
+                                                  Row(
+                                                    children: [
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            selectedUnit = "pair";
+                                                          });
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child: Container(
+                                                          margin: EdgeInsets.only(
+                                                              left: 10, bottom: 10),
+                                                          height: 40,
+                                                          width: 80,
+                                                          decoration: BoxDecoration(
+                                                            border: Border.all(
+                                                              color: Colors.black38,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(10.0),
+                                                          ),
+                                                          child: Center(
+                                                              child: Text("pair")),
                                                         ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.0),
                                                       ),
-                                                      child: Center(
-                                                          child: Text("mm")),
-                                                    ),
-                                                  ),
-                                                  SizedBox(width: 10),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      setState(() {
-                                                        selectedUnit = "kg";
-                                                      });
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    },
-                                                    child: Container(
-                                                      height: 40,
-                                                      width: 80,
-                                                      decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                          color: Colors.black38,
+                                                      SizedBox(width: 10),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            selectedUnit = "inch";
+                                                          });
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child: Container(
+                                                          margin: EdgeInsets.only(
+                                                            bottom: 10,
+                                                          ),
+                                                          height: 40,
+                                                          width: 80,
+                                                          decoration: BoxDecoration(
+                                                            border: Border.all(
+                                                              color: Colors.black38,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(10.0),
+                                                          ),
+                                                          child: Center(
+                                                              child: Text("inch")),
                                                         ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.0),
                                                       ),
-                                                      child: Center(
-                                                          child: Text("kg")),
-                                                    ),
-                                                  ),
-                                                  SizedBox(width: 10),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      setState(() {
-                                                        selectedUnit = "ft";
-                                                      });
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    },
-                                                    child: Container(
-                                                      height: 40,
-                                                      width: 80,
-                                                      decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                          color: Colors.black38,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.0),
-                                                      ),
-                                                      child: Center(
-                                                          child: Text("ft")),
-                                                    ),
-                                                  ),
-                                                  SizedBox(width: 10),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      setState(() {
-                                                        selectedUnit = "meter";
-                                                      });
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    },
-                                                    child: Container(
-                                                      height: 40,
-                                                      width: 80,
-                                                      decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                          color: Colors.black38,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.0),
-                                                      ),
-                                                      child: Center(
-                                                          child: Text("meter")),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(height: 10),
-                                              Row(
-                                                children: [
-                                                  InkWell(
-                                                    onTap: () {
-                                                      setState(() {
-                                                        selectedUnit = "sq.ft";
-                                                      });
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    },
-                                                    child: Container(
-                                                      margin: EdgeInsets.only(
-                                                        left: 10,
-                                                      ),
-                                                      height: 40,
-                                                      width: 80,
-                                                      decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                          color: Colors.black38,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.0),
-                                                      ),
-                                                      child: Center(
-                                                          child: Text("sq.ft")),
-                                                    ),
-                                                  ),
-                                                  SizedBox(width: 10),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      setState(() {
-                                                        selectedUnit = "set";
-                                                      });
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    },
-                                                    child: Container(
-                                                      height: 40,
-                                                      width: 80,
-                                                      decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                          color: Colors.black38,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.0),
-                                                      ),
-                                                      child: Center(
-                                                          child: Text("set")),
-                                                    ),
-                                                  ),
-                                                  SizedBox(width: 10),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      setState(() {
-                                                        selectedUnit = "bunch";
-                                                      });
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    },
-                                                    child: Container(
-                                                      height: 40,
-                                                      width: 80,
-                                                      decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                          color: Colors.black38,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.0),
-                                                      ),
-                                                      child: Center(
-                                                          child: Text("bunch")),
-                                                    ),
-                                                  ),
-                                                  SizedBox(width: 10),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      setState(() {
-                                                        selectedUnit = "bundle";
-                                                      });
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    },
-                                                    child: Container(
-                                                      height: 40,
-                                                      width: 80,
-                                                      decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                          color: Colors.black38,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.0),
-                                                      ),
-                                                      child: Center(
-                                                          child:
-                                                              Text("bundle")),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(height: 10),
-                                              Row(
-                                                children: [
-                                                  InkWell(
-                                                    onTap: () {
-                                                      setState(() {
-                                                        selectedUnit = "packet";
-                                                      });
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    },
-                                                    child: Container(
-                                                      margin: EdgeInsets.only(
-                                                        left: 10,
-                                                      ),
-                                                      height: 40,
-                                                      width: 80,
-                                                      decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                          color: Colors.black38,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.0),
-                                                      ),
-                                                      child: Center(
-                                                          child:
-                                                              Text("packet")),
-                                                    ),
-                                                  ),
-                                                  SizedBox(width: 10),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      setState(() {
-                                                        selectedUnit = "box";
-                                                      });
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    },
-                                                    child: Container(
-                                                      height: 40,
-                                                      width: 80,
-                                                      decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                          color: Colors.black38,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.0),
-                                                      ),
-                                                      child: Center(
-                                                          child: Text("box")),
-                                                    ),
-                                                  ),
-                                                  SizedBox(width: 10),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      setState(() {
-                                                        selectedUnit = "pound";
-                                                      });
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    },
-                                                    child: Container(
-                                                      height: 40,
-                                                      width: 80,
-                                                      decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                          color: Colors.black38,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.0),
-                                                      ),
-                                                      child: Center(
-                                                          child: Text("pound")),
-                                                    ),
-                                                  ),
-                                                  SizedBox(width: 10),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      setState(() {
-                                                        selectedUnit = "dozen";
-                                                      });
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    },
-                                                    child: Container(
-                                                      height: 40,
-                                                      width: 80,
-                                                      decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                          color: Colors.black38,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.0),
-                                                      ),
-                                                      child: Center(
-                                                          child: Text("dozen")),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(height: 10),
-                                              Row(
-                                                children: [
-                                                  InkWell(
-                                                    onTap: () {
-                                                      setState(() {
-                                                        selectedUnit = "pair";
-                                                      });
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    },
-                                                    child: Container(
-                                                      margin: EdgeInsets.only(
-                                                          left: 10, bottom: 10),
-                                                      height: 40,
-                                                      width: 80,
-                                                      decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                          color: Colors.black38,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.0),
-                                                      ),
-                                                      child: Center(
-                                                          child: Text("pair")),
-                                                    ),
-                                                  ),
-                                                  SizedBox(width: 10),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      setState(() {
-                                                        selectedUnit = "inch";
-                                                      });
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    },
-                                                    child: Container(
-                                                      margin: EdgeInsets.only(
-                                                        bottom: 10,
-                                                      ),
-                                                      height: 40,
-                                                      width: 80,
-                                                      decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                          color: Colors.black38,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.0),
-                                                      ),
-                                                      child: Center(
-                                                          child: Text("inch")),
-                                                    ),
+                                                    ],
                                                   ),
                                                 ],
-                                              ),
-                                            ],
-                                          );
-                                        });
-                                  },
-                                  child: Icon(Icons.keyboard_arrow_down))
+                                              );
+                                            });
+                                      },
+                                      child: Icon(Icons.keyboard_arrow_down))
+                                ],
+                              ),
+                              SizedBox(
+                                height: 12,
+                              ),
                             ],
                           ),
-                          SizedBox(
-                            height: 12,
-                          ),
-                        ],
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  TextFormField(
+                    controller: txt_productdetails,
+                    decoration: InputDecoration(
+                        label: Text("Product Details"),
+                        labelStyle: TextStyle(color: Colors.black38),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue),
+                        ),
+                        border: UnderlineInputBorder()),
+                    keyboardType: TextInputType.text,
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [Text("KEY"), Text("VALUE")],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          controller: txt_key,
+                          decoration: InputDecoration(
+                              label: Text("Specification Name"),
+                              labelStyle: TextStyle(color: Colors.black38),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.grey),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.blue),
+                              ),
+                              border: UnderlineInputBorder()),
+                          keyboardType: TextInputType.text,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Expanded(
+                        child: TextFormField(
+                          controller: txt_value,
+                          decoration: InputDecoration(
+                              label: Text("Specification Value"),
+                              labelStyle: TextStyle(color: Colors.black38),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.grey),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.blue),
+                              ),
+                              border: UnderlineInputBorder()),
+                          keyboardType: TextInputType.text,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                    ],
+                  ),
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        add();
+                      },
+                      child: Text(
+                        'Add Specification',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12), // <-- Radius
+                        ),
                       ),
                     ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              TextFormField(
-                controller: txt_productdetails,
-                decoration: InputDecoration(
-                    label: Text("Product Details"),
-                    labelStyle: TextStyle(color: Colors.black38),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.blue),
-                    ),
-                    border: UnderlineInputBorder()),
-                keyboardType: TextInputType.text,
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [Text("KEY"), Text("VALUE")],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: TextFormField(
-                      controller: txt_key,
-                      decoration: InputDecoration(
-                          label: Text("Specification Name"),
-                          labelStyle: TextStyle(color: Colors.black38),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.blue),
-                          ),
-                          border: UnderlineInputBorder()),
-                      keyboardType: TextInputType.text,
-                    ),
                   ),
                   SizedBox(
-                    width: 5,
+                    height: 20,
                   ),
-                  Expanded(
-                    child: TextFormField(
-                      controller: txt_value,
-                      decoration: InputDecoration(
-                          label: Text("Specification Value"),
-                          labelStyle: TextStyle(color: Colors.black38),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.blue),
-                          ),
-                          border: UnderlineInputBorder()),
-                      keyboardType: TextInputType.text,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                ],
-              ),
-              Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    add();
-                  },
-                  child: Text(
-                    'Add Specification',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12), // <-- Radius
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: specifications.length,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                  ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: specifications.length,
+                      itemBuilder: (context, index) {
+                        return Column(
                           children: [
-                            Container(
-                              width: 100,
-                              child: Text(specifications[index]["key"]
-                                  .toString()
-                                  .toUpperCase()),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: 100,
+                                  child: Text(specifications[index]["key"]
+                                      .toString()
+                                      .toUpperCase()),
+                                ),
+                                Text(specifications[index]["value"].toString())
+                              ],
                             ),
-                            Text(specifications[index]["value"].toString())
+                            Divider(
+                              thickness: 1,
+                              color: Colors.grey[30],
+                            ),
                           ],
+                        );
+                      }),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                      height: 50,
+                      width: MediaQuery.of(context).size.width,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          addProduct();
+                        },
+                        child: Text(
+                          'Save',
+                          style: TextStyle(fontSize: 18),
                         ),
-                        Divider(
-                          thickness: 1,
-                          color: Colors.grey[30],
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12), // <-- Radius
+                          ),
                         ),
-                      ],
-                    );
-                  }),
-              SizedBox(
-                height: 20,
+                      ))
+                ],
               ),
-              SizedBox(
-                  height: 50,
-                  width: MediaQuery.of(context).size.width,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      addProduct();
-                    },
-                    child: Text(
-                      'Save',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12), // <-- Radius
-                      ),
-                    ),
-                  ))
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

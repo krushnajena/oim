@@ -35,6 +35,10 @@ class _AdPlanScreenState extends State<AdPlanScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    double deviceHeight = MediaQuery.of(context).size.height;
+    double deviceWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Advertisement Plans"),
@@ -50,7 +54,8 @@ class _AdPlanScreenState extends State<AdPlanScreen> {
               SizedBox(height: 10),
               categoryName != "Restaurant"
                   ? SizedBox(
-                      height: 140,
+                      //height: 140,
+                      height: deviceHeight / 5,
                       width: double.infinity,
                       child: InkWell(
                         onTap: () {
@@ -99,7 +104,8 @@ class _AdPlanScreenState extends State<AdPlanScreen> {
                   : SizedBox(),
               SizedBox(height: 10),
               SizedBox(
-                  height: 140,
+                  //height: 140,
+                  height: deviceHeight / 5,
                   width: double.infinity,
                   child: InkWell(
                     onTap: () {
@@ -147,7 +153,8 @@ class _AdPlanScreenState extends State<AdPlanScreen> {
                   )),
               SizedBox(height: 10),
               SizedBox(
-                  height: 140,
+                  //height: 140,
+                  height: deviceHeight / 5,
                   width: double.infinity,
                   child: InkWell(
                     onTap: () {
@@ -194,7 +201,8 @@ class _AdPlanScreenState extends State<AdPlanScreen> {
                   )),
               const SizedBox(height: 10),
               SizedBox(
-                  height: 140,
+                  //height: 140,
+                  height: deviceHeight / 5,
                   width: double.infinity,
                   child: InkWell(
                     onTap: () {

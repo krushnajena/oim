@@ -42,7 +42,7 @@ class Seller_DashBoardScreenState extends State<SellerDashBoardScreen> {
     String? userId = preferences.getString("userid");
     var nencoded = Uri.parse(get_follwers_by_sellerid + userId!);
     print("%%%%%%%%%%%%%%%%%%%%%%%%%");
-    print(get_follwers_by_sellerid + userId!);
+    print(get_follwers_by_sellerid + userId);
     http.get(nencoded).then((resp) {
       if (resp.statusCode == 200) {
         Map mnjson;
@@ -209,6 +209,10 @@ class Seller_DashBoardScreenState extends State<SellerDashBoardScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    double deviceWidth = MediaQuery.of(context).size.width;
+    double deviceHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       backgroundColor: scaffoldBgColor,
       body: SafeArea(
@@ -416,7 +420,7 @@ class Seller_DashBoardScreenState extends State<SellerDashBoardScreen> {
                     ClipRRect(
                       child: Image.asset(
                         'images/img.jpg',
-                        fit: BoxFit.fill,
+                        fit: BoxFit.contain,
                       ),
                     ),
                     ClipRRect(
@@ -429,23 +433,18 @@ class Seller_DashBoardScreenState extends State<SellerDashBoardScreen> {
                                       PromoteYourBusinessScreen()));
                         },
                         child: Container(
-                          margin: EdgeInsets.only(top: 205),
+                          margin: EdgeInsets.only(top: deviceHeight * 0.25),
                           color: Colors.blue,
                           width: double.infinity,
                           height: 40,
+                          child: Center(
+                              child: Text(
+                                "START ADVERTISING NOW",
+                                style: TextStyle(color: Colors.white),
+                              )),
                         ),
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(
-                        top: 217,
-                      ),
-                      child: Center(
-                          child: Text(
-                        "START ADVERTISING NOW",
-                        style: TextStyle(color: Colors.white),
-                      )),
-                    )
                   ],
                 ),
               ),

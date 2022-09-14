@@ -269,7 +269,6 @@ class _SellerAccountScreenState extends State<SellerAccountScreen> {
 
 //                           ),
 // ),
-
             categoryName == "Restaurant"
                 ? GestureDetector(
                     onTap: () {

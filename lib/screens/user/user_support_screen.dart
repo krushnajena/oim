@@ -99,6 +99,9 @@ class _UserSupportScreenState extends State<UserSupportScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    double deviceHeight = MediaQuery.of(context).size.height;
+    double deviceWidth =MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: Text("Support"),
@@ -111,7 +114,7 @@ class _UserSupportScreenState extends State<UserSupportScreen> {
               width: double.infinity,
               height: 200,
               color: Colors.blue,
-              child: Padding(
+              child: const Padding(
                 padding: EdgeInsets.only(left: 20, top: 40, right: 20),
                 child: Text(
                   "Please fill out the form below and we will get back to you as soon as possible.",
@@ -129,13 +132,13 @@ class _UserSupportScreenState extends State<UserSupportScreen> {
                 padding: EdgeInsets.only(top: 110, left: 30, right: 30),
                 child: SizedBox(
                     height: 567,
-                    width: 350,
+                    width: deviceWidth * 0.9,
                     child: Card(
                       child: Column(
                         children: [
                           Container(
-                              margin: EdgeInsets.only(top: 20),
-                              width: 300,
+                              padding: EdgeInsets.only(top: 20, left: 25, right: 25),
+                              width: deviceWidth * 0.9,
                               child: TextField(
                                 controller: txt_name,
                                 decoration: InputDecoration(
@@ -146,8 +149,8 @@ class _UserSupportScreenState extends State<UserSupportScreen> {
                                 autofocus: false,
                               )),
                           Container(
-                              margin: EdgeInsets.only(top: 20),
-                              width: 300,
+                              padding: EdgeInsets.only(top: 20, left: 25, right: 25),
+                              width: deviceWidth * 0.9,
                               child: TextField(
                                 controller: txt_email,
                                 decoration: InputDecoration(
@@ -158,8 +161,8 @@ class _UserSupportScreenState extends State<UserSupportScreen> {
                                 autofocus: false,
                               )),
                           Container(
-                              margin: EdgeInsets.only(top: 20),
-                              width: 300,
+                              padding: EdgeInsets.only(top: 20, left: 25, right: 25),
+                              width: deviceWidth * 0.9,
                               child: TextField(
                                 controller: txt_phone,
                                 decoration: InputDecoration(
@@ -170,8 +173,8 @@ class _UserSupportScreenState extends State<UserSupportScreen> {
                                 autofocus: false,
                               )),
                           Container(
-                              margin: EdgeInsets.only(top: 20),
-                              width: 300,
+                              padding: EdgeInsets.only(top: 20, left: 25, right: 25),
+                              width: deviceWidth * 0.9,
                               child: TextField(
                                 maxLines: 8,
                                 controller: txt_message,

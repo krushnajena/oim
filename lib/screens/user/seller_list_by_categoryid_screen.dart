@@ -452,7 +452,9 @@ class _SellerListByCategoryIdScreenState
                   Padding(
                     padding: const EdgeInsets.only(top: 4.0, bottom: 4),
                     child: Text(
-                      sellers[index]["streetaddress"],
+                      sellers[index]["streetaddress"] +
+                          ", " +
+                          sellers[index]["landmark"],
                     ),
                   ),
                   Text("In-store shopping"),

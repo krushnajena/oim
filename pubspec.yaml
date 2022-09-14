@@ -65,7 +65,7 @@ dependencies:
   upi_pay: ^1.0.1
   qr_flutter: ^4.0.0
   carousel_slider: ^4.0.0
-  qr_code_scanner: ^0.7.0
+  qr_code_scanner:
   animated_text_kit:
   firebase_core: any
   firebase_auth: any
@@ -108,8 +108,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/
-  fonts:
-    - family: Montserrat
+  # fonts:
+  #   - family: Montserrat
   
   #   - images/a_dot_ham.jpeg
 

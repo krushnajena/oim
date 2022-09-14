@@ -34,6 +34,7 @@ class _UserReportABugScreenState extends State<UserReportABugScreen> {
 
   void getData() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
+
     txt_name.text = preferences.getString("name").toString();
     txt_email.text = preferences.getString("email").toString();
     txt_phone.text = preferences.getString("phoneno").toString();
@@ -114,7 +115,7 @@ class _UserReportABugScreenState extends State<UserReportABugScreen> {
               child: Padding(
                 padding: EdgeInsets.only(left: 20, top: 40, right: 20),
                 child: Text(
-                  "Please fill out the form below and we will get back to you as soon as possible.",
+                  "Please fill out the form below to report a bug.",
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 19,
@@ -129,92 +130,90 @@ class _UserReportABugScreenState extends State<UserReportABugScreen> {
                 padding: EdgeInsets.only(top: 110, left: 30, right: 30),
                 child: SizedBox(
                     height: 510,
-                    width: 350,
                     child: Card(
-                      child: Column(
-                        children: [
-                          Container(
-                              margin: EdgeInsets.only(top: 20),
-                              width: 300,
-                              child: TextField(
-                                controller: txt_name,
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  labelText: '* Name',
-                                  hintText: 'Name',
-                                ),
-                                autofocus: false,
-                              )),
-                          Container(
-                              margin: EdgeInsets.only(top: 20),
-                              width: 300,
-                              child: TextField(
-                                controller: txt_email,
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  labelText: '* Email',
-                                  hintText: 'Email',
-                                ),
-                                autofocus: false,
-                              )),
-                          Container(
-                              margin: EdgeInsets.only(top: 20),
-                              width: 300,
-                              child: TextField(
-                                controller: txt_phone,
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  labelText: '* Phone',
-                                  hintText: 'Phone',
-                                ),
-                                autofocus: false,
-                              )),
-                          Container(
-                              margin: EdgeInsets.only(top: 20),
-                              width: 300,
-                              child: TextField(
-                                maxLines: 5,
-                                controller: txt_message,
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  labelText: '* Message',
-                                  hintText: 'Message',
-                                ),
-                                autofocus: false,
-                              )),
-                          Container(
-                            margin: EdgeInsets.only(top: 50),
-                            height: 50,
-                            width: 300,
-                            // ignore: deprecated_member_use
-                            child: RaisedButton(
-                              onPressed: () {
-                                submit();
-                              },
-                              color: Colors.blue,
-                              child: Padding(
-                                padding: EdgeInsets.only(left: 95),
-                                child: Row(
-                                  // ignore: prefer_const_literals_to_create_immutables
-                                  children: [
-                                    Icon(
-                                      Icons.send,
-                                      color: Colors.white,
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      "Submit",
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 17),
-                                    )
-                                  ],
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                        child: Column(
+                          children: [
+                            Container(
+                                margin: EdgeInsets.only(top: 20),
+                                child: TextField(
+                                  controller: txt_name,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    labelText: '* Name',
+                                    hintText: 'Name',
+                                  ),
+                                  autofocus: false,
+                                )),
+                            Container(
+                                margin: EdgeInsets.only(top: 20),
+                                child: TextField(
+                                  controller: txt_email,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    labelText: '* Email',
+                                    hintText: 'Email',
+                                  ),
+                                  autofocus: false,
+                                )),
+                            Container(
+                                margin: EdgeInsets.only(top: 20),
+                                child: TextField(
+                                  controller: txt_phone,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    labelText: '* Phone',
+                                    hintText: 'Phone',
+                                  ),
+                                  autofocus: false,
+                                )),
+                            Container(
+                                margin: EdgeInsets.only(top: 20),
+                                child: TextField(
+                                  maxLines: 5,
+                                  controller: txt_message,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    labelText: '* Message',
+                                    hintText: 'Message',
+                                  ),
+                                  autofocus: false,
+                                )),
+                            Container(
+                              margin: EdgeInsets.only(top: 50),
+                              height: 50,
+
+                              // ignore: deprecated_member_use
+                              child: RaisedButton(
+                                onPressed: () {
+                                  submit();
+                                },
+                                color: Colors.blue,
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: 95),
+                                  child: Row(
+                                    // ignore: prefer_const_literals_to_create_immutables
+                                    children: [
+                                      Icon(
+                                        Icons.send,
+                                        color: Colors.white,
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(
+                                        "Submit",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 17),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          )
-                        ],
+                            )
+                          ],
+                        ),
                       ),
                     )),
               ),

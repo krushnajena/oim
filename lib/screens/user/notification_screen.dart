@@ -62,7 +62,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             .getString("noofreadnotifications")
                             .toString());
                         preferences.setString("noofreadnotifications",
-                            (noofreadnotifications! + 1).toString());
+                            (noofreadnotifications + 1).toString());
                       }
 
                       if (notifications[index]["notificationtype"].toString() ==

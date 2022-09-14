@@ -68,143 +68,144 @@ class _FeaturedAdPackagesState extends State<FeaturedAdPackages> {
               ))),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        body: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              InkWell(
-                child: Icon(Icons.arrow_back),
-                onTap: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Center(
-                child: SizedBox(
-                  height: 120,
-                  width: 120,
-                  child: Image.asset("images/advimg5.jpg"),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                InkWell(
+                  child: Icon(Icons.arrow_back),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
-                child: Text(
-                  "Sell faster by Promoting your products in 'Offer Zone' Sction with 'FEATURED' tag in top Position to reach more buyers in your city.",
-                  style: TextStyle(
-                      fontSize: 17, fontWeight: FontWeight.w700, height: 1.5),
-                  textAlign: TextAlign.justify,
+                SizedBox(
+                  height: 5,
                 ),
-              ),
-              Divider(
-                color: Colors.black12,
-                height: 30,
-                thickness: 5,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Plan Info",
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          decoration: TextDecoration.underline)),
-                  Text("See Example",
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          decoration: TextDecoration.underline)),
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  SizedBox(
-                    width: 10,
+                Center(
+                  child: SizedBox(
+                    height: 120,
+                    width: 120,
+                    child: Image.asset("images/advimg5.jpg"),
                   ),
-                  Icon(Icons.check, color: Colors.black54),
-                  Text('  Get your product noticed with "FEATURED" tag',
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black54,
-                          height: 1.5)),
-                ],
-              ),
-              Divider(
-                color: Colors.black12,
-                height: 30,
-                thickness: 5,
-              ),
-              Center(
-                child: Text("Buy Plans",
-                    style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Expanded(
-                  child: GridView.builder(
-                      shrinkWrap: true,
-                      itemCount: ads.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2),
-                      itemBuilder: (BuildContext context, int index) {
-                        return Card(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 40, top: 10),
-                                child: Row(
-                                  children: [
-                                    InkWell(
-                                      child: Icon(sindex == index
-                                          ? Icons.check_box
-                                          : Icons.check_box_outline_blank),
-                                      onTap: () {
-                                        setState(() {
-                                          sindex = index;
-                                          totalPrice = double.parse(ads[index]
-                                                  ["offerprice"]
-                                              .toString());
-                                          selectedId =
-                                              ads[index]["_id"].toString();
-                                        });
-                                      },
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                  ],
-                                ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
+                  child: Text(
+                    "Sell faster by Promoting your products in 'Offer Zone' Sction with 'FEATURED' tag in top Position to reach more buyers in your city.",
+                    style: TextStyle(
+                        fontSize: 17, fontWeight: FontWeight.w700, height: 1.5),
+                    textAlign: TextAlign.justify,
+                  ),
+                ),
+                Divider(
+                  color: Colors.black12,
+                  height: 30,
+                  thickness: 5,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Plan Info",
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            decoration: TextDecoration.underline)),
+                    Text("See Example",
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            decoration: TextDecoration.underline)),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Icon(Icons.check, color: Colors.black54),
+                    Text('  Get your product noticed with "FEATURED" tag',
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black54,
+                            height: 1.5)),
+                  ],
+                ),
+                Divider(
+                  color: Colors.black12,
+                  height: 30,
+                  thickness: 5,
+                ),
+                Center(
+                  child: Text("Buy Plans",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                GridView.builder(
+                    shrinkWrap: true,
+                    itemCount: ads.length,
+                    physics: NeverScrollableScrollPhysics(),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2),
+                    itemBuilder: (BuildContext context, int index) {
+                      return Card(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 40, top: 10),
+                              child: Row(
+                                children: [
+                                  InkWell(
+                                    child: Icon(sindex == index
+                                        ? Icons.check_box
+                                        : Icons.check_box_outline_blank),
+                                    onTap: () {
+                                      setState(() {
+                                        sindex = index;
+                                        totalPrice = double.parse(ads[index]
+                                                ["offerprice"]
+                                            .toString());
+                                        selectedId =
+                                            ads[index]["_id"].toString();
+                                      });
+                                    },
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                ],
                               ),
-                              Divider(
-                                color: Colors.grey,
-                                height: 40,
-                              ),
-                              Center(
-                                  child: Text(
-                                      "₹" + ads[index]["offerprice"].toString(),
-                                      style: TextStyle(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.w500,
-                                          height: 1.5)))
-                            ],
-                          ),
-                        );
-                      })),
-              SizedBox(height: 70)
-            ],
+                            ),
+                            Divider(
+                              color: Colors.grey,
+                              height: 40,
+                            ),
+                            Center(
+                                child: Text(
+                                    "₹" + ads[index]["offerprice"].toString(),
+                                    style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w500,
+                                        height: 1.5)))
+                          ],
+                        ),
+                      );
+                    }),
+                SizedBox(height: 70)
+              ],
+            ),
           ),
         ),
       ),

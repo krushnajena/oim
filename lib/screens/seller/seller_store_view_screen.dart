@@ -115,7 +115,9 @@ class _SellerStoreViewScreenState extends State<SellerStoreViewScreen> {
           setState(() {
             storename = mnjson["Data"]["Seller"][0]["businessname"];
             imageUrl = baseUrl + mnjson["Data"]["Seller"][0]["photo"];
-            address = mnjson["Data"]["Seller"][0]["streetaddress"];
+            address = mnjson["Data"]["Seller"][0]["streetaddress"] +
+                ", " +
+                mnjson["Data"]["Seller"][0]["landmark"];
             lat = mnjson["Data"]["Seller"][0]["latitude"];
             lang = mnjson["Data"]["Seller"][0]["longitude"];
             mobileNo = mnjson["Data"]["Seller"][0]["businesscontactinfo"];

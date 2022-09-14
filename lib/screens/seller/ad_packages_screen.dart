@@ -66,6 +66,7 @@ class _AdPackageScreenState extends State<AdPackageScreen> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
                       child: Container(
+                        height: MediaQuery.of(context).size.height * 0.05,
                         width: MediaQuery.of(context).size.width - 50,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -82,211 +83,209 @@ class _AdPackageScreenState extends State<AdPackageScreen> {
                   ],
                 ),
               ),
-              SizedBox(
-                height: 10,
-              )
+              SizedBox(height: 10)
             ],
           ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              InkWell(
-                child: Icon(Icons.arrow_back),
-                onTap: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Center(
-                child: SizedBox(
-                  height: 120,
-                  width: 120,
-                  child: Image.asset("images/no_ad_emoji.png"),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                InkWell(
+                  child: Icon(Icons.arrow_back),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Container(
-                  height: 60,
-                  width: MediaQuery.of(context).size.width,
-                  color: Colors.yellow[200],
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
-                      child: Text(
-                        "You have already posted 2 free Ad in last 30 days.",
-                        style: TextStyle(
-                          fontSize: 15,
-                          height: 1.0,
+                SizedBox(height: 5),
+                Center(
+                  child: SizedBox(
+                    height: 120,
+                    width: 120,
+                    child: Image.asset("images/no_ad_emoji.png"),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Container(
+                    height: 60,
+                    width: MediaQuery.of(context).size.width,
+                    color: Colors.yellow[200],
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10, right: 10),
+                        child: Text(
+                          "You have already posted 2 free Ad in last 30 days.",
+                          style: TextStyle(
+                            fontSize: 15,
+                            height: 1.0,
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              Divider(
-                color: Colors.black12,
-                height: 30,
-                thickness: 5,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Center(
-                child: Text(
-                  "Post More Ads",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                Divider(
+                  color: Colors.black12,
+                  height: 30,
+                  thickness: 5,
                 ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Plan Info",
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          decoration: TextDecoration.underline)),
-                  Text("See Example",
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          decoration: TextDecoration.underline)),
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  SizedBox(
-                    width: 10,
+                SizedBox(
+                  height: 10,
+                ),
+                Center(
+                  child: Text(
+                    "Post More Ads",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                  Icon(Icons.check, color: Colors.black54),
-                  Expanded(
-                    child: Text(
-                        '  Post more Ads and get your product noticed in "OFFERZONE" section.',
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Plan Info",
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            decoration: TextDecoration.underline)),
+                    Text("See Example",
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            decoration: TextDecoration.underline)),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Icon(Icons.check, color: Colors.black54),
+                    Expanded(
+                      child: Text(
+                          '  Post more Ads and get your product noticed in "OFFERZONE" section.',
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black54,
+                              height: 1.5)),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10,),
+                Row(
+                  children: [
+                    SizedBox(width: 10,),
+                    Icon(Icons.check, color: Colors.black54),
+                    Text('  Package available for 180 days.',
                         style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
                             color: Colors.black54,
                             height: 1.5)),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Icon(Icons.check, color: Colors.black54),
-                  Text('  Package available for 180 days.',
+                  ],
+                ),
+                SizedBox(height: 10,),
+                Row(
+                  children: [
+                    SizedBox(width: 10,),
+                    Icon(Icons.check, color: Colors.black54),
+                    Text('  Ad will be valid for 30 days.',
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black54,
+                            height: 1.5)
+                    ),
+                  ],
+                ),
+                Divider(
+                  color: Colors.black12,
+                  height: 30,
+                  thickness: 5,
+                ),
+                Center(
+                  child: Text("Buy Plans",
                       style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black54,
-                          height: 1.5)),
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  SizedBox(
-                    width: 10,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500)
                   ),
-                  Icon(Icons.check, color: Colors.black54),
-                  Text('  Ad will be valid for 30 days.',
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black54,
-                          height: 1.5)),
-                ],
-              ),
-              Divider(
-                color: Colors.black12,
-                height: 30,
-                thickness: 5,
-              ),
-              Center(
-                child: Text("Buy Plans",
-                    style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Expanded(
-                  child: GridView.builder(
-                      shrinkWrap: true,
-                      itemCount: ads.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2),
-                      itemBuilder: (BuildContext context, int index) {
-                        return Card(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 40, top: 10),
-                                child: Row(
-                                  children: [
-                                    InkWell(
-                                      child: Icon(sindex == index
-                                          ? Icons.check_box
-                                          : Icons.check_box_outline_blank),
-                                      onTap: () {
-                                        setState(() {
-                                          sindex = index;
-                                          totalPrice = double.parse(ads[index]
-                                                  ["offerprice"]
-                                              .toString());
-                                        });
-                                      },
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                        ads[index]["numberofadd"].toString() +
-                                            " days",
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            height: 1.5)),
-                                  ],
-                                ),
-                              ),
-                              Divider(
-                                color: Colors.grey,
-                                height: 40,
-                              ),
-                              Center(
-                                  child: Text(
-                                      "₹" + ads[index]["offerprice"].toString(),
-                                      style: TextStyle(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.w500,
-                                          height: 1.5)))
-                            ],
+                ),
+                SizedBox(height: 5),
+                GridView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: ads.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                    itemBuilder: (BuildContext context, int index) {
+                      return Card(
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            color: Colors.grey.shade100
                           ),
-                        );
-                      })),
-              SizedBox(height: 70)
-            ],
+                          borderRadius: BorderRadius.circular(15)
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 40, top: 10),
+                              child: Row(
+                                children: [
+                                  InkWell(
+                                    child: Icon(sindex == index
+                                        ? Icons.check_box
+                                        : Icons.check_box_outline_blank),
+                                    onTap: () {
+                                      setState(() {
+                                        sindex = index;
+                                        totalPrice = double.parse(ads[index]
+                                                ["offerprice"]
+                                            .toString());
+                                      });
+                                    },
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                      ads[index]["numberofadd"].toString() +
+                                          " days",
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                          height: 1.5)),
+                                ],
+                              ),
+                            ),
+                            Divider(
+                              color: Colors.grey,
+                              height: 40,
+                            ),
+                            Center(
+                                child: Text("₹" + ads[index]["offerprice"].toString(),
+                                    style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w500,
+                                        height: 1.5
+                                    )
+                                )
+                            )
+                          ],
+                        ),
+                      );
+                    }),
+                SizedBox(height: 10)
+              ],
+            ),
           ),
         ),
       ),

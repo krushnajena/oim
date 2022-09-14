@@ -262,7 +262,7 @@ class _MyQrScreenState extends State<MyQrScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Expanded(
-                child: OutlineButton(
+                child: ElevatedButton(
                   onPressed: () {},
                   child: Text("Share QR"),
                 ),

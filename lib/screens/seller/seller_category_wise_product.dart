@@ -600,7 +600,7 @@ class _SellerCategoryWiseProductState extends State<SellerCategoryWiseProduct> {
                                                 height: 5,
                                               ),
                                               Center(
-                                                child: OutlineButton(
+                                                child: ElevatedButton(
                                                     onPressed: () {
                                                       Navigator.push(
                                                           context,

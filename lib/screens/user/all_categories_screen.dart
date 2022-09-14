@@ -87,7 +87,7 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
   List subcatelouges = [];
 
   void getsubcatgories() async {
-    var nencoded = Uri.parse(getSubcategoriesByCatelogid + catelogId!);
+    var nencoded = Uri.parse(getSubcategoriesByCatelogid + catelogId);
 
     print(get_catelogues + categoryId);
     http.get(nencoded).then((value) {
@@ -111,7 +111,7 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
       catelogName = "";
       catelogId = "";
     });
-    var nencoded = Uri.parse(get_catelogues + categoryId!);
+    var nencoded = Uri.parse(get_catelogues + categoryId);
     print(get_catelogues + categoryId);
     http.get(nencoded).then((value) {
       print(value.statusCode);

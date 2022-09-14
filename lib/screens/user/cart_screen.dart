@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oim/constants/urls.dart';
 import 'package:oim/screens/user/product_details_screen.dart';
@@ -81,340 +82,268 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double deviceWidth = MediaQuery.of(context).size.width;
+    double deviceHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Cart"),
-        centerTitle: true,
-      ),
-      body: items.length > 0
-          ? SingleChildScrollView(
-              child: Column(
-              children: [
-                ListView.builder(
-                  itemCount: items.length,
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    double disount = double.parse(
-                            items[index]["productid"]["mrp"].toString()) -
-                        double.parse(items[index]["productid"]["sellingprice"]
-                            .toString());
-                    double discountPercentage = (disount /
-                            double.parse(
-                                items[index]["productid"]["mrp"].toString())) *
-                        100;
-
-                    return Stack(children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ProductDetailsScreen(
-                                      items[index]["productid"]["_id"]
-                                          .toString())));
-                        },
-                        child: Container(
-                            margin: EdgeInsets.only(top: 20, left: 20),
-                            height: 150,
-                            width: 350,
-                            child: Card(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 10, left: 10),
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                          child: SizedBox(
-                                            height: 85,
-                                            width: 85,
-                                            child: Image.network(
-                                              baseUrl +
-                                                  items[index]["productid"]
-                                                      ["image"][0]["filename"],
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 8, top: 10),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              items[index]["productid"]
-                                                  ["productname"],
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                            SizedBox(height: 5),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  "₹" +
-                                                      items[index]["productid"]
-                                                              ["sellingprice"]
-                                                          .toString(),
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color: Colors.black26),
-                                                ),
-                                                SizedBox(width: 10),
-                                                Text(
-                                                  "₹" +
-                                                      items[index]["productid"]
-                                                              ["mrp"]
-                                                          .toString(),
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color: Colors.black26,
-                                                      decoration: TextDecoration
-                                                          .lineThrough),
-                                                ),
-                                                SizedBox(width: 5),
-                                                Text(
-                                                  discountPercentage
-                                                          .toStringAsFixed(2) +
-                                                      "% Off",
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color: Colors.green),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(height: 5),
-                                            Text(
-                                              items[index]["sellername"],
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Colors.black26),
-                                            ),
-                                            SizedBox(height: 5),
-                                            Row(
-                                              children: [
-                                                Icon(
-                                                    Icons.location_on_outlined),
-                                                Text(
-                                                  items[index]
-                                                      ["sellerlocation"],
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color: Colors.black),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            )),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          top: 125,
-                          left: 23,
-                        ),
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              width: 172,
-                              child: OutlinedButton(
-                                onPressed: () {
-                                  getRemoveItem(items[index]["_id"].toString());
-                                },
-                                child: Text(
-                                  "REMOVE",
-                                  style: TextStyle(color: Colors.black38),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 172,
-                              child: OutlinedButton(
-                                onPressed: () async {
-                                  String googleUrl =
-                                      'https://www.google.com/maps/search/?api=1&query=' +
-                                          items[index]["sellerlat"].toString() +
-                                          ',' +
-                                          items[index]["sellerlang"].toString();
-
-                                  print(googleUrl);
-
-                                  await launch(googleUrl);
-                                },
-                                child: Text("DIRECTIONS",
-                                    style: TextStyle(color: Colors.black38)),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ]);
-                  },
-                ),
-                Container(
-                  margin: EdgeInsets.only(left: 10, top: 19),
-                  height: 200,
-                  width: 370,
-                  color: Colors.white,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+      backgroundColor: Colors.blue,
+      body: SafeArea(
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              backgroundColor: Colors.blue,
+              expandedHeight: deviceHeight * 0.15,
+              elevation: 0,
+              pinned: true,
+              bottom: PreferredSize(
+                preferredSize: Size.fromHeight(0),
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 40),
+                  child: Row(
                     children: [
-                      Padding(
-                        padding:
-                            const EdgeInsets.only(left: 10, top: 10, bottom: 5),
-                        child: Text(
-                          "PRICE DETAILS",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black26,
-                              fontSize: 16),
-                        ),
-                      ),
-                      Divider(
-                        color: Colors.black38,
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsets.only(left: 10, top: 10, bottom: 5),
-                        child: Row(
-                          children: [
-                            Text(
-                              "Price (" + items.length.toString() + " items)",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black54,
-                                  fontSize: 14),
-                            ),
-                            SizedBox(
-                              width: 195,
-                            ),
-                            Text(
-                              "₹" + Mrptotal.toStringAsFixed(2),
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black54,
-                                  fontSize: 14),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsets.only(left: 10, top: 10, bottom: 5),
-                        child: Row(
-                          children: [
-                            Text(
-                              "Discount",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black54,
-                                  fontSize: 14),
-                            ),
-                            SizedBox(width: 195),
-                            Text(
-                              "-₹" +
-                                  (Mrptotal - sellingtotal).toStringAsFixed(2),
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.green,
-                                  fontSize: 14),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Text(
-                        '   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -',
-                        style: TextStyle(color: Colors.black38),
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsets.only(left: 10, bottom: 5, top: 5),
-                        child: Row(
-                          children: [
-                            Text(
-                              "Total Amount",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black87,
-                                  fontSize: 14),
-                            ),
-                            SizedBox(width: 195),
-                            Text(
-                              "₹" + sellingtotal.toStringAsFixed(2),
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black87,
-                                  fontSize: 15),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Divider(
-                        color: Colors.black38,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10.0),
-                        child: Text(
-                            "You will save ₹" +
-                                (Mrptotal - sellingtotal).toStringAsFixed(2) +
-                                " on this order",
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          Text(
+                            'Cart',
                             style: TextStyle(
+                                fontSize: 24,
                                 fontWeight: FontWeight.w500,
-                                color: Colors.green,
-                                fontSize: 14)),
+                                color: Colors.white),
+                          ),
+                        ],
+                      ),
+                      Expanded(child: Container()),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            items.length.toString() + ' items',
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white),
+                          ),
+                          Text(
+                            "₹" +
+                                "${sellingtotal.toStringAsFixed(2).toString()}",
+                            style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white),
+                          )
+                        ],
                       )
                     ],
                   ),
                 ),
-              ],
-            ))
-          : Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Center(
-                    child: Image(
-                        image: AssetImage(
-                      "images/emptycart.png",
-                    )),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  RaisedButton(
-                    color: Colors.blue,
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(
-                      "Start Shopping",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  )
-                ],
               ),
+
             ),
+            SliverToBoxAdapter(
+                child: Container(
+                    height: deviceHeight,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(45), topRight: Radius.circular(45)),
+                      color: Colors.grey.shade100,
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 45, left: 15, right: 15),
+                      child: ListView.builder(
+                          itemCount: items.length,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            double disount = double.parse(items[index]
+                                        ["productid"]["mrp"]
+                                    .toString()) -
+                                double.parse(items[index]["productid"]
+                                        ["sellingprice"]
+                                    .toString());
+                            double discountPercentage = (disount /
+                                    double.parse(items[index]["productid"]
+                                            ["mrp"]
+                                        .toString())) *
+                                100;
+                            return Column(
+                              children: [
+                                Container(
+                                    height: deviceHeight * 0.17,
+                                    decoration: BoxDecoration(
+                                      color: Colors.black12.withOpacity(0.09),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ProductDetailsScreen(items[
+                                                                index]
+                                                            ["productid"]["_id"]
+                                                        .toString())));
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(left: 10.0, top: 15.0, bottom: 15.0),
+                                            child: SizedBox(
+                                              height: 125,
+                                              width: 85,
+                                              child: ClipRRect(
+                                                child: Image.network(
+                                                  baseUrl +
+                                                      items[index]["productid"]["image"][0]["filename"],
+                                                  fit: BoxFit.contain,
+                                                  width: 85,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(width: 10),
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                items[index]["productid"]
+                                                    ["productname"],
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.black45,
+                                                    fontWeight: FontWeight.w500),
+                                              ),
+                                              //SizedBox(height: deviceHeight * 0.005),
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    "₹" +
+                                                        items[index][
+                                                                    "productid"]
+                                                                ["mrp"]
+                                                            .toString(),
+                                                    style: TextStyle(
+                                                        fontSize: 20,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        decoration:
+                                                            TextDecoration
+                                                                .lineThrough),
+                                                  ),
+                                                  SizedBox(width: 10),
+                                                  Text(
+                                                    "₹" +
+                                                        items[index]["productid"]["sellingprice"].toString(),
+                                                    style: TextStyle(
+                                                      fontSize: 18,
+                                                      fontWeight: FontWeight.w500,
+                                                    ),
+                                                  ),
+                                                  SizedBox(width: 5,),
+                                                  Text(discountPercentage.toStringAsFixed(2) + "% Off",
+                                                    style: TextStyle(
+                                                        fontWeight: FontWeight.w600,
+                                                        color: Colors.green.shade500),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(height: 15),
+                                              Text(
+                                                items[index]["sellername"],
+                                                style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight:
+                                                        FontWeight.w500,
+                                                    color: Colors.black),
+                                              ),
+                                              SizedBox(height: 5),
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    items[index]
+                                                        ["sellerlocation"],
+                                                    overflow: TextOverflow
+                                                        .ellipsis,
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        color:
+                                                            Colors.black),
+                                                  ),
+                                                ],
+                                              ),
+                                              //SizedBox(height: 20),
+                                            ],
+                                          ),
+                                          Expanded(child: Container()),
+                                          Column(
+                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              Container(
+                                                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 0),
+                                                height: 150,
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(20),
+                                                  color: Colors.grey.withOpacity(0.3),
+                                                ),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceEvenly,
+                                                  children: [
+                                                    IconButton(
+                                                      onPressed: () async {
+                                                        String googleUrl = 'https://www.google.com/maps/search/?api=1&query=' +
+                                                                items[index]["sellerlat"].toString() +
+                                                                ',' +
+                                                                items[index][
+                                                                        "sellerlang"]
+                                                                    .toString();
+
+                                                        print(googleUrl);
+                                                        await launch(googleUrl);
+                                                      },
+                                                      icon: Icon(
+                                                        Icons
+                                                            .location_on_rounded,
+                                                        size: 20,
+                                                      ),
+                                                    ),
+                                                    IconButton(
+                                                      onPressed: () {
+                                                        getRemoveItem(
+                                                            items[index]["_id"]
+                                                                .toString());
+                                                      },
+                                                      icon: Icon(
+                                                        Icons.delete,
+                                                        size: 20,
+                                                        color: Colors.black,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                ),
+                                SizedBox(height: deviceHeight * 0.01,)
+                              ],
+                            );
+                          }),
+                    )
+                )
+            )
+          ],
+        ),
+      ),
     );
   }
 }

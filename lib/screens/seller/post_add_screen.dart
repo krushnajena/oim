@@ -88,6 +88,10 @@ class _PostAdScreenState extends State<PostAdScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    double deviceHeight = MediaQuery.of(context).size.height;
+    double deviceWidth = MediaQuery.of(context).size.width;
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -137,35 +141,31 @@ class _PostAdScreenState extends State<PostAdScreen> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: 1.5,
-            ),
+            SizedBox(height: 1.5,),
             Container(
               height: 55,
               color: Colors.blue,
               child: Row(
                 children: [
-                  SizedBox(
-                    width: 40,
+                  SizedBox(width: 40,),
+                  Container(
+                    width: deviceWidth/3.5,
+                    child: Text(
+                      "Total Ads-" + totalAds.toString(),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18),
+                    ),
                   ),
-                  Text(
-                    "Total Ads-" + totalAds.toString(),
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18),
-                  ),
-                  SizedBox(
-                    width: 40,
-                  ),
+                  SizedBox(width: 40,),
                   VerticalDivider(
                     color: Colors.white,
                     thickness: 1.5,
                   ),
-                  SizedBox(
-                    width: 40,
-                  ),
-                  Center(
+                  SizedBox(width: 40,),
+                  Container(
+                    width: deviceWidth/3.5,
                     child: Text("Used Ads-" + usedAds.toString(),
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -196,11 +196,7 @@ class _PostAdScreenState extends State<PostAdScreen> {
                                       Container(
                                           margin: EdgeInsets.all(3),
                                           height: 115,
-                                          width: (MediaQuery.of(context)
-                                                      .size
-                                                      .width -
-                                                  16) /
-                                              2,
+                                          width: (MediaQuery.of(context).size.width - 16) / 2,
                                           child: Image.network(
                                             baseUrl +
                                                 ads[index]["productid"]["image"]
@@ -332,7 +328,7 @@ class _PostAdScreenState extends State<PostAdScreen> {
                                           height: 5,
                                         ),
                                         Center(
-                                          child: OutlineButton(
+                                          child: ElevatedButton(
                                               onPressed: () {},
                                               child: Container(
                                                 height: 15,

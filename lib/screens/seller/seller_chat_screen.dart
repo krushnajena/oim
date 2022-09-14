@@ -261,7 +261,8 @@ class _SellerChatScreenState extends State<SellerChatScreen> {
                                               ["isBlockedBySeller"],
                                         )));
                           },
-                          child: Row(children: [
+                          child: Row(
+                              children: [
                             Expanded(
                               child: Container(
                                   margin: EdgeInsets.only(left: 10, top: 25),
@@ -286,8 +287,7 @@ class _SellerChatScreenState extends State<SellerChatScreen> {
                                           ),
                                         ),
                                         Container(
-                                          margin: EdgeInsets.only(
-                                              left: 45, top: 40),
+                                          margin: EdgeInsets.only(left: 45, top: 40),
                                           height: 35,
                                           width: 35,
                                           decoration: BoxDecoration(

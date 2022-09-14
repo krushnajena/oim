@@ -143,7 +143,7 @@ class _UserHelpCenterScreenState extends State<UserHelpCenterScreen> {
                   ),
                 ),
                 Text(
-                  "Id " + userid,
+                  "Store ID: " + userid,
                   style: TextStyle(fontSize: 18),
                 ),
                 SizedBox(

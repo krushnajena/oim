@@ -29,9 +29,9 @@ class _StoryListScreenState extends State<StoryListScreen> {
 
   void deleteStory(String id) {
     print("Story Delete");
-    var nencoded = Uri.parse(getDeleteStory + id!);
+    var nencoded = Uri.parse(getDeleteStory + id);
     print("Story Delete");
-    print(getDeleteStory + id!);
+    print(getDeleteStory + id);
     print("Story Delete");
     http.get(nencoded).then((resp) {
       if (resp.statusCode == 200) {
@@ -49,7 +49,7 @@ class _StoryListScreenState extends State<StoryListScreen> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String? userid = preferences.getString("userid");
     var nencoded = Uri.parse(get_story_by_userid + userid!);
-    print(get_story_by_userid + userid!);
+    print(get_story_by_userid + userid);
     http.get(nencoded).then((resp) {
       if (resp.statusCode == 200) {
         Map mnjson;
@@ -75,17 +75,21 @@ class _StoryListScreenState extends State<StoryListScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    double deviceHeight = MediaQuery.of(context).size.height;
+    double deviceWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.white, size: 10.0),
+        iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Colors.blue,
         elevation: 0.1,
         centerTitle: true,
         title: Text("Stories"),
       ),
       bottomNavigationBar: Container(
-        height: 70,
+        height: deviceHeight * 0.070,
         child: Column(
           children: [
             Expanded(
@@ -126,165 +130,177 @@ class _StoryListScreenState extends State<StoryListScreen> {
           ],
         ),
       ),
-      body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
-            child: CustomScrollView(
-              slivers: [
-                SliverGrid(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      return Stack(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          SellerStoryDetailsScreen()));
-                            },
-                            child: Card(
-                              color: Colors.transparent,
-                              elevation: 10,
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      image: DecorationImage(
-                                          image: NetworkImage(
-                                              baseUrl + story[index]["image"]),
-                                          fit: BoxFit.cover)),
-                                  child: Stack(
-                                    children: [
-                                      Container(
+      body: story.length == 0
+          ? Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
+                  child: CustomScrollView(
+                    slivers: [
+                      SliverGrid(
+                        delegate: SliverChildBuilderDelegate(
+                          (context, index) {
+                            return Stack(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                SellerStoryDetailsScreen()));
+                                  },
+                                  child: Card(
+                                    color: Colors.transparent,
+                                    elevation: 10,
+                                    child: Container(
                                         decoration: BoxDecoration(
                                             borderRadius:
-                                                BorderRadius.circular(10),
-                                            gradient: LinearGradient(
-                                                begin: Alignment.bottomRight,
-                                                stops: [
-                                                  0.1,
-                                                  1
-                                                ],
-                                                colors: [
-                                                  Colors.black.withOpacity(.8),
-                                                  Colors.black.withOpacity(.1)
-                                                ])),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 8, right: 8, top: 180),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                                BorderRadius.circular(20),
+                                            image: DecorationImage(
+                                                image: NetworkImage(baseUrl +
+                                                    story[index]["image"]),
+                                                fit: BoxFit.cover)),
+                                        child: Stack(
                                           children: [
-                                            Icon(
-                                              Icons.remove_red_eye_outlined,
-                                              color: Colors.white,
-                                              size: 18,
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  gradient: LinearGradient(
+                                                      begin:
+                                                          Alignment.bottomRight,
+                                                      stops: [
+                                                        0.1,
+                                                        1
+                                                      ],
+                                                      colors: [
+                                                        Colors.black
+                                                            .withOpacity(.8),
+                                                        Colors.black
+                                                            .withOpacity(.1)
+                                                      ])),
                                             ),
-                                            Text(
-                                              "Views : 0",
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 13,
-                                                color: Colors.white,
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 8, right: 8, top: 180),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Icon(
+                                                    Icons
+                                                        .remove_red_eye_outlined,
+                                                    color: Colors.white,
+                                                    size: 18,
+                                                  ),
+                                                  Text(
+                                                    "Views : 0",
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 13,
+                                                      color: Colors.white,
+                                                    ),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                ],
                                               ),
-                                              textAlign: TextAlign.center,
                                             ),
                                           ],
-                                        ),
-                                      ),
-                                    ],
-                                  )),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 4.0, top: 8),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                PopupMenuButton(
-                                    color: Colors.white,
-                                    icon: Icon(
-                                      Icons.more_vert,
-                                      color: Colors.white,
-                                    ),
-                                    itemBuilder: (context) => [
-                                          PopupMenuItem(
-                                            child: Text("Remove Story"),
-                                            value: 2,
-                                            onTap: () {
-                                              showDialog(
-                                                  context: context,
-                                                  builder: (BuildContext
-                                                          context) =>
-                                                      CupertinoAlertDialog(
-                                                        title: new Text(
-                                                            "Confirmation"),
-                                                        content: new Text(
-                                                            "Do you want to delete "),
-                                                        actions: <Widget>[
-                                                          CupertinoDialogAction(
-                                                            isDefaultAction:
-                                                                true,
-                                                            child: Text(
-                                                                "Delete Story"),
-                                                            onPressed:
-                                                                () async {
-                                                              deleteStory(story[
-                                                                          index]
-                                                                      ["_id"]
-                                                                  .toString());
-                                                            },
-                                                          ),
-                                                          CupertinoDialogAction(
-                                                            child: Text("Exit"),
-                                                            onPressed: () {
-                                                              Navigator.pop(
-                                                                  context);
-                                                            },
-                                                          )
-                                                        ],
-                                                      ));
+                                        )),
+                                  ),
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(right: 4.0, top: 8),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      PopupMenuButton(
+                                          color: Colors.white,
+                                          icon: Icon(
+                                            Icons.more_vert,
+                                            color: Colors.white,
+                                          ),
+                                          itemBuilder: (context) => [
+                                                PopupMenuItem(
+                                                  child: Text("Remove Story"),
+                                                  value: 2,
+                                                  onTap: () {
+                                                    showDialog(
+                                                        context: context,
+                                                        builder: (BuildContext
+                                                                context) =>
+                                                            CupertinoAlertDialog(
+                                                              title: new Text(
+                                                                  "Confirmation"),
+                                                              content: new Text(
+                                                                  "Do you want to delete "),
+                                                              actions: <Widget>[
+                                                                CupertinoDialogAction(
+                                                                  isDefaultAction:
+                                                                      true,
+                                                                  child: Text(
+                                                                      "Delete Story"),
+                                                                  onPressed:
+                                                                      () async {
+                                                                    deleteStory(story[index]
+                                                                            [
+                                                                            "_id"]
+                                                                        .toString());
+                                                                  },
+                                                                ),
+                                                                CupertinoDialogAction(
+                                                                  child: Text(
+                                                                      "Exit"),
+                                                                  onPressed:
+                                                                      () {
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                  },
+                                                                )
+                                                              ],
+                                                            ));
 
-                                              //getRemoveItem(products[index]["_id"]
-                                              //    .toString());
-                                            },
-                                          )
-                                        ]),
+                                                    //getRemoveItem(products[index]["_id"]
+                                                    //    .toString());
+                                                  },
+                                                )
+                                              ]),
+                                    ],
+                                  ),
+                                ),
                               ],
-                            ),
-                          ),
+                            );
+                          },
+                          childCount: story.length,
+                        ),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          crossAxisSpacing: 2,
+                          mainAxisSpacing: 2,
+                          mainAxisExtent: 220,
+                        ),
+                      ),
+                      SliverGrid.extent(
+                        maxCrossAxisExtent: 250,
+                        mainAxisSpacing: 20.0,
+                        crossAxisSpacing: 20.0,
+                        childAspectRatio: 2.5,
+                        children: <Widget>[
+                          SizedBox(
+                            height: 20,
+                          )
                         ],
-                      );
-                    },
-                    childCount: story.length,
-                  ),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 2,
-                    mainAxisSpacing: 2,
-                    mainAxisExtent: 220,
+                      ),
+                    ],
                   ),
                 ),
-                SliverGrid.extent(
-                  maxCrossAxisExtent: 250,
-                  mainAxisSpacing: 20.0,
-                  crossAxisSpacing: 20.0,
-                  childAspectRatio: 2.5,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 20,
-                    )
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      ]),
+              ),
+            ])
+          : Center(child: Image(image: AssetImage("images/nostory.png"))),
     );
   }
 }

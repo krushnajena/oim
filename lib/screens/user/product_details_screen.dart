@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:oim/constants/constant.dart';
 import 'package:oim/constants/urls.dart';
 import 'package:oim/models/chat_model.dart';
@@ -41,12 +42,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   double lat = 0;
   double lang = 0;
   String mobileNo = "";
+
   String categoryId = "";
   bool? follewed;
   double discountPercentage = 0;
   bool isLoaded = false;
   List<SpecificationModel> spesifications = [];
   List spesifica = [];
+  List products = [];
 
   double ratting = 0;
   int noofrattings = 0;
@@ -56,6 +59,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   double threeStar = 0;
   double fourStar = 0;
   double fiveStar = 0;
+  String catalogueid = "";
   void getRattings() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     var encoded = Uri.parse(get_rattings + sellerid);
@@ -160,6 +164,62 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     });
   }
 
+  void getProducts() async {
+    var nencoded = Uri.parse(get_products_byuserid + sellerid);
+    http.get(nencoded).then((resp) {
+      if (resp.statusCode == 200) {
+        Map mnjson;
+        mnjson = json.decode(resp.body);
+
+        for (int i = 0; i < mnjson["data"]["product"].length; i++) {
+          if (mnjson["data"]["product"][i]["isdeleted"] == false &&
+              mnjson["data"]["product"][i]["instock"] == true &&
+              mnjson["data"]["product"][i]["catalogueid"] == catalogueid) {
+            setState(() {
+              products.add(mnjson["data"]["product"][i]);
+            });
+          }
+        }
+
+        setState(() {});
+        print("*****************************************");
+        print(products.length);
+        print("*****************************************");
+      }
+    });
+  }
+
+  String twlevehourtime(int time) {
+    if (time == 13) {
+      return "01";
+    } else if (time == 14) {
+      return "02";
+    } else if (time == 15) {
+      return "03";
+    } else if (time == 16) {
+      return "04";
+    } else if (time == 17) {
+      return "05";
+    } else if (time == 18) {
+      return "06";
+    } else if (time == 19) {
+      return "07";
+    } else if (time == 20) {
+      return "08";
+    } else if (time == 21) {
+      return "09";
+    } else if (time == 22) {
+      return "10";
+    } else if (time == 23) {
+      return "11";
+    } else {
+      return "12";
+    }
+  }
+
+  String opeingText = "";
+  bool isClosed = false;
+
   void getSellerDetails() async {
     var nencoded = Uri.parse(get_sellerdetalsbyuserid + sellerid);
     http.get(nencoded).then((resp) {
@@ -170,13 +230,257 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           setState(() {
             storename = mnjson["Data"]["Seller"][0]["businessname"];
             imageUrl = mnjson["Data"]["Seller"][0]["photo"];
-            address = mnjson["Data"]["Seller"][0]["streetaddress"];
+            address = mnjson["Data"]["Seller"][0]["streetaddress"] +
+                ", " +
+                mnjson["Data"]["Seller"][0]["landmark"];
             lat = mnjson["Data"]["Seller"][0]["latitude"];
             lang = mnjson["Data"]["Seller"][0]["longitude"];
             mobileNo = mnjson["Data"]["Seller"][0]["businesscontactinfo"];
             categoryId = mnjson["Data"]["Seller"][0]["businesscatagories"];
             isLoaded = true;
           });
+          getProducts();
+
+          DateTime date = DateTime.now();
+
+          String day = DateFormat('EEEE').format(date);
+
+          if (day == "Sunday") {
+            if (mnjson["Data"]["Seller"][0].containsKey("sundayopeningtime")) {
+              int openingtime = int.parse(mnjson["Data"]["Seller"][0]
+                      ["sundayopeningtime"]
+                  .toString()
+                  .split(':')[0]);
+              int closingtime = int.parse(mnjson["Data"]["Seller"][0]
+                      ["sundayclosingtime"]
+                  .toString()
+                  .split(':')[0]);
+              if (openingtime <= date.hour && closingtime > date.hour) {
+                opeingText = "Open . Closes " +
+                    twlevehourtime(closingtime) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["sundayclosingtime"]
+                        .toString()
+                        .split(':')[1];
+                isClosed = false;
+              } else if (closingtime < date.hour) {
+                isClosed = true;
+                opeingText = "Opens " +
+                    twlevehourtime(int.parse(mnjson["Data"]["Seller"][0]
+                            ["mondayopeningtime"]
+                        .toString()
+                        .split(':')[0])) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["mondayopeningtime"]
+                        .toString()
+                        .split(':')[1];
+                " Mon";
+              }
+            }
+          } else if (day == "Monday") {
+            if (mnjson["Data"]["Seller"][0].containsKey("mondayopeningtime")) {
+              int openingtime = int.parse(mnjson["Data"]["Seller"][0]
+                      ["mondayopeningtime"]
+                  .toString()
+                  .split(':')[0]);
+              int closingtime = int.parse(mnjson["Data"]["Seller"][0]
+                      ["mondayclosingtime"]
+                  .toString()
+                  .split(':')[0]);
+
+              if (openingtime <= date.hour && closingtime > date.hour) {
+                opeingText = "Open . Closes " +
+                    twlevehourtime(closingtime) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["mondayclosingtime"]
+                        .toString()
+                        .split(':')[1];
+                isClosed = false;
+              } else if (closingtime < date.hour) {
+                isClosed = true;
+                opeingText = "Opens " +
+                    twlevehourtime(int.parse(mnjson["Data"]["Seller"][0]
+                            ["tuesdayopeningtime"]
+                        .toString()
+                        .split(':')[0])) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["tuesdayopeningtime"]
+                        .toString()
+                        .split(':')[1];
+                " Tue";
+              }
+            }
+          } else if (day == "Tuesday") {
+            if (mnjson["Data"]["Seller"][0].containsKey("tuesdayopeningtime")) {
+              int openingtime = int.parse(mnjson["Data"]["Seller"][0]
+                      ["tuesdayopeningtime"]
+                  .toString()
+                  .split(':')[0]);
+              int closingtime = int.parse(mnjson["Data"]["Seller"][0]
+                      ["tuesdayclosingtime"]
+                  .toString()
+                  .split(':')[0]);
+
+              if (openingtime <= date.hour && closingtime > date.hour) {
+                opeingText = "Open . Closes " +
+                    twlevehourtime(closingtime) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["tuesdayclosingtime"]
+                        .toString()
+                        .split(':')[1];
+                isClosed = false;
+              } else if (closingtime < date.hour) {
+                isClosed = true;
+                opeingText = "Opens " +
+                    twlevehourtime(int.parse(mnjson["Data"]["Seller"][0]
+                            ["wednesdayopeningtime"]
+                        .toString()
+                        .split(':')[0])) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["wednesdayopeningtime"]
+                        .toString()
+                        .split(':')[1];
+                " Wed";
+              }
+            }
+          } else if (day == "Wednesday") {
+            if (mnjson["Data"]["Seller"][0]
+                .containsKey("wednesdayopeningtime")) {
+              int openingtime = int.parse(mnjson["Data"]["Seller"][0]
+                      ["wednesdayopeningtime"]
+                  .toString()
+                  .split(':')[0]);
+              int closingtime = int.parse(mnjson["Data"]["Seller"][0]
+                      ["wednesdayclosingtime"]
+                  .toString()
+                  .split(':')[0]);
+
+              if (openingtime <= date.hour && closingtime > date.hour) {
+                opeingText = "Open . Closes " +
+                    twlevehourtime(closingtime) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["wednesdayclosingtime"]
+                        .toString()
+                        .split(':')[1];
+                isClosed = false;
+              } else if (closingtime < date.hour) {
+                isClosed = true;
+                opeingText = "Opens " +
+                    twlevehourtime(int.parse(mnjson["Data"]["Seller"][0]
+                            ["tuesdayopeningtime"]
+                        .toString()
+                        .split(':')[0])) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["tuesdayopeningtime"]
+                        .toString()
+                        .split(':')[1];
+                " Thu";
+              }
+            }
+          } else if (day == "Thursday") {
+            if (mnjson["Data"]["Seller"][0]
+                .containsKey("thursdayopeningtime")) {
+              int openingtime = int.parse(mnjson["Data"]["Seller"][0]
+                      ["thursdayopeningtime"]
+                  .toString()
+                  .split(':')[0]);
+              int closingtime = int.parse(mnjson["Data"]["Seller"][0]
+                      ["tuesdayclosingtime"]
+                  .toString()
+                  .split(':')[0]);
+
+              if (openingtime <= date.hour && closingtime > date.hour) {
+                opeingText = "Open . Closes " +
+                    twlevehourtime(closingtime) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["tuesdayclosingtime"]
+                        .toString()
+                        .split(':')[1];
+                isClosed = false;
+              } else if (closingtime < date.hour) {
+                isClosed = true;
+                opeingText = "Opens " +
+                    twlevehourtime(int.parse(mnjson["Data"]["Seller"][0]
+                            ["fridayopeningtime"]
+                        .toString()
+                        .split(':')[0])) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["fridayopeningtime"]
+                        .toString()
+                        .split(':')[1];
+                " Fri";
+              }
+            }
+          } else if (day == "Friday") {
+            if (mnjson["Data"]["Seller"][0].containsKey("fridayopeningtime")) {
+              int openingtime = int.parse(mnjson["Data"]["Seller"][0]
+                      ["fridayopeningtime"]
+                  .toString()
+                  .split(':')[0]);
+              int closingtime = int.parse(mnjson["Data"]["Seller"][0]
+                      ["fridayclosingtime"]
+                  .toString()
+                  .split(':')[0]);
+
+              if (openingtime <= date.hour && closingtime > date.hour) {
+                opeingText = "Open . Closes " +
+                    twlevehourtime(closingtime) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["fridayclosingtime"]
+                        .toString()
+                        .split(':')[1];
+                isClosed = false;
+              } else if (closingtime < date.hour) {
+                isClosed = true;
+                opeingText = "Opens " +
+                    twlevehourtime(int.parse(mnjson["Data"]["Seller"][0]
+                            ["saturdayopeningtime"]
+                        .toString()
+                        .split(':')[0])) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["saturdayopeningtime"]
+                        .toString()
+                        .split(':')[1];
+                " Sat";
+              }
+            }
+          } else if (day == "Saturday") {
+            if (mnjson["Data"]["Seller"][0]
+                .containsKey("saturdayopeningtime")) {
+              print("345678904567890-4567890-=567890-=7890-");
+              int openingtime = int.parse(mnjson["Data"]["Seller"][0]
+                      ["saturdayopeningtime"]
+                  .toString()
+                  .split(':')[0]);
+              int closingtime = int.parse(mnjson["Data"]["Seller"][0]
+                      ["saturdayclosingtime"]
+                  .toString()
+                  .split(':')[0]);
+
+              if (openingtime <= date.hour && closingtime > date.hour) {
+                opeingText = "Open . Closes " +
+                    twlevehourtime(closingtime) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["saturdayclosingtime"]
+                        .toString()
+                        .split(':')[1];
+                isClosed = false;
+              } else if (closingtime < date.hour) {
+                opeingText = "Opens " +
+                    twlevehourtime(int.parse(mnjson["Data"]["Seller"][0]
+                            ["sundayopeningtime"]
+                        .toString()
+                        .split(':')[0])) +
+                    ":" +
+                    mnjson["Data"]["Seller"][0]["sundayopeningtime"]
+                        .toString()
+                        .split(':')[1];
+                " Sun";
+                isClosed = true;
+              }
+            }
+          }
+          setState(() {});
           getRattings();
           addView();
         }
@@ -406,6 +710,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
           double disount = mrp - sellingprice;
           discountPercentage = (disount / mrp) * 100;
+          catalogueid = mnjson["data"]["product"]["catalogueid"];
         });
         if (spesifica.length > 0) {
           print("--------------444444444");
@@ -852,11 +1157,19 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     child: Row(
                       children: [
                         Text(address),
-                        Text(
-                          "Open",
-                          style: TextStyle(
-                              color: Colors.green, fontWeight: FontWeight.bold),
-                        )
+                        SizedBox(width: 10),
+                        Expanded(
+                            child: isClosed == true
+                                ? Row(
+                                    children: [
+                                      Text(
+                                        "Closed",
+                                        style: TextStyle(color: Colors.red),
+                                      ),
+                                      Text(opeingText)
+                                    ],
+                                  )
+                                : Text(opeingText))
                       ],
                     ),
                   ),
@@ -944,6 +1257,126 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     ),
                   ),
                   SizedBox(height: 10),
+                  Container(
+                    height: 220,
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: products.length,
+                        itemBuilder: (context, index) {
+                          //  noofrattingsf(
+                          // index);
+                          double disount = double.parse(
+                                  products[index]["mrp"].toString()) -
+                              double.parse(
+                                  products[index]["sellingprice"].toString());
+                          double discountPercentage = (disount /
+                                  double.parse(
+                                      products[index]["mrp"].toString())) *
+                              100;
+
+                          return InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          ProductDetailsScreen(products[index]
+                                                  ["_id"]
+                                              .toString())));
+                            },
+                            child: SizedBox(
+                              child: SizedBox(
+                                height: 210,
+                                width: 160,
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 2, bottom: 12),
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                        child: SizedBox(
+                                          height: 150,
+                                          width: 150,
+                                          child: Image.network(
+                                            baseUrl +
+                                                products[index]["image"][0]
+                                                    ["filename"],
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 8.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 2),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  products[index]
+                                                      ["productname"],
+                                                  style: TextStyle(
+                                                      fontSize: 13,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 4.0, bottom: 4),
+                                                  child: Row(
+                                                    children: [
+                                                      Text(
+                                                        '\₹${products[index]["mrp"]}',
+                                                        style: TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.grey,
+                                                            decoration:
+                                                                TextDecoration
+                                                                    .lineThrough),
+                                                      ),
+                                                      Text(
+                                                        '    \₹${products[index]["sellingprice"]}',
+                                                        style: TextStyle(
+                                                            fontSize: 13,
+                                                            color:
+                                                                Colors.black),
+                                                      ),
+                                                      Text(
+                                                        '  ${discountPercentage.toStringAsFixed(0)}% off',
+                                                        style: TextStyle(
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color:
+                                                                Colors.green),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        }),
+                  ),
                   SizedBox(
                     height: 30,
                   ),

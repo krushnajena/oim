@@ -99,6 +99,9 @@ class _UserFeedBackScreenState extends State<UserFeedBackScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    double deviceWidth =MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Feedback"),
@@ -129,13 +132,13 @@ class _UserFeedBackScreenState extends State<UserFeedBackScreen> {
                 padding: EdgeInsets.only(top: 110, left: 30, right: 30),
                 child: SizedBox(
                     height: 510,
-                    width: 350,
+                    width: deviceWidth * 0.9,
                     child: Card(
                       child: Column(
                         children: [
                           Container(
-                              margin: EdgeInsets.only(top: 20),
-                              width: 300,
+                              padding: EdgeInsets.only(top: 20, left: 25, right: 25),
+                              width: deviceWidth * 0.9,
                               child: TextField(
                                 controller: txt_name,
                                 decoration: InputDecoration(
@@ -146,8 +149,8 @@ class _UserFeedBackScreenState extends State<UserFeedBackScreen> {
                                 autofocus: false,
                               )),
                           Container(
-                              margin: EdgeInsets.only(top: 20),
-                              width: 300,
+                              padding: EdgeInsets.only(top: 20, left: 25, right: 25),
+                              width: deviceWidth * 0.9,
                               child: TextField(
                                 controller: txt_email,
                                 decoration: InputDecoration(
@@ -158,8 +161,8 @@ class _UserFeedBackScreenState extends State<UserFeedBackScreen> {
                                 autofocus: false,
                               )),
                           Container(
-                              margin: EdgeInsets.only(top: 20),
-                              width: 300,
+                              padding: EdgeInsets.only(top: 20, left: 25, right: 25),
+                              width: deviceWidth * 0.9,
                               child: TextField(
                                 controller: txt_phone,
                                 decoration: InputDecoration(
@@ -170,8 +173,8 @@ class _UserFeedBackScreenState extends State<UserFeedBackScreen> {
                                 autofocus: false,
                               )),
                           Container(
-                              margin: EdgeInsets.only(top: 20),
-                              width: 300,
+                              padding: EdgeInsets.only(top: 20, left: 25, right: 25),
+                              width: deviceWidth * 0.9,
                               child: TextField(
                                 maxLines: 5,
                                 controller: txt_message,

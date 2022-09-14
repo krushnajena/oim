@@ -5,6 +5,7 @@ import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:oim/constants/urls.dart';
 import 'package:http/http.dart' as http;
 import 'package:oim/screens/seller/products_list_screen.dart';
+import 'package:oim/screens/user/offerzoneserach.dart';
 import 'package:oim/screens/user/product_details_screen.dart';
 import 'package:oim/screens/widgets/imagesilder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -134,11 +135,19 @@ class _OfferScreenState extends State<OfferScreen> {
         title: Text("Offer Zone"),
         centerTitle: true,
         actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: new Icon(
-              Icons.search,
-              color: Colors.white,
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => OfferZoneSearchScreen()));
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: new Icon(
+                Icons.search,
+                color: Colors.white,
+              ),
             ),
           ),
         ],

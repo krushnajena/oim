@@ -65,10 +65,10 @@ class _CityScreenState extends State<CityScreen> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => AraaScreen(
-                                    city[index]["_id"].toString(),
-                                    city[index]["cityname"].toString(),
                                     widget.stateid,
-                                    widget.statename)));
+                                    widget.statename,
+                                    city[index]["_id"].toString(),
+                                    city[index]["cityname"].toString())));
                       },
                     );
                   }),

@@ -142,7 +142,10 @@ class _MyStoreScreenState extends State<MyStoreScreen> {
                                     padding: const EdgeInsets.all(1.0),
                                     child: Text(
                                       stores[index]["sellerdetails"][0]
-                                          ["streetaddress"],
+                                              ["streetaddress"] +
+                                          ", " +
+                                          stores[index]["sellerdetails"][0]
+                                              ["landmark"],
                                       style: TextStyle(color: Colors.grey),
                                     ),
                                   ),

@@ -66,27 +66,12 @@ class _UpdateBusinessCategoryScreenState
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Update Business Category"),
+        title: Text("Business Category"),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            height: 30,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 30,
-            ),
-            child: Text(
-              "Business Categories",
-              style: TextStyle(fontWeight: FontWeight.w700),
-            ),
-          ),
-          SizedBox(
-            height: 30,
-          ),
           Padding(
             padding: const EdgeInsets.only(left: 30, right: 30),
             child: SizedBox(
@@ -128,7 +113,7 @@ class _UpdateBusinessCategoryScreenState
                 //    MaterialPageRoute(builder: (context) => SellingNow()));
               },
               child: Text(
-                "Submit",
+                "Update",
                 style: TextStyle(color: Colors.white, fontSize: 17),
               ),
             ),

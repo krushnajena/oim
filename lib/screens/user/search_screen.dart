@@ -39,49 +39,43 @@ class _SearchScreenState extends State<SearchScreen> {
         setState(() {
           sellers = mjson["data"]["seller"];
         });
-        getCategories();
+        //getCategories();
       }
     }).catchError((onError) {});
   }
 
   void getCategories() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
+    if ((preferences.getStringList("recentcategory") ?? "") == "") {
+    } else {
+      var encoded = Uri.parse(get_categoris);
+      List<String> str = [];
+      str = preferences.getStringList("recentcategory")!;
+      http.get(encoded).then((value) {
+        print(value.statusCode);
+        if (value.statusCode == 200) {
+          Map mjson;
+          mjson = json.decode(value.body);
+          print(mjson);
 
-    var encoded = Uri.parse(get_categoris);
-    http.get(encoded).then((value) {
-      print(value.statusCode);
-      if (value.statusCode == 200) {
-        Map mjson;
-        mjson = json.decode(value.body);
-        print(mjson);
-
-        for (int i = 0; i < mjson["data"]["categories"].length; i++) {
-          int s = 0;
-          for (int k = 0; k < sellers.length; k++) {
-            if (mjson["data"]["categories"][i]["_id"] ==
-                sellers[k]["businesscatagories"]) {
-              s = s + 1;
+          for (int i = 0; i < mjson["data"]["categories"].length; i++) {
+            for (int j = 0; j < str.length; j++) {
+              if (mjson["data"]["categories"][i]["_id"] == str[j]) {
+                setState(() {
+                  categories.add(
+                    {
+                      'value': mjson["data"]["categories"][i]["_id"],
+                      'label': mjson["data"]["categories"][i]["categoryname"],
+                      'icon': mjson["data"]["categories"][i]["icon"]
+                    },
+                  );
+                });
+              }
             }
           }
-          if (s > 0) {
-            setState(() {
-              categories.add(
-                {
-                  'value': mjson["data"]["categories"][i]["_id"],
-                  'label': mjson["data"]["categories"][i]["categoryname"],
-                  'icon': mjson["data"]["categories"][i]["icon"]
-                },
-              );
-            });
-          }
         }
-        setState(() {
-          categories.add(
-            {'value': 'Restaurant', 'label': 'Restaurant', 'icon': ""},
-          );
-        });
-      }
-    });
+      });
+    }
   }
 
   TextEditingController txt_searchbar = new TextEditingController();
@@ -91,7 +85,7 @@ class _SearchScreenState extends State<SearchScreen> {
     // TODO: implement initState
     super.initState();
 
-    getStores();
+    getCategories();
   }
 
   @override

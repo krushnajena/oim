@@ -36,12 +36,11 @@ class _SelectProductForAdScreenState extends State<SelectProductForAdScreen> {
         // return object of type Dialog
         return Dialog(
           elevation: 0.0,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
           child: Wrap(
             children: [
               Container(
-                padding: EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -112,7 +111,7 @@ class _SelectProductForAdScreenState extends State<SelectProductForAdScreen> {
         } else {
           Navigator.of(context).pop();
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AdPackageScreen()));
+              MaterialPageRoute(builder: (context) => const AdPackageScreen()));
         }
       }
     });
@@ -173,25 +172,20 @@ class _SelectProductForAdScreenState extends State<SelectProductForAdScreen> {
     return Scaffold(
       backgroundColor: scaffoldBgColor,
       appBar:
-          AppBar(centerTitle: true, title: Text('Select Product'), actions: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: InkWell(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => SellerProductSearchScreen()));
-              },
-              child: Icon(Icons.search)),
+          AppBar(centerTitle: true, title: const Text('Select Product'), actions: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: InkWell(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const SellerProductSearchScreen()));
+                    },
+                  child: const Icon(Icons.search)),
         )
       ]),
       body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.only(
-              top: 8,
-            ),
+            padding: const EdgeInsets.only(top: 8),
             child: CustomScrollView(
               slivers: [
                 SliverGrid(
@@ -218,7 +212,7 @@ class _SelectProductForAdScreenState extends State<SelectProductForAdScreen> {
                                   onTap: () {},
                                   child: Stack(children: [
                                     Container(
-                                        margin: EdgeInsets.all(3),
+                                        margin: const EdgeInsets.all(3),
                                         height: 115,
                                         width:
                                             (MediaQuery.of(context).size.width -
@@ -242,7 +236,7 @@ class _SelectProductForAdScreenState extends State<SelectProductForAdScreen> {
                                           child: Container(
                                             width: 30,
                                             height: 30,
-                                            decoration: BoxDecoration(
+                                            decoration: const BoxDecoration(
                                               shape: BoxShape.circle,
                                             ),
                                             child: Icon(
@@ -253,14 +247,14 @@ class _SelectProductForAdScreenState extends State<SelectProductForAdScreen> {
                                     ),
                                   ]),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 8,
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(left: 8.0),
                                   child: Text(
                                     products[index]["productname"],
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w500),
                                     maxLines: 3,
@@ -274,25 +268,22 @@ class _SelectProductForAdScreenState extends State<SelectProductForAdScreen> {
                                       Text(
                                           "₹" +
                                               products[index]["mrp"].toString(),
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w500,
                                               color: Colors.grey,
                                               decoration:
                                                   TextDecoration.lineThrough)),
-                                      SizedBox(width: 5),
-                                      Text(
-                                          "₹" +
-                                              products[index]["sellingprice"]
-                                                  .toString(),
-                                          style: TextStyle(
+                                      const SizedBox(width: 5),
+                                      Text("₹" + products[index]["sellingprice"].toString(),
+                                          style: const TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w500)),
-                                      SizedBox(width: 5),
+                                      const SizedBox(width: 5),
                                       Text(
                                         discountPercentage.toStringAsFixed(2) +
                                             "%",
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           color: Colors.green,
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500,
@@ -351,52 +342,45 @@ class _SelectProductForAdScreenState extends State<SelectProductForAdScreen> {
                                         height: 5,
                                       ),
                                       Center(
-                                        child: OutlineButton(
+                                        child: ElevatedButton(
                                             onPressed: () {
                                               showDialog(
                                                   context: context,
                                                   builder: (BuildContext
                                                           context) =>
                                                       CupertinoAlertDialog(
-                                                        title: new Text(
+                                                        title: const Text(
                                                             "Confirmation"),
-                                                        content: new Text(
+                                                        content: Text(
                                                             "Do you want to display '" +
                                                                 products[index][
                                                                     "productname"] +
                                                                 "' on offerzone section. "),
                                                         actions: <Widget>[
                                                           CupertinoDialogAction(
-                                                            isDefaultAction:
-                                                                true,
-                                                            child:
-                                                                Text("Post Ad"),
-                                                            onPressed:
-                                                                () async {
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pop();
-                                                              getTotalNoOfAds(
-                                                                  products[
-                                                                          index]
-                                                                      ["_id"]);
+                                                            isDefaultAction: true,
+                                                            child: const Text("Post Ad"),
+                                                            onPressed: () async {
+                                                              Navigator.of(context).pop();
+                                                              getTotalNoOfAds(products[index]["_id"]);
                                                             },
                                                           ),
                                                           CupertinoDialogAction(
-                                                            child: Text("Exit"),
+                                                            child: const Text("Exit"),
                                                             onPressed: () {
                                                               Navigator.pop(
                                                                   context);
                                                             },
                                                           )
                                                         ],
-                                                      ));
+                                                      )
+                                              );
                                             },
                                             child: Container(
                                               height: 15,
                                               width: 100,
-                                              child: Center(
-                                                child: const Text("Post Ad",
+                                              child: const Center(
+                                                child: Text("Post Ad",
                                                     style: TextStyle(
                                                         fontSize: 12)),
                                               ),
@@ -426,9 +410,7 @@ class _SelectProductForAdScreenState extends State<SelectProductForAdScreen> {
                   crossAxisSpacing: 20.0,
                   childAspectRatio: 2.5,
                   children: <Widget>[
-                    SizedBox(
-                      height: 20,
-                    )
+                    const SizedBox(height: 20,)
                   ],
                 ),
               ],

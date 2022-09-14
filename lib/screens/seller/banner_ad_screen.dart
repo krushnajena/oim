@@ -160,7 +160,8 @@ class _BannerAdScreenState extends State<BannerAdScreen> {
                                   "Submit",
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 17),
-                                )
+                                ),
+
                               ],
                             ),
                           ),
@@ -168,7 +169,10 @@ class _BannerAdScreenState extends State<BannerAdScreen> {
                       )
                     ],
                   )),
-            )
+            ),
+            SizedBox(
+              height: 35,
+            ),
           ],
         ),
       )),

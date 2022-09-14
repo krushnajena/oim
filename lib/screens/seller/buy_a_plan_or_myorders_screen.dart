@@ -52,6 +52,7 @@ class _BuyAPlanOrMyOrderScreenState extends State<BuyAPlanOrMyOrderScreen> {
                               fontSize: 18, fontWeight: FontWeight.normal),
                         ),
                       ),
+
                     ],
                   ),
                 ),
@@ -79,6 +80,37 @@ class _BuyAPlanOrMyOrderScreenState extends State<BuyAPlanOrMyOrderScreen> {
                         margin: EdgeInsets.only(top: 9, left: 9),
                         child: Text(
                           "My Orders",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.normal),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PurchaseHistoryScreen()));
+                  },
+                  child: Row(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(top: 9, left: 9),
+                        child: Image.asset(
+                          "images/9.jpeg",
+                          height: 35,
+                          width: 35,
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 9, left: 9),
+                        child: Text(
+                          "Invoice Section",
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.normal),
                         ),

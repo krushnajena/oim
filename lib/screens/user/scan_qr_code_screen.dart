@@ -72,7 +72,7 @@ class _QrCodeScannerScreenState extends State<QrCodeScannerScreen> {
       this.controller = controller;
     });
     controller.scannedDataStream.listen((scanData) {
-      controller?.dispose();
+      controller.dispose();
       var nencoded =
           Uri.parse(get_sellerdetalsbyuserid + scanData.code.toString());
 

@@ -85,7 +85,7 @@ class _AllCategofyBySelectScreenState extends State<AllCategofyBySelectScreen> {
   List subcatelouges = [];
 
   void getsubcatgories() async {
-    var nencoded = Uri.parse(getSubcategoriesByCatelogid + catelogId!);
+    var nencoded = Uri.parse(getSubcategoriesByCatelogid + catelogId);
     print(get_catelogues + categoryId);
     http.get(nencoded).then((value) {
       print(value.statusCode);
@@ -102,7 +102,7 @@ class _AllCategofyBySelectScreenState extends State<AllCategofyBySelectScreen> {
   }
 
   void getCatlouges() async {
-    var nencoded = Uri.parse(get_catelogues + categoryId!);
+    var nencoded = Uri.parse(get_catelogues + categoryId);
     print(get_catelogues + categoryId);
     http.get(nencoded).then((value) {
       print(value.statusCode);

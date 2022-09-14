@@ -213,9 +213,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
               elevation: 0.1,
               backgroundColor: Colors.white,
               actions: <Widget>[
-                SizedBox(
-                  width: 15,
-                ),
+                SizedBox(width: 15),
                 InkWell(
                   onTap: () {
                     _scaffoldKey.currentState!.openDrawer();
@@ -225,9 +223,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                     color: Colors.black,
                   ),
                 ),
-                SizedBox(
-                  width: 15,
-                ),
+                SizedBox(width: 15,),
                 Expanded(
                   child: InkWell(
                     onTap: () async {
@@ -288,23 +284,15 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                             builder: (context) => QrCodeScannerScreen()));
                   },
                 ),
-                InkWell(
-                  onTap: () {
+                IconButton(
+                  icon: const Icon(
+                    Icons.shopping_bag_outlined,
+                    color: Colors.black,
+                  ),
+                  onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => CartScreen()));
                   },
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.shopping_bag_outlined,
-                      color: Colors.black,
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => CartScreen()));
-                    },
-                  ),
                 ),
               ],
             ),
@@ -344,7 +332,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                     ),
                   ),
 
-                  //Here you place your menu items
+                  // Here you place your menu items
                   ListTile(
                     leading: Icon(Icons.category),
                     title:
@@ -358,7 +346,6 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                       //Navigator.push(context, MaterialPageRoute(builder: (context)=>CatgoryPage()));
                     },
                   ),
-
                   ListTile(
                     leading: Icon(Icons.store),
                     title: Text('My Stores', style: TextStyle(fontSize: 15)),
@@ -393,7 +380,6 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                               builder: (context) => WishListScreen()));
                     },
                   ),
-
                   ListTile(
                     leading: Icon(Icons.person),
                     title: Text('My Account', style: TextStyle(fontSize: 15)),
@@ -405,7 +391,6 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                               builder: (context) => UserAccountScreen()));
                     },
                   ),
-
                   ListTile(
                     leading: Icon(Icons.chat),
                     title: Text('My Chats', style: TextStyle(fontSize: 15)),
@@ -445,566 +430,560 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
             ),
             body: SingleChildScrollView(
                 child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Container(
-                    height: 90,
-                    child: Row(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(right: 10),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 70,
-                                width: 70,
-                                child: Card(
-                                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50.0),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: InkWell(
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    AllCategoryScreen()));
-                                      },
-                                      child: Image.asset("images/app.png",
-                                          fit: BoxFit.cover),
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Container(
+                        height: 90,
+                        child: Row(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(right: 10),
+                              child: Column(
+                                children: [
+                                  SizedBox(
+                                    height: 70,
+                                    width: 70,
+                                    child: Card(
+                                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(50.0),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: InkWell(
+                                          onTap: () {
+                                            Navigator.push(context, MaterialPageRoute(builder: (context) => AllCategoryScreen()));
+                                            },
+                                          child: Image.asset("images/app.png",
+                                              fit: BoxFit.cover
+                                          ),
                                     ),
                                   ),
                                 ),
                               ),
-                              Text(
-                                "All Categories",
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black),
-                              ),
+                                Text(
+                                  "All Categories",
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
+                                ),
                             ],
                           ),
                         ),
-                        Expanded(
-                          child: ListView.builder(
-                              itemCount: categories.length,
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) {
-                                return categories[index]["label"] !=
-                                        "Restaurant"
-                                    ? Container(
-                                        margin: EdgeInsets.only(right: 10),
-                                        child: Column(
-                                          children: [
-                                            SizedBox(
-                                              height: 70,
-                                              width: 70,
-                                              child: Card(
-                                                clipBehavior:
-                                                    Clip.antiAliasWithSaveLayer,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          50.0),
-                                                ),
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: InkWell(
-                                                    onTap: () {
-                                                      Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder: (context) => AllCategofyBySelectScreen(
-                                                                  categories[
-                                                                          index]
-                                                                      ["value"],
-                                                                  categories[
-                                                                          index]
-                                                                      [
-                                                                      "label"])));
-                                                    },
-                                                    child: Image.network(
-                                                      baseUrl +
-                                                          categories[index]
-                                                              ["icon"],
-                                                      fit: BoxFit.cover,
+                            Expanded(
+                              child: ListView.builder(
+                                  itemCount: categories.length,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context, index) {
+                                    return categories[index]["label"] !=
+                                            "Restaurant"
+                                        ? Container(
+                                            margin: EdgeInsets.only(right: 10),
+                                            child: Column(
+                                              children: [
+                                                SizedBox(
+                                                  height: 70,
+                                                  width: 70,
+                                                  child: Card(
+                                                    clipBehavior:
+                                                        Clip.antiAliasWithSaveLayer,
+                                                    shape: RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius.circular(50.0),
+                                                    ),
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.all(8.0),
+                                                      child: InkWell(
+                                                        onTap: () {
+                                                          Navigator.push(context, MaterialPageRoute(builder: (context) => AllCategofyBySelectScreen(
+                                                                      categories[
+                                                                              index]
+                                                                          ["value"],
+                                                                      categories[
+                                                                              index]
+                                                                          [
+                                                                          "label"])));
+                                                        },
+                                                        child: Image.network(
+                                                          baseUrl +
+                                                              categories[index]
+                                                                  ["icon"],
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
-                                            ),
-                                            Text(
-                                              categories[index]["label"],
-                                              style: TextStyle(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black),
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    : Container(
-                                        margin: EdgeInsets.only(right: 10),
-                                        child: Column(
-                                          children: [
-                                            SizedBox(
-                                              height: 70,
-                                              width: 70,
-                                              child: Card(
-                                                clipBehavior:
-                                                    Clip.antiAliasWithSaveLayer,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          50.0),
+                                                Text(
+                                                  categories[index]["label"],
+                                                  style: TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight: FontWeight.bold,
+                                                      color: Colors.black),
                                                 ),
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: InkWell(
-                                                    onTap: () {
-                                                      Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder: (context) => SellerListByCategoryIdScreen(
-                                                                  categories[
-                                                                          index]
-                                                                      ["value"],
-                                                                  categories[
-                                                                          index]
-                                                                      [
-                                                                      "label"])));
-                                                    },
-                                                    child: Image.asset(
-                                                      "images/restaurant.png",
-                                                      fit: BoxFit.cover,
+                                              ],
+                                            ),
+                                          )
+                                        : Container(
+                                            margin: EdgeInsets.only(right: 10),
+                                            child: Column(
+                                              children: [
+                                                SizedBox(
+                                                  height: 70,
+                                                  width: 70,
+                                                  child: Card(
+                                                    clipBehavior:
+                                                        Clip.antiAliasWithSaveLayer,
+                                                    shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              50.0),
+                                                    ),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(8.0),
+                                                      child: InkWell(
+                                                        onTap: () {
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder: (context) => SellerListByCategoryIdScreen(
+                                                                      categories[
+                                                                              index]
+                                                                          ["value"],
+                                                                      categories[
+                                                                              index]
+                                                                          [
+                                                                          "label"])));
+                                                        },
+                                                        child: Image.asset(
+                                                          "images/restaurant.png",
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
+                                                Text(
+                                                  categories[index]["label"],
+                                                  style: TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight: FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
                                             ),
-                                            Text(
-                                              categories[index]["label"],
-                                              style: TextStyle(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black),
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                              }),
-                        ),
+                                          );
+                                  }),
+                            ),
                       ],
                     ),
                   ),
                 ),
-                Divider(
-                  thickness: 1,
-                  color: Colors.grey[30],
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                      color: Colors.white,
-                      child: Column(children: [
-                        isImageSliderLoaded == true
-                            ? ImagesCarousel(imageSlider)
-                            : SizedBox(),
-                      ])),
-                ),
-                Divider(
-                  thickness: 1,
-                  color: Colors.grey[30],
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Text(
-                    "Top Brands For You",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  Divider(
+                    thickness: 1,
+                    color: Colors.grey[30],
                   ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                        color: Colors.white,
+                        child: Column(children: [
+                          isImageSliderLoaded == true
+                              ? ImagesCarousel(imageSlider)
+                              : SizedBox(),
+                        ])),
                 ),
-                GridView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 4,
-                    crossAxisSpacing: 1,
-                    mainAxisSpacing: 1,
-                    mainAxisExtent: 115,
+                  Divider(
+                    thickness: 1,
+                    color: Colors.grey[30],
                   ),
-                  itemCount: popularStores.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return InkWell(
-                      onTap: () {
-                        print(popularStores[index]["storeid"]
-                            ["businesscatagories"]);
-                        popularStores[index]["storeid"]["businesscatagories"] ==
-                                "Restaurant"
-                            ? Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        ResturentDetailsScreen(
-                                            popularStores[index]["storeid"]
-                                                ["userid"])))
-                            : Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => StoreDetailsScreen(
-                                        popularStores[index]["storeid"]
-                                            ["userid"])));
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(right: 10),
-                        height: 150,
-                        child: InkWell(
-                          onTap: () {
-                            print("555555555555555333333456688766776767676");
-                            print(popularStores[index]["storeid"]
-                                ["businesscatagories"]);
-                            popularStores[index]["storeid"]
-                                        ["businesscatagories"] ==
-                                    "Restaurant"
-                                ? Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            ResturentDetailsScreen(
-                                                popularStores[index]["storeid"]
-                                                    ["userid"])))
-                                : Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            StoreDetailsScreen(
-                                                popularStores[index]["storeid"]
-                                                    ["userid"])));
-                          },
-                          child: Column(
-                            children: [
-                              Stack(
-                                children: [
-                                  SizedBox(
-                                    height: 80,
-                                    width: 80,
-                                    child: Card(
-                                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(50.0),
-                                      ),
-                                      child: InkWell(
-                                        onTap: () {
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text(
+                      "Top Brands For You",
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 4,
+                        crossAxisSpacing: 1,
+                        mainAxisSpacing: 1,
+                        mainAxisExtent: 115,
+                      ),
+                      itemCount: popularStores.length,
+                      itemBuilder: (BuildContext context, int index) {
+                      return InkWell(
+                        onTap: () {
+                          print(popularStores[index]["storeid"]
+                              ["businesscatagories"]);
+                          popularStores[index]["storeid"]["businesscatagories"] ==
+                                  "Restaurant"
+                              ? Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          ResturentDetailsScreen(
+                                              popularStores[index]["storeid"]
+                                                  ["userid"])))
+                              : Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => StoreDetailsScreen(
                                           popularStores[index]["storeid"]
-                                                      ["businesscatagories"] ==
-                                                  "Restaurant"
-                                              ? Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ResturentDetailsScreen(
-                                                              popularStores[index]
-                                                                      ["storeid"]
-                                                                  ["userid"])))
-                                              : Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          StoreDetailsScreen(
-                                                              popularStores[index]["storeid"]["userid"])));
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(15.0),
-                                          child: Image.network(
-                                            baseUrl +
-                                                popularStores[index]["storeid"]
-                                                    ["photo"],
-                                            fit: BoxFit.cover,
+                                              ["userid"])));
+                        },
+                        child: Container(
+                          margin: EdgeInsets.only(right: 10),
+                          height: 150,
+                          child: InkWell(
+                            onTap: () {
+                              print("555555555555555333333456688766776767676");
+                              print(popularStores[index]["storeid"]
+                                  ["businesscatagories"]);
+                              popularStores[index]["storeid"]
+                                          ["businesscatagories"] ==
+                                      "Restaurant"
+                                  ? Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ResturentDetailsScreen(
+                                                  popularStores[index]["storeid"]
+                                                      ["userid"])))
+                                  : Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              StoreDetailsScreen(
+                                                  popularStores[index]["storeid"]
+                                                      ["userid"])));
+                            },
+                            child: Column(
+                              children: [
+                                Stack(
+                                  children: [
+                                    SizedBox(
+                                      height: 80,
+                                      width: 80,
+                                      child: Card(
+                                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(50.0),
+                                        ),
+                                        child: InkWell(
+                                          onTap: () {
+                                            popularStores[index]["storeid"]
+                                                        ["businesscatagories"] ==
+                                                    "Restaurant"
+                                                ? Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            ResturentDetailsScreen(
+                                                                popularStores[index]
+                                                                        ["storeid"]
+                                                                    ["userid"])))
+                                                : Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            StoreDetailsScreen(
+                                                                popularStores[index]["storeid"]["userid"])));
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(15.0),
+                                            child: Image.network(
+                                              baseUrl +
+                                                  popularStores[index]["storeid"]
+                                                      ["photo"],
+                                              fit: BoxFit.cover,
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  Positioned(
-                                    bottom: 2,
-                                    child: Container(
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
+                                    Positioned(
+                                      bottom: 2,
+                                      child: Container(
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                color: Colors.blue,
+                                              ),
                                               color: Colors.blue,
-                                            ),
-                                            color: Colors.blue,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(20))),
-                                        width: 80,
-                                        height: 20,
-                                        child: Text(
-                                          popularStores[index]["storeid"]
-                                                      ["category"] !=
-                                                  null
-                                              ? popularStores[index]["storeid"]
-                                                      ["category"]
-                                                  .toString()
-                                                  .toUpperCase()
-                                              : "Null",
-                                          style: TextStyle(color: Colors.white),
-                                          textAlign: TextAlign.center,
-                                        )),
-                                  )
-                                ],
-                              ),
-                              Text(
-                                popularStores[index]["storeid"]["businessname"],
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black),
-                              ),
-                            ],
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(20))),
+                                          width: 80,
+                                          height: 20,
+                                          child: Text(
+                                            popularStores[index]["storeid"]
+                                                        ["category"] !=
+                                                    null
+                                                ? popularStores[index]["storeid"]
+                                                        ["category"]
+                                                    .toString()
+                                                    .toUpperCase()
+                                                : "Null",
+                                            style: TextStyle(color: Colors.white),
+                                            textAlign: TextAlign.center,
+                                          )),
+                                    )
+                                  ],
+                                ),
+                                Text(
+                                  popularStores[index]["storeid"]["businessname"],
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  },
-                ),
-                Divider(
-                  thickness: 1,
-                  color: Colors.grey[30],
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: categories.length,
-                      itemBuilder: (context, i) {
-                        int count = 0;
-                        int s = 0;
-                        for (int k = 0; k < sellers.length; k++) {
-                          if (categories[i]["value"] ==
-                                  sellers[k]["businesscatagories"] &&
-                              sellers[k]["products"].length > 0) {
-                            s = s + 1;
+                      );
+                    },
+                    ),
+                  ),
+                  Divider(
+                    thickness: 1,
+                    color: Colors.grey[30],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: categories.length,
+                        itemBuilder: (context, i) {
+                          int count = 0;
+                          int s = 0;
+                          for (int k = 0; k < sellers.length; k++) {
+                            if (categories[i]["value"] ==
+                                    sellers[k]["businesscatagories"] &&
+                                sellers[k]["products"].length > 0) {
+                              s = s + 1;
+                            }
                           }
-                        }
 
-                        return s > 0
-                            ? Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Center(
-                                    child: Stack(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              color: Colors.blueGrey,
-                                              height: 2,
-                                              width: 80,
-                                            ),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text(
-                                              categories[i]["label"].toString(),
-                                              style: TextStyle(
+                          return s > 0
+                              ? Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Center(
+                                      child: Stack(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Container(
                                                 color: Colors.blueGrey,
-                                                fontFamily: 'Times',
-                                                fontSize: 26,
-                                                fontWeight: FontWeight.bold,
-                                                //fontStyle: FontStyle.italic
+                                                height: 2,
+                                                width: 80,
                                               ),
-                                            ),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            Container(
-                                              color: Colors.blueGrey,
-                                              height: 2,
-                                              width: 80,
-                                            ),
-                                          ],
-                                        ),
-                                        Positioned(
-                                            right: 10,
-                                            top: 5,
-                                            child: InkWell(
-                                              onTap: () {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            SellerListByCategoryIdScreen(
-                                                                categories[i][
-                                                                        "value"]
-                                                                    .toString(),
-                                                                categories[i][
-                                                                        "label"]
-                                                                    .toString())));
-                                              },
-                                              child: Image(
-                                                  height: 20,
-                                                  width: 20,
-                                                  image: AssetImage(
-                                                      "images/rightarrow.png")),
-                                            ))
-                                      ],
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(
+                                                categories[i]["label"].toString(),
+                                                style: TextStyle(
+                                                  color: Colors.blueGrey,
+                                                  fontFamily: 'Times',
+                                                  fontSize: 26,
+                                                  fontWeight: FontWeight.bold,
+                                                  //fontStyle: FontStyle.italic
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              Container(
+                                                color: Colors.blueGrey,
+                                                height: 2,
+                                                width: 80,
+                                              ),
+                                            ],
+                                          ),
+                                          Positioned(
+                                              right: 10,
+                                              top: 5,
+                                              child: InkWell(
+                                                onTap: () {
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              SellerListByCategoryIdScreen(
+                                                                  categories[i][
+                                                                          "value"]
+                                                                      .toString(),
+                                                                  categories[i][
+                                                                          "label"]
+                                                                      .toString())));
+                                                },
+                                                child: Image(
+                                                    height: 20,
+                                                    width: 20,
+                                                    image: AssetImage(
+                                                        "images/rightarrow.png")),
+                                              ))
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  ListView.builder(
-                                      shrinkWrap: true,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      itemCount: sellers.length,
-                                      itemBuilder: (context, index) {
-                                        if (categories[i]["value"] ==
-                                            sellers[index]
-                                                ["businesscatagories"]) {
-                                          count = count + 1;
-                                        }
-                                        return categories[i]["value"] ==
-                                                    sellers[index][
-                                                        "businesscatagories"] &&
-                                                count < 3 &&
-                                                sellers[index]["products"]
-                                                        .length >
-                                                    0
-                                            ? Column(
-                                                children: [
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    ListView.builder(
+                                        shrinkWrap: true,
+                                        physics: NeverScrollableScrollPhysics(),
+                                        itemCount: sellers.length,
+                                        itemBuilder: (context, index) {
+                                          if (categories[i]["value"] ==
+                                              sellers[index]
+                                                  ["businesscatagories"]) {
+                                            count = count + 1;
+                                          }
+                                          return categories[i]["value"] ==
+                                                      sellers[index][
+                                                          "businesscatagories"] &&
+                                                  count < 3 &&
                                                   sellers[index]["products"]
-                                                              .length >
-                                                          0
-                                                      ? Container(
-                                                          height: 210,
-                                                          child:
-                                                              ListView.builder(
-                                                                  shrinkWrap:
-                                                                      true,
-                                                                  scrollDirection:
-                                                                      Axis
-                                                                          .horizontal,
-                                                                  itemCount: sellers[
-                                                                              index]
-                                                                          [
-                                                                          "products"]
-                                                                      .length,
-                                                                  itemBuilder:
-                                                                      (context,
-                                                                          iindex) {
-                                                                    //  noofrattingsf(
-                                                                    // index);
-                                                                    double
-                                                                        disount =
-                                                                        double.parse(sellers[index]["products"][iindex]["mrp"].toString()) -
-                                                                            double.parse(sellers[index]["products"][iindex]["sellingprice"].toString());
-                                                                    double
-                                                                        discountPercentage =
-                                                                        (disount /
-                                                                                double.parse(sellers[index]["products"][iindex]["mrp"].toString())) *
-                                                                            100;
+                                                          .length !=
+                                                      0
+                                              ? Column(
+                                                  children: [
+                                                    sellers[index]["products"]
+                                                                .length >
+                                                            0
+                                                        ? Container(
+                                                            height: 210,
+                                                            child:
+                                                                ListView.builder(
+                                                                    shrinkWrap:
+                                                                        true,
+                                                                    scrollDirection:
+                                                                        Axis
+                                                                            .horizontal,
+                                                                    itemCount: sellers[
+                                                                                index]
+                                                                            [
+                                                                            "products"]
+                                                                        .length,
+                                                                    itemBuilder:
+                                                                        (context,
+                                                                            iindex) {
+                                                                      //  noofrattingsf(
+                                                                      // index);
+                                                                      double
+                                                                          disount =
+                                                                          double.parse(sellers[index]["products"][iindex]["mrp"].toString()) -
+                                                                              double.parse(sellers[index]["products"][iindex]["sellingprice"].toString());
+                                                                      double
+                                                                          discountPercentage =
+                                                                          (disount /
+                                                                                  double.parse(sellers[index]["products"][iindex]["mrp"].toString())) *
+                                                                              100;
 
-                                                                    return sellers[index]["products"][iindex]["instock"] ==
-                                                                                true &&
-                                                                            sellers[index]["products"][iindex]["isdeleted"] ==
-                                                                                false
-                                                                        ? InkWell(
-                                                                            onTap:
-                                                                                () {
-                                                                              Navigator.push(context, MaterialPageRoute(builder: (context) => ProductDetailsScreen(sellers[index]["products"][iindex]["_id"].toString())));
-                                                                            },
-                                                                            child:
-                                                                                SizedBox(
-                                                                              child: SizedBox(
-                                                                                height: 210,
-                                                                                width: 160,
-                                                                                child: Column(
-                                                                                  children: [
-                                                                                    Padding(
-                                                                                      padding: const EdgeInsets.only(top: 2, bottom: 12),
-                                                                                      child: ClipRRect(
-                                                                                        borderRadius: BorderRadius.circular(10.0),
-                                                                                        child: SizedBox(
-                                                                                          height: 150,
-                                                                                          width: 150,
-                                                                                          child: Image.network(
-                                                                                            baseUrl + sellers[index]["products"][iindex]["image"][0]["filename"],
-                                                                                            fit: BoxFit.cover,
+                                                                      return sellers[index]["products"][iindex]["instock"] ==
+                                                                                  true &&
+                                                                              sellers[index]["products"][iindex]["isdeleted"] ==
+                                                                                  false
+                                                                          ? InkWell(
+                                                                              onTap:
+                                                                                  () {
+                                                                                Navigator.push(context, MaterialPageRoute(builder: (context) => ProductDetailsScreen(sellers[index]["products"][iindex]["_id"].toString())));
+                                                                              },
+                                                                              child:
+                                                                                  SizedBox(
+                                                                                child: SizedBox(
+                                                                                  height: 210,
+                                                                                  width: 160,
+                                                                                  child: Column(
+                                                                                    children: [
+                                                                                      Padding(
+                                                                                        padding: const EdgeInsets.only(top: 2, bottom: 12),
+                                                                                        child: ClipRRect(
+                                                                                          borderRadius: BorderRadius.circular(10.0),
+                                                                                          child: SizedBox(
+                                                                                            height: 150,
+                                                                                            width: 150,
+                                                                                            child: Image.network(
+                                                                                              baseUrl + sellers[index]["products"][iindex]["image"][0]["filename"],
+                                                                                              fit: BoxFit.cover,
+                                                                                            ),
                                                                                           ),
                                                                                         ),
                                                                                       ),
-                                                                                    ),
-                                                                                    Padding(
-                                                                                      padding: const EdgeInsets.only(left: 8.0),
-                                                                                      child: Column(
-                                                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                        children: [
-                                                                                          Padding(
-                                                                                            padding: const EdgeInsets.only(left: 2),
-                                                                                            child: Column(
-                                                                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                              children: [
-                                                                                                Text(
-                                                                                                  sellers[index]["products"][iindex]["productname"],
-                                                                                                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
-                                                                                                ),
-                                                                                                Padding(
-                                                                                                  padding: const EdgeInsets.only(top: 4.0, bottom: 4),
-                                                                                                  child: Row(
-                                                                                                    children: [
-                                                                                                      Text(
-                                                                                                        '\₹${sellers[index]["products"][iindex]["mrp"]}',
-                                                                                                        style: TextStyle(fontSize: 14, color: Colors.grey, decoration: TextDecoration.lineThrough),
-                                                                                                      ),
-                                                                                                      Text(
-                                                                                                        '    \₹${sellers[index]["products"][iindex]["sellingprice"]}',
-                                                                                                        style: TextStyle(fontSize: 13, color: Colors.black),
-                                                                                                      ),
-                                                                                                      Text(
-                                                                                                        '  ${discountPercentage.toStringAsFixed(0)}% off',
-                                                                                                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.green),
-                                                                                                      ),
-                                                                                                    ],
+                                                                                      Padding(
+                                                                                        padding: const EdgeInsets.only(left: 8.0),
+                                                                                        child: Column(
+                                                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                          children: [
+                                                                                            Padding(
+                                                                                              padding: const EdgeInsets.only(left: 2),
+                                                                                              child: Column(
+                                                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                children: [
+                                                                                                  Text(
+                                                                                                    sellers[index]["products"][iindex]["productname"],
+                                                                                                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
                                                                                                   ),
-                                                                                                ),
-                                                                                              ],
+                                                                                                  Padding(
+                                                                                                    padding: const EdgeInsets.only(top: 4.0, bottom: 4),
+                                                                                                    child: Row(
+                                                                                                      children: [
+                                                                                                        Text(
+                                                                                                          '\₹${sellers[index]["products"][iindex]["mrp"]}',
+                                                                                                          style: TextStyle(fontSize: 14, color: Colors.grey, decoration: TextDecoration.lineThrough),
+                                                                                                        ),
+                                                                                                        Text(
+                                                                                                          '    \₹${sellers[index]["products"][iindex]["sellingprice"]}',
+                                                                                                          style: TextStyle(fontSize: 13, color: Colors.black),
+                                                                                                        ),
+                                                                                                        Text(
+                                                                                                          '  ${discountPercentage.toStringAsFixed(0)}% off',
+                                                                                                          style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.green),
+                                                                                                        ),
+                                                                                                      ],
+                                                                                                    ),
+                                                                                                  ),
+                                                                                                ],
+                                                                                              ),
                                                                                             ),
-                                                                                          ),
-                                                                                        ],
+                                                                                          ],
+                                                                                        ),
                                                                                       ),
-                                                                                    ),
-                                                                                  ],
+                                                                                    ],
+                                                                                  ),
                                                                                 ),
                                                                               ),
-                                                                            ),
-                                                                          )
-                                                                        : SizedBox();
-                                                                  }),
-                                                        )
-                                                      : SizedBox(),
-                                                  sellerwidget(index)
-                                                ],
-                                              )
-                                            : SizedBox();
-                                      })
-                                ],
-                              )
-                            : SizedBox();
-                      }),
-                )
+                                                                            )
+                                                                          : SizedBox();
+                                                                    }),
+                                                          )
+                                                        : SizedBox(),
+                                                    sellerwidget(index)
+                                                  ],
+                                                )
+                                              : SizedBox();
+                                        })
+                                  ],
+                                )
+                              : SizedBox();
+                        }),
+                  )
               ],
             )),
           )
@@ -1042,6 +1021,9 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
   }
 
   Widget sellerwidget(int index) {
+    print("********************************");
+    print(sellers[index]["products"]);
+    print("********************************");
     double ratting = 0;
     int noofrattings = 0;
     double appliedRatting = 0;
@@ -1283,7 +1265,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    sellers[index]["businessname"],
+                    sellers[index]["businessname"].toString(),
                     style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                   ),
                   Row(
@@ -1316,7 +1298,9 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                   Padding(
                     padding: const EdgeInsets.only(top: 4.0, bottom: 4),
                     child: Text(
-                      sellers[index]["streetaddress"]+", "+    sellers[index]["landmark"],
+                      sellers[index]["streetaddress"] +
+                          ", " +
+                          sellers[index]["landmark"],
                     ),
                   ),
                   Text("In-store shopping"),

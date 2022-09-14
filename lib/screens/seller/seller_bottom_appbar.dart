@@ -23,6 +23,7 @@ class _SellerBottomAppBarState extends State<SellerBottomAppBar> {
     StoryListScreen(),
     SellerAccountScreen()
   ];
+
   int _selectedIndex = 0;
   void _onPageChanged(int index) {
     setState(() {
@@ -86,7 +87,7 @@ class _SellerBottomAppBarState extends State<SellerBottomAppBar> {
             BottomNavigationBarItem(
                 icon: Column(
                   children: [
-                    Icon(Icons.category_outlined,
+                    Icon(Icons.category_outlined, size: 26,
                         color: _selectedIndex == 2 ? Colors.blue : Colors.grey),
                     Text(
                       "Product",

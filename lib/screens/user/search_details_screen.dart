@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:oim/constants/urls.dart';
 import 'package:oim/screens/seller/products_list_screen.dart';
 import 'package:oim/screens/user/product_details_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchDetailsScreen extends StatefulWidget {
   final String productname;
@@ -26,6 +27,36 @@ class _SearchDetailsScreenState extends State<SearchDetailsScreen> {
         setState(() {
           products = mnjson["data"]["products"];
         });
+        if (mnjson["data"]["products"].length > 0) {
+          getSearchCategoryId(
+              mnjson["data"]["products"][0]["sellerid"].toString());
+        }
+      }
+    });
+  }
+
+  void getSearchCategoryId(String sellerid) async {
+    var nencoded = Uri.parse(get_sellerdetalsbyuserid + sellerid);
+    print("seller id " + sellerid);
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    http.get(nencoded).then((resp) {
+      if (resp.statusCode == 200) {
+        Map mnjson;
+        mnjson = json.decode(resp.body);
+        if (mnjson["Data"]["Seller"].length > 0) {
+          String categoryId = mnjson["Data"]["Seller"][0]["businesscatagories"];
+
+          if ((preferences.getStringList("recentcategory") ?? "") == "") {
+            List<String> str = [];
+
+            str.add(categoryId);
+            preferences.setStringList("recentcategory", str);
+          } else {
+            List<String>? str = preferences.getStringList("recentcategory");
+            str!.add(categoryId);
+            preferences.setStringList("recentcategory", str);
+          }
+        }
       }
     });
   }

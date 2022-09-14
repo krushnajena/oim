@@ -216,7 +216,7 @@ class _SelectAdToMakeFeaturedScreenState
                                               height: 5,
                                             ),
                                             Center(
-                                              child: OutlineButton(
+                                              child: ElevatedButton(
                                                   onPressed: () {
                                                     Navigator.push(
                                                         context,

@@ -160,14 +160,18 @@ class _SearchLocationState extends State<SearchLocation> {
                   child: Column(
                     children: [
                       Container(
-                        color: Colors.blue,
+                        color: Colors.black26,
                         width: MediaQuery.of(context).size.width,
                         height: 36,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             "Recent Search",
-                            style: TextStyle(color: Colors.white, fontSize: 18),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18,
+                            ),
                           ),
                         ),
                       ),
@@ -192,9 +196,7 @@ class _SearchLocationState extends State<SearchLocation> {
                                   child: Row(
                                     children: [
                                       Icon(Icons.refresh),
-                                      SizedBox(
-                                        width: 8,
-                                      ),
+                                      SizedBox(width: 8),
                                       Expanded(
                                         child: Text(
                                           str[index].toString(),
@@ -215,14 +217,16 @@ class _SearchLocationState extends State<SearchLocation> {
                         ),
                       ),
                       Container(
-                        color: Colors.blue,
+                        color: Colors.black26,
                         width: MediaQuery.of(context).size.width,
                         height: 36,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             "States",
-                            style: TextStyle(color: Colors.white, fontSize: 18),
+                            style: TextStyle(color: Colors.white, fontSize: 18,
+                              fontWeight: FontWeight.w500
+                            ),
                           ),
                         ),
                       ),

@@ -53,19 +53,13 @@ class _SplashScreenState extends State<SplashScreen> {
         } else {
           if (preferences.getString("businesscategory") == "Restaurant") {
             Timer(
-                Duration(seconds: 3),
-                () => Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            RestSellerBottomAppBar()),
+                Duration(seconds: 3), () =>
+                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder:
+                    (BuildContext context) => RestSellerBottomAppBar()),
                     (Route<dynamic> route) => false));
           } else {
-            Timer(
-                Duration(seconds: 3),
-                () => Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            SellerBottomAppBar()),
+            Timer(Duration(seconds: 3), () => Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (BuildContext context) => SellerBottomAppBar()),
                     (Route<dynamic> route) => false));
           }
         }

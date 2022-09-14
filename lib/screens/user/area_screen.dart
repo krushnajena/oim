@@ -29,7 +29,7 @@ class _AraaScreenState extends State<AraaScreen> {
 
   void getarea() {
     var nencoded = Uri.parse(getareabycityid + widget.cityid);
-
+    print(getareabycityid + widget.cityid);
     http.get(nencoded).then((resp) {
       if (resp.statusCode == 200) {
         Map mnjson;
@@ -45,7 +45,7 @@ class _AraaScreenState extends State<AraaScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.statename + ", " + widget.cityname),
+          title: Text(widget.cityname + ", " + widget.statename),
           centerTitle: true,
         ),
         body: SafeArea(
@@ -67,14 +67,34 @@ class _AraaScreenState extends State<AraaScreen> {
                       onTap: () async {
                         SharedPreferences preferences =
                             await SharedPreferences.getInstance();
+                        print("--------------");
+
+                        print("--------------");
+                        if ((preferences.getStringList("recentaddress") ??
+                                "") ==
+                            "") {
+                          List<String> str = [];
+
+                          str.add(area[index]["areaname"].toString() +
+                              ", " +
+                              widget.cityname);
+                          preferences.setStringList("recentaddress", str);
+                        } else {
+                          List<String>? str =
+                              preferences.getStringList("recentaddress");
+                          str!.add(area[index]["areaname"].toString() +
+                              ", " +
+                              widget.cityname);
+                          preferences.setStringList("recentaddress", str);
+                        }
 
                         preferences.setString(
                             "address",
                             area[index]["areaname"].toString() +
                                 ", " +
-                                widget.statename +
+                                widget.cityname +
                                 ", " +
-                                widget.cityname);
+                                widget.statename);
                         Navigator.of(context).pushAndRemoveUntil(
                             MaterialPageRoute(
                                 builder: (BuildContext context) =>
