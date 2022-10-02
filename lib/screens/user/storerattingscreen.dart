@@ -227,8 +227,7 @@ class _StoreRattingScreenState extends State<StoreRattingScreen> {
                       color: primaryColor,
                       size: 20,
                     ),
-                    half:
-                        Icon(Icons.star_border, color: primaryColor, size: 20),
+                    half: Icon(Icons.star_half, color: primaryColor, size: 20),
                   ),
                   onRatingUpdate: (value) {
                     print(value);
@@ -444,7 +443,7 @@ class _StoreRattingScreenState extends State<StoreRattingScreen> {
                             color: primaryColor,
                             size: 20,
                           ),
-                          half: Icon(Icons.star_border,
+                          half: Icon(Icons.star_half,
                               color: primaryColor, size: 20),
                         ),
                         onRatingUpdate: (value) {},

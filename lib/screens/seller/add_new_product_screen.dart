@@ -40,7 +40,6 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
   TextEditingController txt_mrp = new TextEditingController();
   TextEditingController txt_discountedprice = new TextEditingController();
   TextEditingController txt_productdetails = new TextEditingController();
-
   TextEditingController txt_key = new TextEditingController();
   TextEditingController txt_value = new TextEditingController();
 

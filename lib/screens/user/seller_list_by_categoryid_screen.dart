@@ -439,7 +439,7 @@ class _SellerListByCategoryIdScreenState
                             color: primaryColor,
                             size: 20,
                           ),
-                          half: Icon(Icons.star_border,
+                          half: Icon(Icons.star_half,
                               color: primaryColor, size: 20),
                         ),
                         onRatingUpdate: (value) {

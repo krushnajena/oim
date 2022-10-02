@@ -172,7 +172,7 @@ class _StoryCreateScreenState extends State<StoryCreateScreen> {
                               child: Container(
                                 width: 20,
                                 height: 20,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   shape: BoxShape.circle,
                                 ),
                                 child: Icon(

@@ -628,8 +628,8 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
           slivers: [
             SliverPersistentHeader(
                 delegate: SliverAppBarDelegate(
-              minHeight: 250,
-              maxHeight: 250,
+              minHeight: 260,
+              maxHeight: 260,
               child: Column(
                 children: [
                   Padding(
@@ -689,7 +689,7 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                               color: primaryColor,
                               size: 20,
                             ),
-                            half: Icon(Icons.star_border,
+                            half: Icon(Icons.star_half,
                                 color: primaryColor, size: 20),
                           ),
                           onRatingUpdate: (value) {

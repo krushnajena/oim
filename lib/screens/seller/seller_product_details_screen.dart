@@ -444,8 +444,8 @@ class _SellerProductDetailsScreenState
                         color: primaryColor,
                         size: 20,
                       ),
-                      half: Icon(Icons.star_border,
-                          color: primaryColor, size: 20),
+                      half:
+                          Icon(Icons.star_half, color: primaryColor, size: 20),
                     ),
                     onRatingUpdate: (value) {
                       print(value);

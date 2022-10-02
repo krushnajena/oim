@@ -858,47 +858,53 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           children: images,
                           isLoop: false,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8, left: 290),
+                        Positioned(
+                          top: 8,
+                          right: 8,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Card(
-                                  elevation: 2,
+                                  elevation: 20,
+                                  color: Colors.white,
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(150),
+                                    borderRadius: BorderRadius.circular(50),
                                   ),
-                                  child: itemAddedToWishList == false
-                                      ? InkWell(
-                                          onTap: () {
-                                            addToCartOrWishList("wishlist");
-                                          },
-                                          child: Container(
-                                            width: 40,
-                                            height: 40,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
+                                  child: Container(
+                                    height: 50,
+                                    width: 50,
+                                    child: itemAddedToWishList == false
+                                        ? InkWell(
+                                            onTap: () {
+                                              addToCartOrWishList("wishlist");
+                                            },
+                                            child: Container(
+                                              width: 40,
+                                              height: 40,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                              ),
+                                              child: Icon(
+                                                Icons.favorite_outlined,
+                                                color: Colors.grey[400],
+                                              ),
                                             ),
-                                            child: Icon(
-                                              Icons.favorite_outlined,
-                                              color: Colors.grey[400],
+                                          )
+                                        : InkWell(
+                                            onTap: () {},
+                                            child: Container(
+                                              width: 40,
+                                              height: 40,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                              ),
+                                              child: Icon(
+                                                Icons.favorite_outlined,
+                                                color: Colors.red,
+                                              ),
                                             ),
                                           ),
-                                        )
-                                      : InkWell(
-                                          onTap: () {},
-                                          child: Container(
-                                            width: 40,
-                                            height: 40,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                            ),
-                                            child: Icon(
-                                              Icons.favorite_outlined,
-                                              color: Colors.red,
-                                            ),
-                                          ),
-                                        )),
+                                  )),
                               SizedBox(
                                 height: 10,
                               ),
@@ -1122,7 +1128,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               color: primaryColor,
                               size: 20,
                             ),
-                            half: Icon(Icons.star_border,
+                            half: Icon(Icons.star_half,
                                 color: primaryColor, size: 20),
                           ),
                           onRatingUpdate: (value) {
