@@ -199,10 +199,6 @@ class _StoreRattingScreenState extends State<StoreRattingScreen> {
                   widget.storename,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                Image(
-                  image: NetworkImage(baseUrl + widget.storeLogo),
-                  height: 150,
-                )
               ],
             ),
             SizedBox(height: 10),
@@ -241,7 +237,7 @@ class _StoreRattingScreenState extends State<StoreRattingScreen> {
             ),
             Row(
               children: [
-                Expanded(child: Text(widget.storeaddress)),
+                Text(widget.storeaddress),
                 Text(
                   "Open",
                   style: TextStyle(color: primaryColor),
@@ -261,8 +257,8 @@ class _StoreRattingScreenState extends State<StoreRattingScreen> {
                 ),
                 child: InkWell(
                   onTap: () {},
-                  child: Image.asset(
-                    "images/oimnew.png",
+                  child: Image.network(
+                    baseUrl + widget.storeLogo,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -309,18 +305,18 @@ class _StoreRattingScreenState extends State<StoreRattingScreen> {
 
   _ratingAndReviews() {
     return Container(
-      padding: const EdgeInsets.only(top: 15.0),
+      padding: const EdgeInsets.only(top: 5.0),
       //color: Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: fixPadding * 2.0,
-            ),
-            child: Text(
-              'Ratings',
-              style: black16BoldTextStyle,
+            padding: EdgeInsets.only(left: 0),
+            child: Center(
+              child: Text(
+                'Ratings',
+                style: black16BoldTextStyle,
+              ),
             ),
           ),
           Padding(

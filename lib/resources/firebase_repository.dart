@@ -22,4 +22,7 @@ class FirebaseRepository {
 
   Future<void> unblockMessage(String msgid, String deletedby) =>
       _firebaseMethods.unblockMessage(msgid, deletedby);
+
+  Future<void> fulldeleteMessage(String msgid) =>
+      _firebaseMethods.fulldeleteMessage(msgid);
 }

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
@@ -14,6 +15,7 @@ import 'package:oim/models/message_model.dart';
 import 'package:flutter/material.dart';
 import 'package:oim/resources/firebase_repository.dart';
 import 'package:oim/screens/user/product_details_screen.dart';
+import 'package:oim/screens/user/select_image_for_chat_screen.dart';
 import 'package:oim/screens/user/store_details_screen.dart';
 import 'package:oim/screens/widgets/own_message_card.dart';
 import 'package:oim/screens/widgets/reply_message_card.dart';
@@ -75,6 +77,7 @@ class _ChatMessage_ScreenState extends State<ChatMessage_Screen> {
   }
 
   Widget messgaList() {
+    FirebaseRepository _repository = FirebaseRepository();
     var beginningDate = DateTime.now();
     return StreamBuilder(
         stream: FirebaseFirestore.instance
@@ -107,11 +110,53 @@ class _ChatMessage_ScreenState extends State<ChatMessage_Screen> {
               }
 
               return snapshot.data!.docs[index]["source"].toString() == "buyer"
-                  ? OwnMessageCard(
-                      message: snapshot.data!.docs[index]["message"].toString(),
-                      time: snapshot.data!.docs[index]["time"].toString(),
-                      isRead: snapshot.data!.docs[index]["issRead"],
-                      messageType: snapshot.data!.docs[index]["type"])
+                  ? GestureDetector(
+                      onLongPress: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) =>
+                                CupertinoAlertDialog(
+                                  title: new Text("Confirmation"),
+                                  content: new Text(
+                                      "Do you want to Delete This Chat?"),
+                                  actions: <Widget>[
+                                    CupertinoDialogAction(
+                                      isDefaultAction: true,
+                                      child: Text(
+                                        "Yes",
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                      onPressed: () async {
+                                        SharedPreferences preferences =
+                                            await SharedPreferences
+                                                .getInstance();
+                                        preferences.clear();
+
+                                        Navigator.of(context).pop();
+                                        _repository.fulldeleteMessage(snapshot
+                                            .data!.docs[index].id
+                                            .toString());
+                                      },
+                                    ),
+                                    CupertinoDialogAction(
+                                      child: Text(
+                                        "Exit",
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                    )
+                                  ],
+                                ));
+                      },
+                      child: OwnMessageCard(
+                          message:
+                              snapshot.data!.docs[index]["message"].toString(),
+                          time: snapshot.data!.docs[index]["time"].toString(),
+                          isRead: snapshot.data!.docs[index]["issRead"],
+                          messageType: snapshot.data!.docs[index]["type"]),
+                    )
                   : snapshot.data!.docs[index]["isBlockedByByer"].toString() !=
                           "1"
                       ? ReplyCard(
@@ -142,6 +187,41 @@ class _ChatMessage_ScreenState extends State<ChatMessage_Screen> {
         }
       }
     });
+  }
+
+  File? _pickedImage2;
+  void _pickImage2(String from, String type) async {
+    if (from == "gallery") {
+      final pickedImageFile =
+          await ImagePicker().pickImage(source: ImageSource.gallery);
+      Navigator.of(context).pop();
+      var a = await Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => SelectImageForChatScreen(
+                  File(pickedImageFile!.path.toString()))));
+      if (a["send"] == "1") {
+        setState(() {
+          _pickedImage2 = File(pickedImageFile!.path.toString());
+        });
+        sendImageMessage();
+      }
+    } else {
+      final pickedImageFile =
+          await ImagePicker().pickImage(source: ImageSource.camera);
+      Navigator.of(context).pop();
+      var a = await Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => SelectImageForChatScreen(
+                  File(pickedImageFile!.path.toString()))));
+      if (a["send"] == "1") {
+        setState(() {
+          _pickedImage2 = File(pickedImageFile!.path.toString());
+        });
+        sendImageMessage();
+      }
+    }
   }
 
   @override
@@ -236,23 +316,6 @@ class _ChatMessage_ScreenState extends State<ChatMessage_Screen> {
         print(e);
         Navigator.of(context).pop();
       }
-    }
-  }
-
-  File? _pickedImage2;
-  void _pickImage2(String from, String type) async {
-    if (from == "gallery") {
-      final pickedImageFile =
-          await ImagePicker().pickImage(source: ImageSource.gallery);
-      setState(() {
-        _pickedImage2 = File(pickedImageFile!.path.toString());
-      });
-    } else {
-      final pickedImageFile =
-          await ImagePicker().pickImage(source: ImageSource.camera);
-      setState(() {
-        _pickedImage2 = File(pickedImageFile!.path.toString());
-      });
     }
   }
 
@@ -485,57 +548,7 @@ class _ChatMessage_ScreenState extends State<ChatMessage_Screen> {
                                             IconButton(
                                               icon: Icon(Icons.camera_alt),
                                               onPressed: () {
-                                                showModalBottomSheet(
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return Column(
-                                                        mainAxisSize:
-                                                            MainAxisSize.min,
-                                                        children: <Widget>[
-                                                          SizedBox(
-                                                            height: 10,
-                                                          ),
-                                                          Text(
-                                                            "Send Image",
-                                                            style: TextStyle(
-                                                                fontSize: 18,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                          ListTile(
-                                                            leading: new Icon(
-                                                                Icons.photo),
-                                                            title: new Text(
-                                                                'Gallery'),
-                                                            onTap: () {
-                                                              _pickImage2(
-                                                                  "gallery",
-                                                                  "");
-                                                            },
-                                                          ),
-                                                          ListTile(
-                                                            leading: new Icon(
-                                                                Icons.videocam),
-                                                            title: new Text(
-                                                                'Camera'),
-                                                            onTap: () {
-                                                              _pickImage2(
-                                                                  "camera", "");
-                                                            },
-                                                          ),
-                                                          RaisedButton(
-                                                            onPressed: () {
-                                                              sendImageMessage();
-                                                            },
-                                                            child: Text("Send"),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 10,
-                                                          ),
-                                                        ],
-                                                      );
-                                                    });
+                                                _pickImage2("camera", "");
                                               },
                                             ),
                                           ],
@@ -600,7 +613,7 @@ class _ChatMessage_ScreenState extends State<ChatMessage_Screen> {
 
   Widget bottomSheet() {
     return Container(
-      height: 278,
+      height: 185,
       width: MediaQuery.of(context).size.width,
       child: Card(
         margin: const EdgeInsets.all(18.0),
@@ -612,34 +625,26 @@ class _ChatMessage_ScreenState extends State<ChatMessage_Screen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  iconCreation(
-                      Icons.insert_drive_file, Colors.indigo, "Document"),
+                  InkWell(
+                      onTap: () {
+                        print("ff");
+                        _pickImage2("camera", "");
+                      },
+                      child: iconCreation(
+                          Icons.camera_alt, Colors.pink, "Camera")),
                   SizedBox(
                     width: 40,
                   ),
-                  iconCreation(Icons.camera_alt, Colors.pink, "Camera"),
-                  SizedBox(
-                    width: 40,
-                  ),
-                  iconCreation(Icons.insert_photo, Colors.purple, "Gallery"),
+                  InkWell(
+                      onTap: () {
+                        _pickImage2("gallery", "");
+                      },
+                      child: iconCreation(
+                          Icons.insert_photo, Colors.purple, "Gallery")),
                 ],
               ),
               SizedBox(
                 height: 30,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  iconCreation(Icons.headset, Colors.orange, "Audio"),
-                  SizedBox(
-                    width: 40,
-                  ),
-                  iconCreation(Icons.location_pin, Colors.teal, "Location"),
-                  SizedBox(
-                    width: 40,
-                  ),
-                  iconCreation(Icons.person, Colors.blue, "Contact"),
-                ],
               ),
             ],
           ),
@@ -649,32 +654,29 @@ class _ChatMessage_ScreenState extends State<ChatMessage_Screen> {
   }
 
   Widget iconCreation(IconData icons, Color color, String text) {
-    return InkWell(
-      onTap: () {},
-      child: Column(
-        children: [
-          CircleAvatar(
-            radius: 30,
-            backgroundColor: color,
-            child: Icon(
-              icons,
-              // semanticLabel: "Help",
-              size: 29,
-              color: Colors.white,
-            ),
+    return Column(
+      children: [
+        CircleAvatar(
+          radius: 30,
+          backgroundColor: color,
+          child: Icon(
+            icons,
+            // semanticLabel: "Help",
+            size: 29,
+            color: Colors.white,
           ),
-          SizedBox(
-            height: 5,
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        Text(
+          text,
+          style: TextStyle(
+            fontSize: 12,
+            // fontWeight: FontWeight.w100,
           ),
-          Text(
-            text,
-            style: TextStyle(
-              fontSize: 12,
-              // fontWeight: FontWeight.w100,
-            ),
-          )
-        ],
-      ),
+        )
+      ],
     );
   }
 }

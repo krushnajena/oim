@@ -27,6 +27,27 @@ class _StoryDetailsScreenState extends State<StoryDetailsScreen> {
     getStoryByUserId();
   }
 
+  void addView(Key? id) {
+    var nencoded = Uri.parse(postview);
+    print("keyyyyyyyyy");
+    String string = id.toString();
+
+    string = string.replaceAll("[<'", '');
+    string = string.replaceAll("'>]", '');
+    print(string);
+    print("keyyyyyyyyy");
+    print("sssssssssssssssssssssssssssssssssssssssssssssssssssssssssss");
+    http.post(nencoded, body: {
+      "cid": string,
+      "userid": widget.storeid,
+      "type": "story"
+    }).then((value) {
+      print("-----------------------------");
+      print(value.statusCode);
+      if (value.statusCode == 200) {}
+    });
+  }
+
   void getStoryByUserId() async {
     String? userid = widget.storeid;
     var nencoded = Uri.parse(get_story_by_userid + userid);
@@ -38,14 +59,22 @@ class _StoryDetailsScreenState extends State<StoryDetailsScreen> {
           story = mnjson["data"]["storybyeuserid"];
         });
         for (int i = 0; i < story.length; i++) {
-          setState(() {
-            storyItems.add(
-              StoryItem.pageImage(
+          if (DateTime.parse(
+                  mnjson["data"]["storybyeuserid"][i]["publishedon"].toString())
+              .add(Duration(hours: 24))
+              .isAfter(DateTime.now())) {
+            print(
+                "image    image    image    image    image    image    image    ");
+
+            print(baseUrl + story[i]["image"]);
+            setState(() {
+              storyItems.add(StoryItem.pageImage(
+                  key: Key(story[i]["_id"]),
                   url: baseUrl + story[i]["image"],
                   controller: controller,
-                  caption: story[i]["text"]),
-            );
-          });
+                  caption: story[i]["text"]));
+            });
+          }
         }
       }
     });
@@ -61,7 +90,10 @@ class _StoryDetailsScreenState extends State<StoryDetailsScreen> {
                   storyItems: storyItems,
                   controller: controller,
                   inline: true,
-                  repeat: true,
+                  repeat: false,
+                  onStoryShow: (value) {
+                    addView(value.view.key);
+                  },
                 ),
                 Padding(
                     padding: const EdgeInsets.only(top: 60, left: 20),

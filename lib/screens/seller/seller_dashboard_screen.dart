@@ -20,7 +20,7 @@ class SellerDashBoardScreen extends StatefulWidget {
 
 class Seller_DashBoardScreenState extends State<SellerDashBoardScreen> {
   String? businessName;
-  String selectedval = "Life Time";
+  String selectedval = "Today";
   String photo = "";
   String categoryName = "";
   @override
@@ -40,9 +40,10 @@ class Seller_DashBoardScreenState extends State<SellerDashBoardScreen> {
   void getNoOfFollers() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String? userId = preferences.getString("userid");
-    var nencoded = Uri.parse(get_follwers_by_sellerid + userId!);
+    var nencoded =
+        Uri.parse(getNooffollowersbysellerid + userId! + "/" + selectedval);
     print("%%%%%%%%%%%%%%%%%%%%%%%%%");
-    print(get_follwers_by_sellerid + userId);
+    print(getNooffollowersbysellerid + userId + "/" + selectedval);
     http.get(nencoded).then((resp) {
       if (resp.statusCode == 200) {
         Map mnjson;
@@ -58,7 +59,11 @@ class Seller_DashBoardScreenState extends State<SellerDashBoardScreen> {
   void getProducts() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String? userId = preferences.getString("userid");
-    var nencoded = Uri.parse(get_products_byuserid + userId!);
+    var nencoded =
+        Uri.parse(getnoofproductlistings + userId! + "/" + selectedval);
+    print(
+        "6666666666666666666666666666666666666666666666666666666666666666666666666666");
+    print(getnoofproductlistings + userId + "/" + selectedval);
     http.get(nencoded).then((resp) {
       if (resp.statusCode == 200) {
         Map mnjson;
@@ -75,7 +80,8 @@ class Seller_DashBoardScreenState extends State<SellerDashBoardScreen> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     var nencoded = Uri.parse(getlifetimeviews +
         preferences.getString("userid").toString() +
-        "/product");
+        "/product/" +
+        selectedval);
     print(getlifetimeviews +
         preferences.getString("userid").toString() +
         "/product");
@@ -99,7 +105,9 @@ class Seller_DashBoardScreenState extends State<SellerDashBoardScreen> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     var nencoded = Uri.parse(getlifetimeviews +
         preferences.getString("userid").toString() +
-        "/story");
+        "/store/" +
+        selectedval);
+    print("stuhyfirei hur hfh uhurfeh r ");
     print(getlifetimeviews +
         preferences.getString("userid").toString() +
         "/store");
@@ -132,8 +140,10 @@ class Seller_DashBoardScreenState extends State<SellerDashBoardScreen> {
     noofrattings = 0;
     double appliedRatting = 0;
 
-    var encoded =
-        Uri.parse(get_rattings + preferences.getString("userid").toString());
+    var encoded = Uri.parse(getnostoreratting +
+        preferences.getString("userid").toString() +
+        "/" +
+        selectedval);
     print("##########################zeeeeeerrr7777777777777777777777");
 
     //print(get_rattings + widget.userid);
@@ -209,7 +219,6 @@ class Seller_DashBoardScreenState extends State<SellerDashBoardScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
 
@@ -439,9 +448,9 @@ class Seller_DashBoardScreenState extends State<SellerDashBoardScreen> {
                           height: 40,
                           child: Center(
                               child: Text(
-                                "START ADVERTISING NOW",
-                                style: TextStyle(color: Colors.white),
-                              )),
+                            "START ADVERTISING NOW",
+                            style: TextStyle(color: Colors.white),
+                          )),
                         ),
                       ),
                     ),
@@ -477,6 +486,11 @@ class Seller_DashBoardScreenState extends State<SellerDashBoardScreen> {
                                 setState(() {
                                   selectedval = "Today";
                                 });
+                                noofViewsStoreLifetime();
+                                noofViewsProductLifetime();
+                                getNoOfFollers();
+                                getProducts();
+                                noofrattingslifetime();
                               },
                               value: 1,
                               child: Text("Today"),
@@ -486,6 +500,12 @@ class Seller_DashBoardScreenState extends State<SellerDashBoardScreen> {
                                 setState(() {
                                   selectedval = "Yesterday";
                                 });
+
+                                noofViewsStoreLifetime();
+                                noofViewsProductLifetime();
+                                getNoOfFollers();
+                                getProducts();
+                                noofrattingslifetime();
                               },
                               value: 2,
                               child: Text("Yesterday"),
@@ -495,6 +515,12 @@ class Seller_DashBoardScreenState extends State<SellerDashBoardScreen> {
                                 setState(() {
                                   selectedval = "This Week";
                                 });
+
+                                noofViewsStoreLifetime();
+                                noofViewsProductLifetime();
+                                getNoOfFollers();
+                                getProducts();
+                                noofrattingslifetime();
                               },
                               value: 3,
                               child: Text("This Week"),
@@ -504,6 +530,12 @@ class Seller_DashBoardScreenState extends State<SellerDashBoardScreen> {
                                 setState(() {
                                   selectedval = "This Month";
                                 });
+
+                                noofViewsStoreLifetime();
+                                noofViewsProductLifetime();
+                                getNoOfFollers();
+                                getProducts();
+                                noofrattingslifetime();
                               },
                               value: 4,
                               child: Text("This Month"),
@@ -513,6 +545,12 @@ class Seller_DashBoardScreenState extends State<SellerDashBoardScreen> {
                                 setState(() {
                                   selectedval = "Life Time";
                                 });
+
+                                noofViewsStoreLifetime();
+                                noofViewsProductLifetime();
+                                getNoOfFollers();
+                                getProducts();
+                                noofrattingslifetime();
                               },
                               value: 5,
                               child: Text("Life Time"),

@@ -95,7 +95,7 @@ class _MyQrScreenState extends State<MyQrScreen> {
     print("7377483873827382987392");
     customFile = await File(path).writeAsBytes(capturedImage);
     final result = await ImageGallerySaver.saveFile(path);
-    showInSnackBar("QR Saved To Your Galler.");
+    showInSnackBar("QR Saved To Your Gallery.");
     //final imagePath = await File('${tempDir.path}/image.png').create();
     //await imagePath.writeAsBytes(capturedImage);
 
@@ -262,9 +262,15 @@ class _MyQrScreenState extends State<MyQrScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Expanded(
-                child: ElevatedButton(
+                child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    side: BorderSide(width: 1.0, color: Colors.black),
+                  ),
                   onPressed: () {},
-                  child: Text("Share QR"),
+                  child: Text(
+                    "Share QR",
+                    style: TextStyle(color: Colors.black),
+                  ),
                 ),
               ),
               SizedBox(

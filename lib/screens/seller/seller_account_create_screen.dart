@@ -423,8 +423,11 @@ class _SellerAccountCreateScreenState extends State<SellerAccountCreateScreen> {
                                     size: 35,
                                     color: Colors.blue,
                                   )
-                                : Image.file(
-                                    File(_pickedImage!.path.toString()),
+                                : Container(
+                                    height: 50,
+                                    child: Image.file(
+                                      File(_pickedImage!.path.toString()),
+                                    ),
                                   )),
                       ),
                     ),

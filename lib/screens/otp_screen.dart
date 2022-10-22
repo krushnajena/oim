@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:oim/constants/constant.dart';
 import 'package:oim/screens/set_password_screen.dart';
 import 'package:otp_autofill/otp_autofill.dart';
+import 'package:http/http.dart' as http;
 
 class OtpScreen extends StatefulWidget {
   final String mobileNo, userType;
-  OtpScreen(this.mobileNo, this.userType);
+  final int code;
+  OtpScreen(this.mobileNo, this.userType, this.code);
 
   @override
   State<OtpScreen> createState() => _OtpScreenState();
@@ -34,23 +36,38 @@ class _OtpScreenState extends State<OtpScreen> {
   int _start = 15;
 
   void startTimer() {
-    Timer(const Duration(seconds: 3),
-        () => showInSnackBar("An OTP Was sent to your mobile no."));
-    const oneSec = Duration(seconds: 1);
-    _timer = Timer.periodic(
-      oneSec,
-      (Timer timer) {
-        if (_start == 0) {
-          setState(() {
-            timer.cancel();
-          });
-        } else {
-          setState(() {
-            _start--;
-          });
-        }
-      },
-    );
+    String msg = "Dear user,." +
+        "Your OTP for sign up to Offers In Market Application is ${widget.code} . " +
+        "Please don't share this OTP. " +
+        "Regards Offers In Market Team. ";
+    String msgurl =
+        "http://api.bulksmsgateway.in/sendmessage.php?user=offersinmarket&password=Software@2016&mobile=${widget.mobileNo}&message=" +
+            msg +
+            "&sender=OIMOTP&type=3&template_id=1207166421327318564";
+    print(msgurl);
+    var otpencoded = Uri.parse(msgurl);
+    print(otpencoded);
+    http.get(otpencoded).then((value) {
+      if (value.statusCode == 200) {
+        Timer(const Duration(seconds: 3),
+            () => showInSnackBar("An OTP Was sent to your mobile no."));
+        const oneSec = Duration(seconds: 1);
+        _timer = Timer.periodic(
+          oneSec,
+          (Timer timer) {
+            if (_start == 0) {
+              setState(() {
+                timer.cancel();
+              });
+            } else {
+              setState(() {
+                _start--;
+              });
+            }
+          },
+        );
+      }
+    });
   }
 
   @override
@@ -295,7 +312,7 @@ class _OtpScreenState extends State<OtpScreen> {
                             secondController.text +
                             thirdController.text +
                             fourthController.text ==
-                        "1234") {
+                        widget.code.toString()) {
                       Navigator.push(
                           context,
                           MaterialPageRoute(

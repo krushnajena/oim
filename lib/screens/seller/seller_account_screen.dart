@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -12,6 +13,7 @@ import 'package:oim/screens/seller/buy_a_plan_or_myorders_screen.dart';
 import 'package:oim/screens/seller/cusine_create_screen.dart';
 import 'package:oim/screens/seller/price_for_two_screen.dart';
 import 'package:oim/screens/seller/purchase_history_screen.dart';
+import 'package:oim/screens/seller/qr_stand_price_screen.dart';
 import 'package:oim/screens/seller/resturent_setting_screen.dart';
 import 'package:oim/screens/seller/seller_account_create_screen.dart';
 import 'package:oim/screens/seller/seller_bottom_appbar.dart';
@@ -20,6 +22,8 @@ import 'package:oim/screens/seller/seller_profile_update_screen.dart';
 import 'package:oim/screens/user/notification_screen.dart';
 import 'package:oim/screens/user/user_hep_center_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 class SellerAccountScreen extends StatefulWidget {
   const SellerAccountScreen({Key? key}) : super(key: key);
@@ -38,7 +42,23 @@ class _SellerAccountScreenState extends State<SellerAccountScreen> {
       businessName = preferences.getString("businessname")!;
       categoryName = preferences.getString("businesscategory")!;
     });
+
+    var nencoded = Uri.parse(
+        getunseennotifications + preferences.getString("userid").toString());
+    http.get(nencoded).then((resp) {
+      if (resp.statusCode == 200) {
+        Map mnjson;
+        mnjson = json.decode(resp.body);
+        print("8778678437898877549889989898899889989889");
+        print(mnjson);
+        setState(() {
+          noofunreadnotifications = mnjson["data"]["notifications"].length;
+        });
+      }
+    });
   }
+
+  int noofunreadnotifications = 0;
 
   @override
   void initState() {
@@ -66,21 +86,52 @@ class _SellerAccountScreenState extends State<SellerAccountScreen> {
           ),
           centerTitle: true,
           actions: [
-            Padding(
-              padding: EdgeInsets.only(right: 15.0),
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => NotificationScreen()));
-                },
-                child: Icon(
-                  Icons.notifications,
-                  color: Colors.white,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 15.0),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => NotificationScreen()));
+                    },
+                    child: new Stack(
+                      children: <Widget>[
+                        new Icon(
+                          Icons.notifications,
+                          color: Colors.white,
+                        ),
+                        new Positioned(
+                          right: 0,
+                          child: new Container(
+                            padding: EdgeInsets.all(1),
+                            decoration: new BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            constraints: BoxConstraints(
+                              minWidth: 12,
+                              minHeight: 12,
+                            ),
+                            child: new Text(
+                              '$noofunreadnotifications',
+                              style: new TextStyle(
+                                color: Colors.white,
+                                fontSize: 8,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-            )
+              ],
+            ),
           ],
         ),
         body: ListView(
@@ -215,6 +266,40 @@ class _SellerAccountScreenState extends State<SellerAccountScreen> {
               ),
             ),
 
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => QrStandPriceScreen()));
+              },
+              child: ListTile(
+                leading: Container(
+                    margin: EdgeInsets.only(top: 10, left: 8),
+                    child: Image.asset(
+                      "images/qr.png",
+                      height: 35,
+                      width: 35,
+                    )),
+                title: Padding(
+                  padding: EdgeInsets.only(top: 8),
+                  child: Text(
+                    "QR Stand Pricing",
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+                trailing: IconButton(
+                  icon: Icon(
+                    Icons.arrow_forward_ios_outlined,
+                    size: 15,
+                    color: Colors.grey,
+                  ),
+                  onPressed: () {},
+                ),
+              ),
+            ),
 //   Divider(
 //                 height: 1,
 //                 color: Colors.black38,
@@ -379,6 +464,14 @@ class _SellerAccountScreenState extends State<SellerAccountScreen> {
             ),
 
             ListTile(
+                onTap: () async {
+                  String googleUrl =
+                      'https://play.google.com/store/apps/details?id=com.oim.android';
+
+                  print(googleUrl);
+
+                  await launch(googleUrl);
+                },
                 leading: Container(
                     margin: EdgeInsets.only(top: 10, left: 8),
                     child: Image.asset(
@@ -401,7 +494,14 @@ class _SellerAccountScreenState extends State<SellerAccountScreen> {
                     size: 15,
                     color: Colors.grey,
                   ),
-                  onPressed: () {},
+                  onPressed: () async {
+                    String googleUrl =
+                        'https://play.google.com/store/apps/details?id=com.oim.android';
+
+                    print(googleUrl);
+
+                    await launch(googleUrl);
+                  },
                 )),
 
             GestureDetector(

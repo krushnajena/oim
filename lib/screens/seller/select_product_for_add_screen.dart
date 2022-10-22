@@ -36,7 +36,8 @@ class _SelectProductForAdScreenState extends State<SelectProductForAdScreen> {
         // return object of type Dialog
         return Dialog(
           elevation: 0.0,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
           child: Wrap(
             children: [
               Container(
@@ -110,8 +111,24 @@ class _SelectProductForAdScreenState extends State<SelectProductForAdScreen> {
           postAd(productid);
         } else {
           Navigator.of(context).pop();
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const AdPackageScreen()));
+
+          showDialog(
+              context: context,
+              builder: (BuildContext context) => CupertinoAlertDialog(
+                    title: const Text("Information"),
+                    content: Text("You have used all your free ad credits."),
+                    actions: <Widget>[
+                      CupertinoDialogAction(
+                        child: const Text("Exit"),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      )
+                    ],
+                  ));
+
+          // Navigator.push(context,
+          //   MaterialPageRoute(builder: (context) => const AdPackageScreen()));
         }
       }
     });
@@ -171,17 +188,23 @@ class _SelectProductForAdScreenState extends State<SelectProductForAdScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: scaffoldBgColor,
-      appBar:
-          AppBar(centerTitle: true, title: const Text('Select Product'), actions: [
+      appBar: AppBar(
+          centerTitle: true,
+          title: const Text('Select Product'),
+          actions: [
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: InkWell(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const SellerProductSearchScreen()));
-                    },
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                const SellerProductSearchScreen()));
+                  },
                   child: const Icon(Icons.search)),
-        )
-      ]),
+            )
+          ]),
       body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Expanded(
           child: Padding(
@@ -275,7 +298,10 @@ class _SelectProductForAdScreenState extends State<SelectProductForAdScreen> {
                                               decoration:
                                                   TextDecoration.lineThrough)),
                                       const SizedBox(width: 5),
-                                      Text("₹" + products[index]["sellingprice"].toString(),
+                                      Text(
+                                          "₹" +
+                                              products[index]["sellingprice"]
+                                                  .toString(),
                                           style: const TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w500)),
@@ -358,23 +384,31 @@ class _SelectProductForAdScreenState extends State<SelectProductForAdScreen> {
                                                                 "' on offerzone section. "),
                                                         actions: <Widget>[
                                                           CupertinoDialogAction(
-                                                            isDefaultAction: true,
-                                                            child: const Text("Post Ad"),
-                                                            onPressed: () async {
-                                                              Navigator.of(context).pop();
-                                                              getTotalNoOfAds(products[index]["_id"]);
+                                                            isDefaultAction:
+                                                                true,
+                                                            child: const Text(
+                                                                "Post Ad"),
+                                                            onPressed:
+                                                                () async {
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop();
+                                                              getTotalNoOfAds(
+                                                                  products[
+                                                                          index]
+                                                                      ["_id"]);
                                                             },
                                                           ),
                                                           CupertinoDialogAction(
-                                                            child: const Text("Exit"),
+                                                            child: const Text(
+                                                                "Exit"),
                                                             onPressed: () {
                                                               Navigator.pop(
                                                                   context);
                                                             },
                                                           )
                                                         ],
-                                                      )
-                                              );
+                                                      ));
                                             },
                                             child: Container(
                                               height: 15,
@@ -410,7 +444,9 @@ class _SelectProductForAdScreenState extends State<SelectProductForAdScreen> {
                   crossAxisSpacing: 20.0,
                   childAspectRatio: 2.5,
                   children: <Widget>[
-                    const SizedBox(height: 20,)
+                    const SizedBox(
+                      height: 20,
+                    )
                   ],
                 ),
               ],

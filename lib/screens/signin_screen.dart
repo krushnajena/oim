@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -77,13 +78,15 @@ class _SignInScreenState extends State<SignInScreen> {
             Map mjson;
             mjson = json.decode(value.body);
             if (mjson["data"]["User"].length == 0) {
+              var rng = new Random();
+              var code = rng.nextInt(9000) + 1000;
               Navigator.of(context).pop();
 
               Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          OtpScreen(txt_mobileno.text, widget.userType)));
+                          OtpScreen(txt_mobileno.text, widget.userType, code)));
             } else {
               Navigator.of(context).pop();
 

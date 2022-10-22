@@ -69,13 +69,13 @@ class _StoryListScreenState extends State<StoryListScreen> {
             });
           }
         }
+        setState(() {});
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-
     double deviceHeight = MediaQuery.of(context).size.height;
     double deviceWidth = MediaQuery.of(context).size.width;
 
@@ -130,7 +130,7 @@ class _StoryListScreenState extends State<StoryListScreen> {
           ],
         ),
       ),
-      body: story.length == 0
+      body: story.length != 0
           ? Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Expanded(
                 child: Padding(
@@ -195,7 +195,10 @@ class _StoryListScreenState extends State<StoryListScreen> {
                                                     size: 18,
                                                   ),
                                                   Text(
-                                                    "Views : 0",
+                                                    "Views : " +
+                                                        story[index]
+                                                                ["noofviews"]
+                                                            .toString(),
                                                     style: TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -300,7 +303,11 @@ class _StoryListScreenState extends State<StoryListScreen> {
                 ),
               ),
             ])
-          : Center(child: Image(image: AssetImage("images/nostory.png"))),
+          : Center(
+              child: Image(
+              image: AssetImage("images/nostory.png"),
+              height: 200,
+            )),
     );
   }
 }

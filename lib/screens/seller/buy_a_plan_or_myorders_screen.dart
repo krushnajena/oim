@@ -52,7 +52,6 @@ class _BuyAPlanOrMyOrderScreenState extends State<BuyAPlanOrMyOrderScreen> {
                               fontSize: 18, fontWeight: FontWeight.normal),
                         ),
                       ),
-
                     ],
                   ),
                 ),
@@ -102,7 +101,7 @@ class _BuyAPlanOrMyOrderScreenState extends State<BuyAPlanOrMyOrderScreen> {
                       Container(
                         margin: EdgeInsets.only(top: 9, left: 9),
                         child: Image.asset(
-                          "images/9.jpeg",
+                          "images/search-invoice-icon.png",
                           height: 35,
                           width: 35,
                         ),

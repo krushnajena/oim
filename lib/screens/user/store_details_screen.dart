@@ -628,14 +628,14 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
           slivers: [
             SliverPersistentHeader(
                 delegate: SliverAppBarDelegate(
-              minHeight: 260,
-              maxHeight: 260,
+              minHeight: 270,
+              maxHeight: 270,
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 8.0, right: 8),
+                    padding: const EdgeInsets.only(left: 8.0, right: 8, top: 8),
                     child: SizedBox(
-                      height: 40,
+                      height: 50,
                       width: double.infinity,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -647,23 +647,18 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                                   fontWeight: FontWeight.bold, fontSize: 20),
                             ),
                           ),
-                          SizedBox(
-                            height: 70,
-                            width: 70,
-                            child: Card(
-                              clipBehavior: Clip.antiAliasWithSaveLayer,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(70.0),
-                              ),
-                              child: InkWell(
-                                onTap: () {
-                                  //Navigator.push(context, MaterialPageRoute(builder: (context)=>Status()));
-                                },
-                                child: Image.network(
-                                  baseUrl + imageUrl,
+                          Container(
+                            height: 50,
+                            width: 50,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
                                   fit: BoxFit.cover,
-                                ),
-                              ),
+                                  image: NetworkImage(
+                                    imageUrl,
+                                  )),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(40.0)),
+                              color: Colors.redAccent,
                             ),
                           ),
                         ],
@@ -725,22 +720,33 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                       children: [
                         Text(address),
                         SizedBox(width: 10),
-                        Expanded(
-                            child: isClosed == true
-                                ? Row(
-                                    children: [
-                                      Text(
-                                        "Closed",
-                                        style: TextStyle(color: Colors.red),
-                                      ),
-                                      Text(opeingText)
-                                    ],
-                                  )
-                                : Text(opeingText))
                       ],
                     ),
                   ),
-                  SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Container(
+                        child: isClosed == true
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Closed ",
+                                    style: TextStyle(color: Colors.red),
+                                  ),
+                                  Text(opeingText)
+                                ],
+                              )
+                            : Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(opeingText),
+                                ],
+                              )),
+                  ),
+                  SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -986,6 +992,14 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
             SliverGrid(
               delegate: SliverChildBuilderDelegate(
                 (context, index) {
+                  double disount =
+                      double.parse(products[index]["mrp"].toString()) -
+                          double.parse(products[index]["sellingprice"]
+                              .toString()
+                              .toString());
+                  double discountPercentage = (disount /
+                          double.parse(products[index]["mrp"].toString())) *
+                      100;
                   return InkWell(
                     onTap: () {
                       Navigator.push(
@@ -1035,7 +1049,7 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                                     decoration: TextDecoration.lineThrough),
                               ),
                               Text(
-                                "63% Off",
+                                "${discountPercentage.toStringAsFixed(2)}% Off",
                                 style: TextStyle(color: Colors.green),
                               )
                             ],

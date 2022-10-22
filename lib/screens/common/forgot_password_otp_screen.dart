@@ -6,10 +6,12 @@ import 'package:oim/constants/constant.dart';
 import 'package:oim/screens/common/change_password_screen.dart';
 import 'package:oim/screens/set_password_screen.dart';
 import 'package:otp_autofill/otp_autofill.dart';
+import 'package:http/http.dart' as http;
 
 class ForgotPasswordOTPScreen extends StatefulWidget {
   final String mobileno;
-  const ForgotPasswordOTPScreen(this.mobileno);
+  final int code;
+  const ForgotPasswordOTPScreen(this.mobileno, this.code);
 
   @override
   State<ForgotPasswordOTPScreen> createState() =>
@@ -36,23 +38,39 @@ class _ForgotPasswordOTPScreenState extends State<ForgotPasswordOTPScreen> {
   int _start = 15;
 
   void startTimer() {
-    Timer(const Duration(seconds: 3),
-        () => showInSnackBar("An OTP Was sent to your mobile no."));
-    const oneSec = Duration(seconds: 1);
-    _timer = Timer.periodic(
-      oneSec,
-      (Timer timer) {
-        if (_start == 0) {
-          setState(() {
-            timer.cancel();
-          });
-        } else {
-          setState(() {
-            _start--;
-          });
-        }
-      },
-    );
+    String msg = "Dear user," +
+        "Please use this OTP ${widget.code} to reset your Offers In Market password. " +
+        "Please don't share this OTP." +
+        "Regards," +
+        "Offers In Market Team. ";
+    String msgurl =
+        "http://api.bulksmsgateway.in/sendmessage.php?user=offersinmarket&password=Software@2016&mobile=${widget.mobileno}&message=" +
+            msg +
+            "&sender=OIMAPP&type=3&template_id=1207166421362292789";
+    print(msgurl);
+    var otpencoded = Uri.parse(msgurl);
+    print(otpencoded);
+    http.get(otpencoded).then((value) {
+      if (value.statusCode == 200) {
+        Timer(const Duration(seconds: 3),
+            () => showInSnackBar("An OTP Was sent to your mobile no."));
+        const oneSec = Duration(seconds: 1);
+        _timer = Timer.periodic(
+          oneSec,
+          (Timer timer) {
+            if (_start == 0) {
+              setState(() {
+                timer.cancel();
+              });
+            } else {
+              setState(() {
+                _start--;
+              });
+            }
+          },
+        );
+      }
+    });
   }
 
   @override
@@ -285,7 +303,7 @@ class _ForgotPasswordOTPScreenState extends State<ForgotPasswordOTPScreen> {
                             secondController.text +
                             thirdController.text +
                             fourthController.text ==
-                        "1234") {
+                        widget.code.toString()) {
                       Navigator.push(
                           context,
                           MaterialPageRoute(

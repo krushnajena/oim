@@ -39,180 +39,210 @@ class _SellerChatScreenState extends State<SellerChatScreen> {
           if (snapshot.data == null) {
             return Center();
           }
-
-          return ListView.builder(
-            padding: EdgeInsets.all(10),
-            controller: _listScrollController,
-            reverse: false,
-            shrinkWrap: true,
-            itemCount: snapshot.data!.docs.length,
-            itemBuilder: (context, index) {
-              // mention the arrow syntax if you get the time
-              return snapshot.data!.docs[index]["lastMessage"] !=
-                      "NoMessageAvailableOimAppmaAgg"
-                  ? snapshot.data!.docs[index]["isDeletdBySeller"] != "1"
-                      ? InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (contex) =>
-                                        SellerChatMessageScreen(
-                                          snapshot.data!.docs[index].id
-                                              .toString(),
-                                          snapshot.data!.docs[index]["userid"]
-                                              .toString(),
-                                          snapshot.data!.docs[index]["sellerid"]
-                                              .toString(),
-                                          snapshot
-                                              .data!.docs[index]["productid"]
-                                              .toString(),
-                                          snapshot.data!.docs[index]
-                                              ["isBlockedByByer"],
-                                          snapshot.data!.docs[index]
-                                              ["isBlockedBySeller"],
-                                        )));
-                          },
-                          child: Row(children: [
-                            Expanded(
-                              child: Container(
-                                  margin: EdgeInsets.only(left: 10, top: 25),
-                                  child: Row(
-                                    children: [
-                                      Stack(children: [
-                                        Container(
-                                          height: 60,
-                                          width: 60,
-                                          decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                                image: NetworkImage(baseUrl +
+          int unreadmessage = 0;
+          for (int i = 0; i < snapshot.data!.docs.length; i++) {
+            if (snapshot.data!.docs[i]["lastMessage"] !=
+                    "NoMessageAvailableOimAppmaAgg" &&
+                snapshot.data!.docs[i]["isDeletdBySeller"] != "1") {
+              unreadmessage = -1;
+            }
+          }
+          return unreadmessage == -1
+              ? ListView.builder(
+                  padding: EdgeInsets.all(10),
+                  controller: _listScrollController,
+                  reverse: false,
+                  shrinkWrap: true,
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (context, index) {
+                    // mention the arrow syntax if you get the time
+                    return snapshot.data!.docs[index]["lastMessage"] !=
+                            "NoMessageAvailableOimAppmaAgg"
+                        ? snapshot.data!.docs[index]["isDeletdBySeller"] != "1"
+                            ? InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (contex) =>
+                                              SellerChatMessageScreen(
+                                                snapshot.data!.docs[index].id
+                                                    .toString(),
+                                                snapshot
+                                                    .data!.docs[index]["userid"]
+                                                    .toString(),
+                                                snapshot.data!
+                                                    .docs[index]["sellerid"]
+                                                    .toString(),
+                                                snapshot.data!
+                                                    .docs[index]["productid"]
+                                                    .toString(),
+                                                snapshot.data!.docs[index]
+                                                    ["isBlockedByByer"],
+                                                snapshot.data!.docs[index]
+                                                    ["isBlockedBySeller"],
+                                              )));
+                                },
+                                child: Row(children: [
+                                  Expanded(
+                                    child: Container(
+                                        margin:
+                                            EdgeInsets.only(left: 10, top: 25),
+                                        child: Row(
+                                          children: [
+                                            Stack(children: [
+                                              Container(
+                                                height: 60,
+                                                width: 60,
+                                                decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                      image: NetworkImage(baseUrl +
+                                                          snapshot
+                                                              .data!
+                                                              .docs[index][
+                                                                  "productlogo"]
+                                                              .toString()),
+                                                      fit: BoxFit.cover),
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  color: Colors.redAccent,
+                                                ),
+                                              ),
+                                              Container(
+                                                margin: EdgeInsets.only(
+                                                    left: 45, top: 40),
+                                                height: 35,
+                                                width: 35,
+                                                decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        color: Colors.white,
+                                                        width: 2),
+                                                    image: DecorationImage(
+                                                        image: NetworkImage(baseUrl +
+                                                            snapshot
+                                                                .data!
+                                                                .docs[index][
+                                                                    "sellerlogo"]
+                                                                .toString()),
+                                                        fit: BoxFit.cover),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20)),
+                                              ),
+                                            ]),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 10),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                        snapshot
+                                                            .data!
+                                                            .docs[index]
+                                                                ["username"]
+                                                            .toString(),
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            fontSize: 18),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Text(
                                                     snapshot
                                                         .data!
                                                         .docs[index]
-                                                            ["productlogo"]
-                                                        .toString()),
-                                                fit: BoxFit.cover),
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            color: Colors.redAccent,
-                                          ),
-                                        ),
-                                        Container(
-                                          margin: EdgeInsets.only(
-                                              left: 45, top: 40),
-                                          height: 35,
-                                          width: 35,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color: Colors.white,
-                                                  width: 2),
-                                              image: DecorationImage(
-                                                  image: NetworkImage(baseUrl +
-                                                      snapshot
-                                                          .data!
-                                                          .docs[index]
-                                                              ["sellerlogo"]
-                                                          .toString()),
-                                                  fit: BoxFit.cover),
-                                              borderRadius:
-                                                  BorderRadius.circular(20)),
-                                        ),
-                                      ]),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 10),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  snapshot.data!
-                                                      .docs[index]["username"]
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      fontSize: 18),
-                                                ),
-                                              ],
-                                            ),
-                                            Text(
-                                              snapshot.data!
-                                                  .docs[index]["productname"]
-                                                  .toString(),
-                                              style: TextStyle(fontSize: 15),
-                                            ),
-                                            Text(
-                                              snapshot.data!
-                                                  .docs[index]["lastMessage"]
-                                                  .toString(),
-                                              style: TextStyle(fontSize: 15),
-                                            ),
+                                                            ["productname"]
+                                                        .toString(),
+                                                    style:
+                                                        TextStyle(fontSize: 15),
+                                                  ),
+                                                  Text(
+                                                    snapshot
+                                                        .data!
+                                                        .docs[index]
+                                                            ["lastMessage"]
+                                                        .toString(),
+                                                    style:
+                                                        TextStyle(fontSize: 15),
+                                                  ),
+                                                ],
+                                              ),
+                                            )
                                           ],
-                                        ),
-                                      )
-                                    ],
-                                  )),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 50),
-                              child: PopupMenuButton(
-                                itemBuilder: (context) {
-                                  return [
-                                    PopupMenuItem(
-                                      value: 'delete',
-                                      child: Text('Delete Chat'),
-                                      onTap: () {
-                                        FirebaseRepository _repository =
-                                            FirebaseRepository();
-                                        _repository.deleteMessage(
-                                            snapshot.data!.docs[index].id
-                                                .toString(),
-                                            "seller");
+                                        )),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 50),
+                                    child: PopupMenuButton(
+                                      itemBuilder: (context) {
+                                        return [
+                                          PopupMenuItem(
+                                            value: 'delete',
+                                            child: Text('Delete Chat'),
+                                            onTap: () {
+                                              FirebaseRepository _repository =
+                                                  FirebaseRepository();
+                                              _repository.deleteMessage(
+                                                  snapshot.data!.docs[index].id
+                                                      .toString(),
+                                                  "seller");
+                                            },
+                                          ),
+                                          snapshot.data!.docs[index]
+                                                      ["isDeletdBySeller"] !=
+                                                  "1"
+                                              ? PopupMenuItem(
+                                                  value: 'block',
+                                                  child: Text('Block User'),
+                                                  onTap: () {
+                                                    FirebaseRepository
+                                                        _repository =
+                                                        FirebaseRepository();
+                                                    _repository.blockMessage(
+                                                        snapshot.data!
+                                                            .docs[index].id
+                                                            .toString(),
+                                                        "seller");
+                                                  },
+                                                )
+                                              : PopupMenuItem(
+                                                  value: 'unblock',
+                                                  child: Text('UnBlock User'),
+                                                  onTap: () {
+                                                    FirebaseRepository
+                                                        _repository =
+                                                        FirebaseRepository();
+                                                    _repository.unblockMessage(
+                                                        snapshot.data!
+                                                            .docs[index].id
+                                                            .toString(),
+                                                        "seller");
+                                                  },
+                                                )
+                                        ];
+                                      },
+                                      onSelected: (String value) {
+                                        print('You Click on po up menu item');
                                       },
                                     ),
-                                    snapshot.data!.docs[index]
-                                                ["isDeletdBySeller"] !=
-                                            "1"
-                                        ? PopupMenuItem(
-                                            value: 'block',
-                                            child: Text('Block User'),
-                                            onTap: () {
-                                              FirebaseRepository _repository =
-                                                  FirebaseRepository();
-                                              _repository.blockMessage(
-                                                  snapshot.data!.docs[index].id
-                                                      .toString(),
-                                                  "seller");
-                                            },
-                                          )
-                                        : PopupMenuItem(
-                                            value: 'unblock',
-                                            child: Text('UnBlock User'),
-                                            onTap: () {
-                                              FirebaseRepository _repository =
-                                                  FirebaseRepository();
-                                              _repository.unblockMessage(
-                                                  snapshot.data!.docs[index].id
-                                                      .toString(),
-                                                  "seller");
-                                            },
-                                          )
-                                  ];
-                                },
-                                onSelected: (String value) {
-                                  print('You Click on po up menu item');
-                                },
-                              ),
-                            ),
-                          ]),
-                        )
-                      : SizedBox()
-                  : SizedBox();
-            },
-          );
+                                  ),
+                                ]),
+                              )
+                            : SizedBox()
+                        : SizedBox();
+                  },
+                )
+              : Center(
+                  child: Image.asset(
+                    "images/emptychat.png",
+                    height: 200,
+                  ),
+                );
         });
   }
 
@@ -227,180 +257,211 @@ class _SellerChatScreenState extends State<SellerChatScreen> {
           if (snapshot.data == null) {
             return Center();
           }
+          int a = 0;
+          for (int i = 0; i < snapshot.data!.docs.length; i++) {
+            if (snapshot.data!.docs[i]["lastMessage"] !=
+                    "NoMessageAvailableOimAppmaAgg" &&
+                snapshot.data!.docs[i]["isDeletdBySeller"] != "1") {
+              a = -1;
+            }
+          }
 
-          return ListView.builder(
-            padding: EdgeInsets.all(10),
-            controller: _listScrollController,
-            reverse: false,
-            shrinkWrap: true,
-            itemCount: snapshot.data!.docs.length,
-            itemBuilder: (context, index) {
-              // mention the arrow syntax if you get the time
-              return snapshot.data!.docs[index]["lastMessage"] !=
-                      "NoMessageAvailableOimAppmaAgg"
-                  ? snapshot.data!.docs[index]["isDeletdBySeller"] != "1"
-                      ? InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (contex) =>
-                                        SellerChatMessageScreen(
-                                          snapshot.data!.docs[index].id
-                                              .toString(),
-                                          snapshot.data!.docs[index]["userid"]
-                                              .toString(),
-                                          snapshot.data!.docs[index]["sellerid"]
-                                              .toString(),
-                                          snapshot
-                                              .data!.docs[index]["productid"]
-                                              .toString(),
-                                          snapshot.data!.docs[index]
-                                              ["isBlockedByByer"],
-                                          snapshot.data!.docs[index]
-                                              ["isBlockedBySeller"],
-                                        )));
-                          },
-                          child: Row(
-                              children: [
-                            Expanded(
-                              child: Container(
-                                  margin: EdgeInsets.only(left: 10, top: 25),
-                                  child: Row(
-                                    children: [
-                                      Stack(children: [
-                                        Container(
-                                          height: 60,
-                                          width: 60,
-                                          decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                                image: NetworkImage(baseUrl +
+          return a == -1
+              ? ListView.builder(
+                  padding: EdgeInsets.all(10),
+                  controller: _listScrollController,
+                  reverse: false,
+                  shrinkWrap: true,
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (context, index) {
+                    // mention the arrow syntax if you get the time
+                    return snapshot.data!.docs[index]["lastMessage"] !=
+                            "NoMessageAvailableOimAppmaAgg"
+                        ? snapshot.data!.docs[index]["isDeletdBySeller"] != "1"
+                            ? InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (contex) =>
+                                              SellerChatMessageScreen(
+                                                snapshot.data!.docs[index].id
+                                                    .toString(),
+                                                snapshot
+                                                    .data!.docs[index]["userid"]
+                                                    .toString(),
+                                                snapshot.data!
+                                                    .docs[index]["sellerid"]
+                                                    .toString(),
+                                                snapshot.data!
+                                                    .docs[index]["productid"]
+                                                    .toString(),
+                                                snapshot.data!.docs[index]
+                                                    ["isBlockedByByer"],
+                                                snapshot.data!.docs[index]
+                                                    ["isBlockedBySeller"],
+                                              )));
+                                },
+                                child: Row(children: [
+                                  Expanded(
+                                    child: Container(
+                                        margin:
+                                            EdgeInsets.only(left: 10, top: 25),
+                                        child: Row(
+                                          children: [
+                                            Stack(children: [
+                                              Container(
+                                                height: 60,
+                                                width: 60,
+                                                decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                      image: NetworkImage(baseUrl +
+                                                          snapshot
+                                                              .data!
+                                                              .docs[index][
+                                                                  "productlogo"]
+                                                              .toString()),
+                                                      fit: BoxFit.cover),
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  color: Colors.redAccent,
+                                                ),
+                                              ),
+                                              Container(
+                                                margin: EdgeInsets.only(
+                                                    left: 45, top: 40),
+                                                height: 35,
+                                                width: 35,
+                                                decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        color: Colors.white,
+                                                        width: 2),
+                                                    image: DecorationImage(
+                                                        image: NetworkImage(baseUrl +
+                                                            snapshot
+                                                                .data!
+                                                                .docs[index][
+                                                                    "sellerlogo"]
+                                                                .toString()),
+                                                        fit: BoxFit.cover),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20)),
+                                              ),
+                                            ]),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 10),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                        snapshot
+                                                            .data!
+                                                            .docs[index]
+                                                                ["username"]
+                                                            .toString(),
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            fontSize: 18),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Text(
                                                     snapshot
                                                         .data!
                                                         .docs[index]
-                                                            ["productlogo"]
-                                                        .toString()),
-                                                fit: BoxFit.cover),
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            color: Colors.redAccent,
-                                          ),
-                                        ),
-                                        Container(
-                                          margin: EdgeInsets.only(left: 45, top: 40),
-                                          height: 35,
-                                          width: 35,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color: Colors.white,
-                                                  width: 2),
-                                              image: DecorationImage(
-                                                  image: NetworkImage(baseUrl +
-                                                      snapshot
-                                                          .data!
-                                                          .docs[index]
-                                                              ["sellerlogo"]
-                                                          .toString()),
-                                                  fit: BoxFit.cover),
-                                              borderRadius:
-                                                  BorderRadius.circular(20)),
-                                        ),
-                                      ]),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 10),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  snapshot.data!
-                                                      .docs[index]["username"]
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      fontSize: 18),
-                                                ),
-                                              ],
-                                            ),
-                                            Text(
-                                              snapshot.data!
-                                                  .docs[index]["productname"]
-                                                  .toString(),
-                                              style: TextStyle(fontSize: 15),
-                                            ),
-                                            Text(
-                                              snapshot.data!
-                                                  .docs[index]["lastMessage"]
-                                                  .toString(),
-                                              style: TextStyle(fontSize: 15),
-                                            ),
+                                                            ["productname"]
+                                                        .toString(),
+                                                    style:
+                                                        TextStyle(fontSize: 15),
+                                                  ),
+                                                  Text(
+                                                    snapshot
+                                                        .data!
+                                                        .docs[index]
+                                                            ["lastMessage"]
+                                                        .toString(),
+                                                    style:
+                                                        TextStyle(fontSize: 15),
+                                                  ),
+                                                ],
+                                              ),
+                                            )
                                           ],
-                                        ),
-                                      )
-                                    ],
-                                  )),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 50),
-                              child: PopupMenuButton(
-                                itemBuilder: (context) {
-                                  return [
-                                    PopupMenuItem(
-                                      value: 'delete',
-                                      child: Text('Delete Chat'),
-                                      onTap: () {
-                                        FirebaseRepository _repository =
-                                            FirebaseRepository();
-                                        _repository.deleteMessage(
-                                            snapshot.data!.docs[index].id
-                                                .toString(),
-                                            "seller");
+                                        )),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 50),
+                                    child: PopupMenuButton(
+                                      itemBuilder: (context) {
+                                        return [
+                                          PopupMenuItem(
+                                            value: 'delete',
+                                            child: Text('Delete Chat'),
+                                            onTap: () {
+                                              FirebaseRepository _repository =
+                                                  FirebaseRepository();
+                                              _repository.deleteMessage(
+                                                  snapshot.data!.docs[index].id
+                                                      .toString(),
+                                                  "seller");
+                                            },
+                                          ),
+                                          snapshot.data!.docs[index]
+                                                      ["isDeletdBySeller"] !=
+                                                  "1"
+                                              ? PopupMenuItem(
+                                                  value: 'block',
+                                                  child: Text('Block User'),
+                                                  onTap: () {
+                                                    FirebaseRepository
+                                                        _repository =
+                                                        FirebaseRepository();
+                                                    _repository.blockMessage(
+                                                        snapshot.data!
+                                                            .docs[index].id
+                                                            .toString(),
+                                                        "seller");
+                                                  },
+                                                )
+                                              : PopupMenuItem(
+                                                  value: 'unblock',
+                                                  child: Text('UnBlock User'),
+                                                  onTap: () {
+                                                    FirebaseRepository
+                                                        _repository =
+                                                        FirebaseRepository();
+                                                    _repository.unblockMessage(
+                                                        snapshot.data!
+                                                            .docs[index].id
+                                                            .toString(),
+                                                        "seller");
+                                                  },
+                                                )
+                                        ];
+                                      },
+                                      onSelected: (String value) {
+                                        print('You Click on po up menu item');
                                       },
                                     ),
-                                    snapshot.data!.docs[index]
-                                                ["isDeletdBySeller"] !=
-                                            "1"
-                                        ? PopupMenuItem(
-                                            value: 'block',
-                                            child: Text('Block User'),
-                                            onTap: () {
-                                              FirebaseRepository _repository =
-                                                  FirebaseRepository();
-                                              _repository.blockMessage(
-                                                  snapshot.data!.docs[index].id
-                                                      .toString(),
-                                                  "seller");
-                                            },
-                                          )
-                                        : PopupMenuItem(
-                                            value: 'unblock',
-                                            child: Text('UnBlock User'),
-                                            onTap: () {
-                                              FirebaseRepository _repository =
-                                                  FirebaseRepository();
-                                              _repository.unblockMessage(
-                                                  snapshot.data!.docs[index].id
-                                                      .toString(),
-                                                  "seller");
-                                            },
-                                          )
-                                  ];
-                                },
-                                onSelected: (String value) {
-                                  print('You Click on po up menu item');
-                                },
-                              ),
-                            ),
-                          ]),
-                        )
-                      : SizedBox()
-                  : SizedBox();
-            },
-          );
+                                  ),
+                                ]),
+                              )
+                            : SizedBox()
+                        : SizedBox();
+                  },
+                )
+              : Center(
+                  child: Image.asset(
+                    "images/emptychat.png",
+                    height: 200,
+                  ),
+                );
         });
   }
 

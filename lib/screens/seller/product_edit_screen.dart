@@ -1721,6 +1721,13 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
                 height: 30,
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [Text("KEY"), Text("VALUE")],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
                 children: [
                   Expanded(
                     child: TextFormField(
@@ -1760,28 +1767,23 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
                   SizedBox(
                     width: 5,
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      add();
-                    },
-                    child: Text(
-                      'Add',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12), // <-- Radius
-                      ),
-                    ),
-                  )
                 ],
               ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [Text("KEY"), Text("VALUE")],
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    add();
+                  },
+                  child: Text(
+                    'Add Specification',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12), // <-- Radius
+                    ),
+                  ),
+                ),
               ),
               SizedBox(
                 height: 20,
@@ -1793,10 +1795,26 @@ class _ProductEditScreenState extends State<ProductEditScreen> {
                   return Column(
                     children: [
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text(specifications[index]["key"].toString()),
-                          Text(specifications[index]["value"].toString())
+                          Container(
+                            width: 100,
+                            child:
+                                Text(specifications[index]["key"].toString()),
+                          ),
+                          Container(
+                              width: MediaQuery.of(context).size.width - 170,
+                              child: Text(
+                                  specifications[index]["value"].toString())),
+                          Container(
+                              width: 30,
+                              child: InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      specifications.removeAt(index);
+                                    });
+                                  },
+                                  child: Icon(Icons.delete))),
                         ],
                       ),
                       Divider(

@@ -139,4 +139,13 @@ class FirebaseMethods {
           .catchError((error) => print('Failed: $error'));
     }
   }
+
+  Future<void> fulldeleteMessage(String msgid) async {
+    await firestore
+        .collection("message")
+        .doc(msgid)
+        .delete()
+        .then((_) => print('Success'))
+        .catchError((error) => print('Failed: $error'));
+  }
 }

@@ -865,14 +865,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Card(
-                                  elevation: 20,
+                                  elevation: 2,
                                   color: Colors.white,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(50),
                                   ),
                                   child: Container(
-                                    height: 50,
-                                    width: 50,
+                                    height: 40,
+                                    width: 40,
                                     child: itemAddedToWishList == false
                                         ? InkWell(
                                             onTap: () {
@@ -1076,7 +1076,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   Padding(
                     padding: const EdgeInsets.only(left: 5.0, right: 5),
                     child: SizedBox(
-                      height: 40,
+                      height: 50,
                       width: double.infinity,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1086,23 +1086,18 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 20),
                           ),
-                          SizedBox(
-                            height: 60,
+                          Container(
+                            height: 50,
                             width: 50,
-                            child: Card(
-                              clipBehavior: Clip.antiAliasWithSaveLayer,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50.0),
-                              ),
-                              child: InkWell(
-                                onTap: () {
-                                  //Navigator.push(context, MaterialPageRoute(builder: (context)=>Status()));
-                                },
-                                child: Image.network(
-                                  baseUrl + imageUrl,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
                                   fit: BoxFit.cover,
-                                ),
-                              ),
+                                  image: NetworkImage(
+                                    baseUrl + imageUrl,
+                                  )),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(40.0)),
+                              color: Colors.redAccent,
                             ),
                           ),
                         ],
@@ -1164,20 +1159,31 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       children: [
                         Text(address),
                         SizedBox(width: 10),
-                        Expanded(
-                            child: isClosed == true
-                                ? Row(
-                                    children: [
-                                      Text(
-                                        "Closed",
-                                        style: TextStyle(color: Colors.red),
-                                      ),
-                                      Text(opeingText)
-                                    ],
-                                  )
-                                : Text(opeingText))
                       ],
                     ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 5.0),
+                    child: Container(
+                        child: isClosed == true
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Closed ",
+                                    style: TextStyle(color: Colors.red),
+                                  ),
+                                  Text(opeingText)
+                                ],
+                              )
+                            : Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(opeingText),
+                                ],
+                              )),
                   ),
                   Divider(color: Colors.grey[350]),
                   Row(

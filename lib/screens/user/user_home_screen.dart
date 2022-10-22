@@ -730,7 +730,8 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                     Positioned(
                                       bottom: 2,
                                       child: Padding(
-                                        padding: const EdgeInsets.only(left: 4,right: 4),
+                                        padding: const EdgeInsets.only(
+                                            left: 4, right: 4),
                                         child: Container(
                                             decoration: BoxDecoration(
                                                 border: Border.all(
@@ -1341,7 +1342,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                       ? Row(
                           children: [
                             Text(
-                              "Closed",
+                              "Closed ",
                               style: TextStyle(color: Colors.red),
                             ),
                             Text(opeingText)
@@ -1353,9 +1354,9 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
             ),
             Container(
               height: 50,
-              child: ListView(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(top: 10.0, bottom: 10),
@@ -1390,7 +1391,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                   ),
                   Padding(
                     padding:
-                        const EdgeInsets.only(top: 10, left: 15.0, bottom: 10),
+                        const EdgeInsets.only(top: 10, left: 8.0, bottom: 10),
                     child: RaisedButton(
                       child: SizedBox(
                         width: 100,
@@ -1423,7 +1424,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                   ),
                   Padding(
                     padding:
-                        const EdgeInsets.only(top: 10, left: 15.0, bottom: 10),
+                        const EdgeInsets.only(top: 10, left: 8.0, bottom: 10),
                     child: RaisedButton(
                       child: SizedBox(
                         width: 70,

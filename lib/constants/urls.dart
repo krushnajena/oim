@@ -1,4 +1,4 @@
-const baseUrl = "https://oimnewapp.herokuapp.com/";
+const baseUrl = "http://offersinmarket.com/";
 const get_UserDetailsByMobileNoAndUserType = baseUrl + "user/getuserdetails/";
 const post_register = baseUrl + "reg";
 const post_login = baseUrl + "user/login";
@@ -7,6 +7,8 @@ const post_seller_register = baseUrl + "createseller";
 const get_catelogues = baseUrl + "catalogue/getcatalogue/";
 const get_sellerdetalsbyuserid = baseUrl + "getseller/";
 const get_products_byuserid = baseUrl + "getproductbysellerid/";
+const getnoofproductlistings = baseUrl + "getnoofproductlistings/";
+
 const post_stock_update = baseUrl + "updateproductinstock";
 const get_ad_packages = baseUrl + "getaddpackage";
 const get_no_of_ad_credits = baseUrl + "getnoofaddscredit/";
@@ -39,7 +41,7 @@ const get_movetocart = baseUrl + "getMoveTocART/";
 const get_deleteproduct = baseUrl + "deleteproduct/";
 const post_updateseller = baseUrl + "updateseller";
 const new_login = baseUrl + "newuserlogin";
-const get_notifications = baseUrl + "getnotifications";
+const get_notifications = baseUrl + "getnotifications/";
 const post_updatespesifications = baseUrl + "productSpecificationUpdate";
 const updatepassword = baseUrl + "updatepassword";
 const mystores = baseUrl + "myseller/";
@@ -69,3 +71,8 @@ const getlifetimeviews = baseUrl + "getlifetimeviews/";
 const postDcumentUploadForMessage = baseUrl + "postDcumentUploadForMessage";
 
 const getsellersearch = baseUrl + "getsellersearch/";
+const getunseennotifications = baseUrl + "getNoOfUnseenNotification/";
+const seenNotification = baseUrl + "seenNotification/";
+const getNooffollowersbysellerid = baseUrl + "getNooffollowersbysellerid/";
+
+const getnostoreratting = baseUrl + "getnostoreratting/";

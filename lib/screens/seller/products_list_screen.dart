@@ -189,20 +189,24 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     double deviceHeight = MediaQuery.of(context).size.height;
     double deviceWidth = MediaQuery.of(context).size.width;
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: scaffoldBgColor,
+        backgroundColor: isItemsLoaded == true
+            ? products.length > 0
+                ? Colors.transparent
+                : Color(0xffc0c0c0)
+            : Colors.transparent,
         appBar: AppBar(
             elevation: 0.1,
             leading: IconButton(
               icon: Icon(Icons.arrow_back, color: Colors.white),
               onPressed: () => Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (BuildContext context) => SellerBottomAppBar()),
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => SellerBottomAppBar()),
                   (Route<dynamic> route) => false),
             ),
             centerTitle: true,
@@ -212,12 +216,16 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => SellerProductSearchScreen()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  SellerProductSearchScreen()));
                     },
-                    child: Icon(Icons.search,
+                    child: Icon(
+                      Icons.search,
                       size: 20,
-                    )
-                ),
+                    )),
               )
             ]),
         bottomNavigationBar: Container(
@@ -258,7 +266,7 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
             ],
           ),
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        //floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         body: isItemsLoaded == true
             ? products.length > 0
                 ? Column(
@@ -407,10 +415,10 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                                                                     ["_id"])));
                                               },
                                               child: Container(
-                                                height: 250,
+                                                height: 267,
                                                 child: Card(
                                                   child: Container(
-                                                    height: 250,
+                                                    height: 267,
                                                     child: Column(
                                                       crossAxisAlignment:
                                                           CrossAxisAlignment
@@ -646,32 +654,28 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                                                                 ],
                                                               ),
                                                               Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .only(
-                                                                        left:
-                                                                            8.0),
-                                                                child: Text(
-                                                                  products[index]
-                                                                          [
-                                                                          "instock"]
-                                                                      ? "In Stock"
-                                                                      : "Stock Out",
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          13,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                      color: products[index]
+                                                                  padding: const EdgeInsets
+                                                                          .only(
+                                                                      left:
+                                                                          8.0),
+                                                                  child: Switch(
+                                                                    activeColor:
+                                                                        Colors
+                                                                            .green,
+                                                                    value: products[
+                                                                            index]
+                                                                        [
+                                                                        "instock"],
+                                                                    onChanged:
+                                                                        (value) {
+                                                                      updateStock(
+                                                                          products[index]
                                                                               [
-                                                                              "instock"]
-                                                                          ? Colors
-                                                                              .green
-                                                                          : Colors
-                                                                              .red),
-                                                                ),
-                                                              ),
+                                                                              "_id"],
+                                                                          value,
+                                                                          index);
+                                                                    },
+                                                                  )),
                                                             ],
                                                           ),
                                                         ),
@@ -686,29 +690,34 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                                                                     .start,
                                                             children: [
                                                               const SizedBox(
-                                                                height: 5,
+                                                                height: 1,
                                                               ),
                                                               Center(
                                                                 child:
-                                                                    ElevatedButton(
-                                                                        onPressed:
-                                                                            () {
-                                                                          Navigator.push(
-                                                                              context,
-                                                                              MaterialPageRoute(builder: (context) => PromoteYourBusinessScreen()));
-                                                                        },
-                                                                        child:
-                                                                            Container(
-                                                                          height:
-                                                                              15,
-                                                                          width:
-                                                                              100,
-                                                                          child:
-                                                                              Center(
-                                                                            child:
-                                                                                const Text("Sell Faster Now", style: TextStyle(fontSize: 12)),
-                                                                          ),
-                                                                        )),
+                                                                    OutlinedButton(
+                                                                  style: OutlinedButton
+                                                                      .styleFrom(
+                                                                    side: BorderSide(
+                                                                        width:
+                                                                            1.0,
+                                                                        color: Colors
+                                                                            .black),
+                                                                  ),
+                                                                  onPressed:
+                                                                      () {
+                                                                    Navigator.push(
+                                                                        context,
+                                                                        MaterialPageRoute(
+                                                                            builder: (context) =>
+                                                                                PromoteYourBusinessScreen()));
+                                                                  },
+                                                                  child: Text(
+                                                                    "Sell Faster Now",
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .black),
+                                                                  ),
+                                                                ),
                                                               )
                                                             ],
                                                           ),
@@ -727,7 +736,7 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                                           crossAxisCount: 2,
                                           crossAxisSpacing: 2,
                                           mainAxisSpacing: 2,
-                                          mainAxisExtent: 303,
+                                          mainAxisExtent: 320,
                                         ),
                                       )
                                     : SliverPersistentHeader(
@@ -789,7 +798,9 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                         Text(
                           "Racks are empty \nStart adding your products.",
                           style: TextStyle(
-                              fontSize: 22, fontWeight: FontWeight.bold),
+                              color: Colors.white,
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
                         ),
                         SizedBox(

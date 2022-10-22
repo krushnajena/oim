@@ -746,7 +746,7 @@ class _StoreDetailsWithSpecifiedProductCatagoryIdState
                                 ? Row(
                                     children: [
                                       Text(
-                                        "Closed",
+                                        "Closed ",
                                         style: TextStyle(color: Colors.red),
                                       ),
                                       Text(opeingText)

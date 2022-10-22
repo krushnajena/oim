@@ -238,42 +238,37 @@ class _SellerStoreViewScreenState extends State<SellerStoreViewScreen> {
           slivers: [
             SliverPersistentHeader(
                 delegate: SliverAppBarDelegate(
-              minHeight: 250,
-              maxHeight: 250,
+              minHeight: 260,
+              maxHeight: 260,
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 8.0, right: 8),
+                    padding: const EdgeInsets.only(left: 8.0, right: 8, top: 8),
                     child: SizedBox(
-                      height: 40,
-                      width: double.infinity,
+                      height: 50,
+                      //width: MediaQuery.of(context).size.width,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            storename,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20),
+                          Expanded(
+                            child: Text(
+                              storename,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 20),
+                            ),
                           ),
-                          SizedBox(
-                            height: 60,
+                          Container(
+                            height: 50,
                             width: 50,
-                            child: Card(
-                              clipBehavior: Clip.antiAliasWithSaveLayer,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50.0),
-                              ),
-                              child: InkWell(
-                                onTap: () {
-                                  //Navigator.push(context, MaterialPageRoute(builder: (context)=>Status()));
-                                },
-                                child: imageUrl != ""
-                                    ? Image.asset(
-                                        imageUrl,
-                                        fit: BoxFit.cover,
-                                      )
-                                    : SizedBox(),
-                              ),
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage(
+                                    imageUrl,
+                                  )),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(40.0)),
+                              color: Colors.redAccent,
                             ),
                           ),
                         ],

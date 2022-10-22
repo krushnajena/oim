@@ -272,7 +272,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 40, left: 160),
+            margin: EdgeInsets.only(
+                top: 40, left: MediaQuery.of(context).size.width / 2),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(60),
               child: Container(

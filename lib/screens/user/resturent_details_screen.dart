@@ -376,14 +376,14 @@ class _ResturentDetailsScreenState extends State<ResturentDetailsScreen> {
           slivers: [
             SliverPersistentHeader(
                 delegate: SliverAppBarDelegate(
-              minHeight: 250,
-              maxHeight: 250,
+              minHeight: 252,
+              maxHeight: 252,
               child: Column(
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 8.0, right: 8),
                     child: SizedBox(
-                      height: 40,
+                      height: 50,
                       width: double.infinity,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -394,7 +394,7 @@ class _ResturentDetailsScreenState extends State<ResturentDetailsScreen> {
                                 fontWeight: FontWeight.bold, fontSize: 20),
                           ),
                           SizedBox(
-                            height: 60,
+                            height: 50,
                             width: 50,
                             child: Card(
                               clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -689,22 +689,7 @@ class _ResturentDetailsScreenState extends State<ResturentDetailsScreen> {
                         Column(
                           children: [
                             RaisedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            ResturentImagesScreen(
-                                                widget.userid)));
-                              },
-                              child:
-                                  Text("Food (" + food.length.toString() + ")"),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            RaisedButton(
+                              color: Colors.blue,
                               onPressed: () {
                                 Navigator.push(
                                     context,
@@ -714,13 +699,16 @@ class _ResturentDetailsScreenState extends State<ResturentDetailsScreen> {
                                                 widget.userid)));
                               },
                               child: Text(
-                                  "Ambience (" + amb.length.toString() + ")"),
+                                "Food (" + food.length.toString() + ")",
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ),
                           ],
                         ),
                         Column(
                           children: [
                             RaisedButton(
+                              color: Colors.blue,
                               onPressed: () {
                                 Navigator.push(
                                     context,
@@ -729,8 +717,29 @@ class _ResturentDetailsScreenState extends State<ResturentDetailsScreen> {
                                             ResturentImagesScreen(
                                                 widget.userid)));
                               },
-                              child:
-                                  Text("Menu (" + img.length.toString() + ")"),
+                              child: Text(
+                                "Ambience (" + amb.length.toString() + ")",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            RaisedButton(
+                              color: Colors.blue,
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ResturentImagesScreen(
+                                                widget.userid)));
+                              },
+                              child: Text(
+                                "Menu (" + img.length.toString() + ")",
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ),
                           ],
                         ),
@@ -740,22 +749,25 @@ class _ResturentDetailsScreenState extends State<ResturentDetailsScreen> {
                 delegate: SliverAppBarDelegate(
                     minHeight: 150,
                     maxHeight: 150,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "About Restaurant",
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ],
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "About Restaurant",
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ))),
           ],
         ),

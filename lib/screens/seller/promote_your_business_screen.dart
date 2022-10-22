@@ -68,44 +68,53 @@ class _PromoteYourBusinessScreenState extends State<PromoteYourBusinessScreen> {
                     height: 300,
                     width: double.infinity,
                     color: Colors.blue,
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.only(top: 50, left: 15, right: 15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          top: 15,
+                          left: 15,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Icon(
+                              Icons.arrow_back,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 50, left: 15, right: 15),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              InkWell(
-                                onTap: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Icon(
-                                  Icons.arrow_back,
-                                  color: Colors.white,
-                                ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Text(
+                                    "PROMOTE YOUR\nSTORE & BOOST\nLISTING",
+                                    style: TextStyle(
+                                        fontSize: 22,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontStyle: FontStyle.italic,
+                                        height: 1.5),
+                                  ),
+                                  SizedBox(
+                                    height: 140,
+                                    width: 140,
+                                    child: Image.asset(
+                                      "images/advimg4.png",
+                                    ),
+                                  )
+                                ],
                               ),
-                              Text(
-                                "PROMOTE YOUR\nSTORE & BOOST\nLISTING",
-                                style: TextStyle(
-                                    fontSize: 22,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontStyle: FontStyle.italic,
-                                    height: 1.5),
-                              ),
-                              SizedBox(
-                                height: 140,
-                                width: 140,
-                                child: Image.asset(
-                                  "images/advimg4.png",
-                                ),
-                              )
                             ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                   Center(
@@ -203,15 +212,15 @@ class _PromoteYourBusinessScreenState extends State<PromoteYourBusinessScreen> {
                                   width: 300,
                                   child: RaisedButton(
                                     onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  AdPlanScreen()));
+                                      //Navigator.push(
+                                      //   context,
+                                      // MaterialPageRoute(
+                                      //   builder: (context) =>
+                                      //     AdPlanScreen()));
                                     },
                                     color: Colors.blue,
                                     child: Text(
-                                      "View Plans",
+                                      "Comming Soon",
                                       style: TextStyle(
                                           fontSize: 18, color: Colors.white),
                                     ),

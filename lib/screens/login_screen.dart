@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -11,6 +12,8 @@ import 'package:oim/screens/seller/seller_account_create_screen.dart';
 import 'package:oim/screens/seller/seller_bottom_appbar.dart';
 import 'package:oim/screens/user/user_bottom_appbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'common/forgot_password_otp_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -182,6 +185,24 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  void mobileNoCheck() async {
+    if (txt_mobileno.text != "") {
+      if (txt_mobileno.text.length == 10) {
+        var rng = new Random();
+        var code = rng.nextInt(9000) + 1000;
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    ForgotPasswordOTPScreen(txt_mobileno.text, code)));
+      } else {
+        showInSnackBar("Mobile No Should Be 10 Digits");
+      }
+    } else {
+      showInSnackBar("Please Enter Mobile No");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -192,7 +213,7 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                height: 10,
+                height: 50,
               ),
               Image.asset(
                 "images/login.png",
@@ -252,10 +273,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Container(
                 child: InkWell(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ForgotPasswordScreen()));
+                    mobileNoCheck();
                   },
                   child: Text(
                     "Forgot Password?",

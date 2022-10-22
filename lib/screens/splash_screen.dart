@@ -53,13 +53,19 @@ class _SplashScreenState extends State<SplashScreen> {
         } else {
           if (preferences.getString("businesscategory") == "Restaurant") {
             Timer(
-                Duration(seconds: 3), () =>
-                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder:
-                    (BuildContext context) => RestSellerBottomAppBar()),
+                Duration(seconds: 3),
+                () => Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            RestSellerBottomAppBar()),
                     (Route<dynamic> route) => false));
           } else {
-            Timer(Duration(seconds: 3), () => Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (BuildContext context) => SellerBottomAppBar()),
+            Timer(
+                Duration(seconds: 3),
+                () => Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            SellerBottomAppBar()),
                     (Route<dynamic> route) => false));
           }
         }
@@ -77,14 +83,14 @@ class _SplashScreenState extends State<SplashScreen> {
             Expanded(
               child: Center(
                   child: Image.asset(
-                "images/splash_logo.png",
+                "images/logo_sp.png",
                 height: 180,
               )),
             ),
             Padding(
                 padding: const EdgeInsets.only(bottom: 18.0),
                 child: Image.asset(
-                  "images/indian_flag.png",
+                  "images/flag.png",
                   height: 40,
                 ))
           ],

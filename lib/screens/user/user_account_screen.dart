@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oim/constants/constant.dart';
+import 'package:oim/constants/urls.dart';
 import 'package:oim/screens/flash_screen.dart';
 import 'package:oim/screens/seller/app_settings_screen.dart';
 import 'package:oim/screens/seller/seller_help_center.dart';
@@ -9,6 +12,8 @@ import 'package:oim/screens/user/user_hep_center_screen.dart';
 import 'package:oim/screens/user/user_profile_screen.dart';
 import 'package:oim/screens/user/user_support_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 class UserAccountScreen extends StatefulWidget {
   const UserAccountScreen({Key? key}) : super(key: key);
@@ -20,26 +25,28 @@ class UserAccountScreen extends StatefulWidget {
 class _UserAccountScreenState extends State<UserAccountScreen> {
   String name = "";
   int noofunreadnotifications = 0;
+
   void getUserDetails() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       name = preferences.getString("name")!;
     });
-
-    if ((preferences.getString("noofreadnotifications") ?? "") == "") {
-      setState(() {
-        noofunreadnotifications =
-            int.parse(preferences.getInt("noofnotifications").toString());
-      });
-    } else {
-      int noofreadnotifications =
-          int.parse(preferences.getString("noofreadnotifications").toString());
-      int noofnotifications =
-          int.parse(preferences.getInt("noofnotifications").toString());
-      setState(() {
-        noofunreadnotifications = noofnotifications - noofreadnotifications;
-      });
-    }
+    var nencoded = Uri.parse(
+        getunseennotifications + preferences.getString("userid").toString());
+    http.get(nencoded).then((resp) {
+      if (resp.statusCode == 200) {
+        Map mnjson;
+        mnjson = json.decode(resp.body);
+        print("8778678437898877549889989898899889989889");
+        print(getunseennotifications +
+            preferences.getString("userid").toString());
+        print(mnjson);
+        setState(() {
+          noofunreadnotifications = mnjson["data"]["notifications"].length;
+        });
+        print(noofunreadnotifications);
+      }
+    });
   }
 
   @override
@@ -264,36 +271,46 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                     ),
                   ),
                 ),
-                Container(
-                  height: 60,
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Row(
-                      children: [
-                        Image.asset("images/4.jpeg"),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          "Rate Us",
-                          style: TextStyle(
-                            fontSize: 16,
+                InkWell(
+                  onTap: () async {
+                    String googleUrl =
+                        'https://play.google.com/store/apps/details?id=com.oim.android';
+
+                    print(googleUrl);
+
+                    await launch(googleUrl);
+                  },
+                  child: Container(
+                    height: 60,
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Row(
+                        children: [
+                          Image.asset("images/4.jpeg"),
+                          SizedBox(
+                            width: 10,
                           ),
-                        ),
-                        Expanded(
-                            child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            InkWell(
-                              child: Icon(
-                                Icons.keyboard_arrow_right,
-                                color: Colors.grey,
-                              ),
-                            )
-                          ],
-                        ))
-                      ],
+                          Text(
+                            "Rate Us",
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
+                          ),
+                          Expanded(
+                              child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              InkWell(
+                                child: Icon(
+                                  Icons.keyboard_arrow_right,
+                                  color: Colors.grey,
+                                ),
+                              )
+                            ],
+                          ))
+                        ],
+                      ),
                     ),
                   ),
                 ),

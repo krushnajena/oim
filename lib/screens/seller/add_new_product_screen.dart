@@ -79,10 +79,38 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
   void _pickImage1(String from) async {
     if (from == "gallery") {
       final pickedImageFile =
-          await ImagePicker().pickImage(source: ImageSource.gallery);
-      setState(() {
-        _pickedImage1 = File(pickedImageFile!.path.toString());
-      });
+          await ImagePicker().pickMultiImage(imageQuality: 7);
+      for (int i = 0; i < pickedImageFile!.length; i++) {
+        if (i == 0) {
+          setState(() {
+            _pickedImage1 = File(pickedImageFile[i].path.toString());
+          });
+        } else if (i == 1) {
+          setState(() {
+            _pickedImage2 = File(pickedImageFile[i].path.toString());
+          });
+        } else if (i == 2) {
+          setState(() {
+            _pickedImage3 = File(pickedImageFile[i].path.toString());
+          });
+        } else if (i == 3) {
+          setState(() {
+            _pickedImage4 = File(pickedImageFile[i].path.toString());
+          });
+        } else if (i == 4) {
+          setState(() {
+            _pickedImage5 = File(pickedImageFile[i].path.toString());
+          });
+        } else if (i == 5) {
+          setState(() {
+            _pickedImage6 = File(pickedImageFile[i].path.toString());
+          });
+        } else if (i == 6) {
+          setState(() {
+            _pickedImage7 = File(pickedImageFile[i].path.toString());
+          });
+        }
+      }
     } else {
       final pickedImageFile =
           await ImagePicker().pickImage(source: ImageSource.camera);
@@ -95,10 +123,34 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
   void _pickImage2(String from) async {
     if (from == "gallery") {
       final pickedImageFile =
-          await ImagePicker().pickImage(source: ImageSource.gallery);
-      setState(() {
-        _pickedImage2 = File(pickedImageFile!.path.toString());
-      });
+          await ImagePicker().pickMultiImage(imageQuality: 6);
+      for (int i = 0; i < pickedImageFile!.length; i++) {
+        if (i == 0) {
+          setState(() {
+            _pickedImage2 = File(pickedImageFile[i].path.toString());
+          });
+        } else if (i == 1) {
+          setState(() {
+            _pickedImage3 = File(pickedImageFile[i].path.toString());
+          });
+        } else if (i == 2) {
+          setState(() {
+            _pickedImage4 = File(pickedImageFile[i].path.toString());
+          });
+        } else if (i == 3) {
+          setState(() {
+            _pickedImage5 = File(pickedImageFile[i].path.toString());
+          });
+        } else if (i == 4) {
+          setState(() {
+            _pickedImage6 = File(pickedImageFile[i].path.toString());
+          });
+        } else if (i == 5) {
+          setState(() {
+            _pickedImage7 = File(pickedImageFile[i].path.toString());
+          });
+        }
+      }
     } else {
       final pickedImageFile =
           await ImagePicker().pickImage(source: ImageSource.camera);
@@ -111,10 +163,30 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
   void _pickImage3(String from) async {
     if (from == "gallery") {
       final pickedImageFile =
-          await ImagePicker().pickImage(source: ImageSource.gallery);
-      setState(() {
-        _pickedImage3 = File(pickedImageFile!.path.toString());
-      });
+          await ImagePicker().pickMultiImage(imageQuality: 5);
+      for (int i = 0; i < pickedImageFile!.length; i++) {
+        if (i == 0) {
+          setState(() {
+            _pickedImage3 = File(pickedImageFile[i].path.toString());
+          });
+        } else if (i == 1) {
+          setState(() {
+            _pickedImage4 = File(pickedImageFile[i].path.toString());
+          });
+        } else if (i == 2) {
+          setState(() {
+            _pickedImage5 = File(pickedImageFile[i].path.toString());
+          });
+        } else if (i == 3) {
+          setState(() {
+            _pickedImage6 = File(pickedImageFile[i].path.toString());
+          });
+        } else if (i == 4) {
+          setState(() {
+            _pickedImage7 = File(pickedImageFile[i].path.toString());
+          });
+        }
+      }
     } else {
       final pickedImageFile =
           await ImagePicker().pickImage(source: ImageSource.camera);
@@ -127,10 +199,26 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
   void _pickImage4(String from) async {
     if (from == "gallery") {
       final pickedImageFile =
-          await ImagePicker().pickImage(source: ImageSource.gallery);
-      setState(() {
-        _pickedImage4 = File(pickedImageFile!.path.toString());
-      });
+          await ImagePicker().pickMultiImage(imageQuality: 4);
+      for (int i = 0; i < pickedImageFile!.length; i++) {
+        if (i == 0) {
+          setState(() {
+            _pickedImage4 = File(pickedImageFile[i].path.toString());
+          });
+        } else if (i == 1) {
+          setState(() {
+            _pickedImage5 = File(pickedImageFile[i].path.toString());
+          });
+        } else if (i == 2) {
+          setState(() {
+            _pickedImage6 = File(pickedImageFile[i].path.toString());
+          });
+        } else if (i == 3) {
+          setState(() {
+            _pickedImage7 = File(pickedImageFile[i].path.toString());
+          });
+        }
+      }
     } else {
       final pickedImageFile =
           await ImagePicker().pickImage(source: ImageSource.camera);
@@ -143,10 +231,22 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
   void _pickImage5(String from) async {
     if (from == "gallery") {
       final pickedImageFile =
-          await ImagePicker().pickImage(source: ImageSource.gallery);
-      setState(() {
-        _pickedImage5 = File(pickedImageFile!.path.toString());
-      });
+          await ImagePicker().pickMultiImage(imageQuality: 3);
+      for (int i = 0; i < pickedImageFile!.length; i++) {
+        if (i == 0) {
+          setState(() {
+            _pickedImage5 = File(pickedImageFile[i].path.toString());
+          });
+        } else if (i == 1) {
+          setState(() {
+            _pickedImage6 = File(pickedImageFile[i].path.toString());
+          });
+        } else if (i == 2) {
+          setState(() {
+            _pickedImage7 = File(pickedImageFile[i].path.toString());
+          });
+        }
+      }
     } else {
       final pickedImageFile =
           await ImagePicker().pickImage(source: ImageSource.camera);
@@ -159,10 +259,18 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
   void _pickImage6(String from) async {
     if (from == "gallery") {
       final pickedImageFile =
-          await ImagePicker().pickImage(source: ImageSource.gallery);
-      setState(() {
-        _pickedImage6 = File(pickedImageFile!.path.toString());
-      });
+          await ImagePicker().pickMultiImage(imageQuality: 2);
+      for (int i = 0; i < pickedImageFile!.length; i++) {
+        if (i == 0) {
+          setState(() {
+            _pickedImage6 = File(pickedImageFile[i].path.toString());
+          });
+        } else if (i == 1) {
+          setState(() {
+            _pickedImage7 = File(pickedImageFile[i].path.toString());
+          });
+        }
+      }
     } else {
       final pickedImageFile =
           await ImagePicker().pickImage(source: ImageSource.camera);
@@ -437,7 +545,6 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     double deviceHeight = MediaQuery.of(context).size.height;
     double deviceWidth = MediaQuery.of(context).size.width;
 
@@ -449,7 +556,6 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
@@ -457,9 +563,7 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                 children: [
                   Container(
                     height: 80,
-
-                    child:
-                    Align(
+                    child: Align(
                       alignment: Alignment(-1.60, 0),
                       child: ListView(
                         scrollDirection: Axis.horizontal,
@@ -467,475 +571,508 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                         children: [
                           _pickedImage6 != null
                               ? _pickedImage7 == null
-                              ? InkWell(
-                            onTap: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  builder: (context) {
-                                    return Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        ListTile(
-                                          leading: new Icon(Icons.photo),
-                                          title: new Text('Gallery'),
-                                          onTap: () {
-                                            Navigator.pop(context);
-                                            _pickImage7("gallery");
-                                          },
+                                  ? InkWell(
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                            context: context,
+                                            builder: (context) {
+                                              return Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: <Widget>[
+                                                  ListTile(
+                                                    leading:
+                                                        new Icon(Icons.photo),
+                                                    title: new Text('Gallery'),
+                                                    onTap: () {
+                                                      Navigator.pop(context);
+                                                      _pickImage7("gallery");
+                                                    },
+                                                  ),
+                                                  ListTile(
+                                                    leading: new Icon(
+                                                        Icons.videocam),
+                                                    title: new Text('Camera'),
+                                                    onTap: () {
+                                                      Navigator.pop(context);
+                                                      _pickImage7("camera");
+                                                    },
+                                                  ),
+                                                ],
+                                              );
+                                            });
+                                      },
+                                      child: Container(
+                                        height: 100,
+                                        width: 100,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color: Colors.black12,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
                                         ),
-                                        ListTile(
-                                          leading: new Icon(Icons.videocam),
-                                          title: new Text('Camera'),
-                                          onTap: () {
-                                            Navigator.pop(context);
-                                            _pickImage7("camera");
-                                          },
+                                        child: Center(
+                                            child: Icon(
+                                          Icons.camera_alt_outlined,
+                                          color: Colors.grey,
+                                        )),
+                                      ),
+                                    )
+                                  : InkWell(
+                                      onTap: () {},
+                                      child: Container(
+                                        height: 100,
+                                        width: 100,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color: Colors.black12,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
                                         ),
-                                      ],
-                                    );
-                                  });
-                            },
-                            child: Container(
-                              height: 100,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.black12,
-                                ),
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              child: Center(
-                                  child: Icon(
-                                    Icons.camera_alt_outlined,
-                                    color: Colors.grey,
-                                  )),
-                            ),
-                          )
-                              : InkWell(
-                            onTap: () {},
-                            child: Container(
-                              height: 100,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.black12,
-                                ),
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              child: Center(
-                                  child: Image.file(
-                                    File(_pickedImage7!.path.toString()),
-                                  )),
-                            ),
-                          )
+                                        child: Center(
+                                            child: Image.file(
+                                          File(_pickedImage7!.path.toString()),
+                                        )),
+                                      ),
+                                    )
                               : SizedBox(),
-                          SizedBox(width: 10,),
+                          SizedBox(
+                            width: 10,
+                          ),
                           _pickedImage5 != null
                               ? _pickedImage6 == null
-                              ? InkWell(
-                            onTap: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  builder: (context) {
-                                    return Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        ListTile(
-                                          leading: new Icon(Icons.photo),
-                                          title: new Text('Gallery'),
-                                          onTap: () {
-                                            Navigator.pop(context);
-                                            _pickImage6("gallery");
-                                          },
+                                  ? InkWell(
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                            context: context,
+                                            builder: (context) {
+                                              return Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: <Widget>[
+                                                  ListTile(
+                                                    leading:
+                                                        new Icon(Icons.photo),
+                                                    title: new Text('Gallery'),
+                                                    onTap: () {
+                                                      Navigator.pop(context);
+                                                      _pickImage6("gallery");
+                                                    },
+                                                  ),
+                                                  ListTile(
+                                                    leading: new Icon(
+                                                        Icons.videocam),
+                                                    title: new Text('Camera'),
+                                                    onTap: () {
+                                                      Navigator.pop(context);
+                                                      _pickImage6("camera");
+                                                    },
+                                                  ),
+                                                ],
+                                              );
+                                            });
+                                      },
+                                      child: Container(
+                                        height: 100,
+                                        width: 100,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color: Colors.black12,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
                                         ),
-                                        ListTile(
-                                          leading: new Icon(Icons.videocam),
-                                          title: new Text('Camera'),
-                                          onTap: () {
-                                            Navigator.pop(context);
-                                            _pickImage6("camera");
-                                          },
+                                        child: Center(
+                                            child: Icon(
+                                          Icons.camera_alt_outlined,
+                                          color: Colors.grey,
+                                        )),
+                                      ),
+                                    )
+                                  : InkWell(
+                                      onTap: () {},
+                                      child: Container(
+                                        height: 100,
+                                        width: 100,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color: Colors.black12,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
                                         ),
-                                      ],
-                                    );
-                                  });
-                            },
-                            child: Container(
-                              height: 100,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.black12,
-                                ),
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              child: Center(
-                                  child: Icon(
-                                    Icons.camera_alt_outlined,
-                                    color: Colors.grey,
-                                  )),
-                            ),
-                          )
-                              : InkWell(
-                            onTap: () {},
-                            child: Container(
-                              height: 100,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.black12,
-                                ),
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              child: Center(
-                                  child: Image.file(
-                                    File(_pickedImage6!.path.toString()),
-                                  )),
-                            ),
-                          )
+                                        child: Center(
+                                            child: Image.file(
+                                          File(_pickedImage6!.path.toString()),
+                                        )),
+                                      ),
+                                    )
                               : SizedBox(),
                           SizedBox(
                             width: 10,
                           ),
                           _pickedImage4 != null
                               ? _pickedImage5 == null
-                              ? InkWell(
-                            onTap: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  builder: (context) {
-                                    return Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        ListTile(
-                                          leading: new Icon(Icons.photo),
-                                          title: new Text('Gallery'),
-                                          onTap: () {
-                                            Navigator.pop(context);
-                                            _pickImage5("gallery");
-                                          },
+                                  ? InkWell(
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                            context: context,
+                                            builder: (context) {
+                                              return Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: <Widget>[
+                                                  ListTile(
+                                                    leading:
+                                                        new Icon(Icons.photo),
+                                                    title: new Text('Gallery'),
+                                                    onTap: () {
+                                                      Navigator.pop(context);
+                                                      _pickImage5("gallery");
+                                                    },
+                                                  ),
+                                                  ListTile(
+                                                    leading: new Icon(
+                                                        Icons.videocam),
+                                                    title: new Text('Camera'),
+                                                    onTap: () {
+                                                      Navigator.pop(context);
+                                                      _pickImage5("camera");
+                                                    },
+                                                  ),
+                                                ],
+                                              );
+                                            });
+                                      },
+                                      child: Container(
+                                        height: 100,
+                                        width: 100,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color: Colors.black12,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
                                         ),
-                                        ListTile(
-                                          leading: new Icon(Icons.videocam),
-                                          title: new Text('Camera'),
-                                          onTap: () {
-                                            Navigator.pop(context);
-                                            _pickImage5("camera");
-                                          },
+                                        child: Center(
+                                            child: Icon(
+                                          Icons.camera_alt_outlined,
+                                          color: Colors.grey,
+                                        )),
+                                      ),
+                                    )
+                                  : InkWell(
+                                      onTap: () {},
+                                      child: Container(
+                                        height: 100,
+                                        width: 100,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color: Colors.black12,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
                                         ),
-                                      ],
-                                    );
-                                  });
-                            },
-                            child: Container(
-                              height: 100,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.black12,
-                                ),
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              child: Center(
-                                  child: Icon(
-                                    Icons.camera_alt_outlined,
-                                    color: Colors.grey,
-                                  )),
-                            ),
-                          )
-                              : InkWell(
-                            onTap: () {},
-                            child: Container(
-                              height: 100,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.black12,
-                                ),
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              child: Center(
-                                  child: Image.file(
-                                    File(_pickedImage5!.path.toString()),
-                                  )),
-                            ),
-                          )
+                                        child: Center(
+                                            child: Image.file(
+                                          File(_pickedImage5!.path.toString()),
+                                        )),
+                                      ),
+                                    )
                               : SizedBox(),
                           SizedBox(
                             width: 10,
                           ),
                           _pickedImage3 != null
                               ? _pickedImage4 == null
-                              ? InkWell(
-                            onTap: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  builder: (context) {
-                                    return Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        ListTile(
-                                          leading: new Icon(Icons.photo),
-                                          title: new Text('Gallery'),
-                                          onTap: () {
-                                            Navigator.pop(context);
-                                            _pickImage4("gallery");
-                                          },
+                                  ? InkWell(
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                            context: context,
+                                            builder: (context) {
+                                              return Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: <Widget>[
+                                                  ListTile(
+                                                    leading:
+                                                        new Icon(Icons.photo),
+                                                    title: new Text('Gallery'),
+                                                    onTap: () {
+                                                      Navigator.pop(context);
+                                                      _pickImage4("gallery");
+                                                    },
+                                                  ),
+                                                  ListTile(
+                                                    leading: new Icon(
+                                                        Icons.videocam),
+                                                    title: new Text('Camera'),
+                                                    onTap: () {
+                                                      Navigator.pop(context);
+                                                      _pickImage4("camera");
+                                                    },
+                                                  ),
+                                                ],
+                                              );
+                                            });
+                                      },
+                                      child: Container(
+                                        height: 100,
+                                        width: 100,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color: Colors.black12,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
                                         ),
-                                        ListTile(
-                                          leading: new Icon(Icons.videocam),
-                                          title: new Text('Camera'),
-                                          onTap: () {
-                                            Navigator.pop(context);
-                                            _pickImage4("camera");
-                                          },
+                                        child: Center(
+                                            child: Icon(
+                                          Icons.camera_alt_outlined,
+                                          color: Colors.grey,
+                                        )),
+                                      ),
+                                    )
+                                  : InkWell(
+                                      onTap: () {},
+                                      child: Container(
+                                        height: 100,
+                                        width: 100,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color: Colors.black12,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
                                         ),
-                                      ],
-                                    );
-                                  });
-                            },
-                            child: Container(
-                              height: 100,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.black12,
-                                ),
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              child: Center(
-                                  child: Icon(
-                                    Icons.camera_alt_outlined,
-                                    color: Colors.grey,
-                                  )),
-                            ),
-                          )
-                              : InkWell(
-                            onTap: () {},
-                            child: Container(
-                              height: 100,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.black12,
-                                ),
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              child: Center(
-                                  child: Image.file(
-                                    File(_pickedImage4!.path.toString()),
-                                  )),
-                            ),
-                          )
+                                        child: Center(
+                                            child: Image.file(
+                                          File(_pickedImage4!.path.toString()),
+                                        )),
+                                      ),
+                                    )
                               : SizedBox(),
                           SizedBox(
                             width: 10,
                           ),
                           _pickedImage2 != null
                               ? _pickedImage3 == null
-                              ? InkWell(
-                            onTap: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  builder: (context) {
-                                    return Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        ListTile(
-                                          leading: new Icon(Icons.photo),
-                                          title: new Text('Gallery'),
-                                          onTap: () {
-                                            Navigator.pop(context);
-                                            _pickImage3("gallery");
-                                          },
+                                  ? InkWell(
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                            context: context,
+                                            builder: (context) {
+                                              return Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: <Widget>[
+                                                  ListTile(
+                                                    leading:
+                                                        new Icon(Icons.photo),
+                                                    title: new Text('Gallery'),
+                                                    onTap: () {
+                                                      Navigator.pop(context);
+                                                      _pickImage3("gallery");
+                                                    },
+                                                  ),
+                                                  ListTile(
+                                                    leading: new Icon(
+                                                        Icons.videocam),
+                                                    title: new Text('Camera'),
+                                                    onTap: () {
+                                                      Navigator.pop(context);
+                                                      _pickImage3("camera");
+                                                    },
+                                                  ),
+                                                ],
+                                              );
+                                            });
+                                      },
+                                      child: Container(
+                                        height: 100,
+                                        width: 100,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color: Colors.black12,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
                                         ),
-                                        ListTile(
-                                          leading: new Icon(Icons.videocam),
-                                          title: new Text('Camera'),
-                                          onTap: () {
-                                            Navigator.pop(context);
-                                            _pickImage3("camera");
-                                          },
+                                        child: Center(
+                                            child: Icon(
+                                          Icons.camera_alt_outlined,
+                                          color: Colors.grey,
+                                        )),
+                                      ),
+                                    )
+                                  : InkWell(
+                                      onTap: () {},
+                                      child: Container(
+                                        height: 100,
+                                        width: 100,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color: Colors.black12,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
                                         ),
-                                      ],
-                                    );
-                                  });
-                            },
-                            child: Container(
-                              height: 100,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.black12,
-                                ),
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              child: Center(
-                                  child: Icon(
-                                    Icons.camera_alt_outlined,
-                                    color: Colors.grey,
-                                  )),
-                            ),
-                          )
-                              : InkWell(
-                            onTap: () {},
-                            child: Container(
-                              height: 100,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.black12,
-                                ),
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              child: Center(
-                                  child: Image.file(
-                                    File(_pickedImage3!.path.toString()),
-                                  )),
-                            ),
-                          )
+                                        child: Center(
+                                            child: Image.file(
+                                          File(_pickedImage3!.path.toString()),
+                                        )),
+                                      ),
+                                    )
                               : SizedBox(),
-                          SizedBox(width: 10,),
+                          SizedBox(
+                            width: 10,
+                          ),
                           _pickedImage1 != null
                               ? _pickedImage2 == null
-                              ? InkWell(
-                            onTap: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  builder: (context) {
-                                    return Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        ListTile(
-                                          leading: new Icon(Icons.photo),
-                                          title: new Text('Gallery'),
-                                          onTap: () {
-                                            Navigator.pop(context);
-                                            _pickImage2("gallery");
-                                          },
+                                  ? InkWell(
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                            context: context,
+                                            builder: (context) {
+                                              return Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: <Widget>[
+                                                  ListTile(
+                                                    leading:
+                                                        new Icon(Icons.photo),
+                                                    title: new Text('Gallery'),
+                                                    onTap: () {
+                                                      Navigator.pop(context);
+                                                      _pickImage2("gallery");
+                                                    },
+                                                  ),
+                                                  ListTile(
+                                                    leading: new Icon(
+                                                        Icons.videocam),
+                                                    title: new Text('Camera'),
+                                                    onTap: () {
+                                                      Navigator.pop(context);
+                                                      _pickImage2("camera");
+                                                    },
+                                                  ),
+                                                ],
+                                              );
+                                            });
+                                      },
+                                      child: Container(
+                                        height: 100,
+                                        width: 100,
+                                        decoration: BoxDecoration(
+                                          //color: Colors.grey,
+                                          border: Border.all(
+                                            color: Colors.black12,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
                                         ),
-                                        ListTile(
-                                          leading: new Icon(Icons.videocam),
-                                          title: new Text('Camera'),
-                                          onTap: () {
-                                            Navigator.pop(context);
-                                            _pickImage2("camera");
-                                          },
+                                        child: Stack(
+                                          children: [
+                                            Text("Main Image"),
+                                            Center(
+                                                child: Icon(
+                                              Icons.camera_alt_outlined,
+                                              color: Colors.grey,
+                                            )),
+                                          ],
                                         ),
-                                      ],
-                                    );
-                                  });
-                            },
-                            child: Container(
-                              height: 100,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                //color: Colors.grey,
-                                border: Border.all(
-                                  color: Colors.black12,
-                                ),
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              child: Stack(
-                                children: [
-                                  Text("Main Image"),
-                                  Center(
-                                      child: Icon(
-                                        Icons.camera_alt_outlined,
-                                        color: Colors.grey,
-                                      )),
-                                ],
-                              ),
-                            ),
-                          )
-                              : InkWell(
-                            onTap: () {},
-                            child: Container(
-                              height: 100,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.black12,
-                                ),
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              child: Center(
-                                  child: Image.file(
-                                    File(_pickedImage2!.path.toString()),
-                                  )),
-                            ),
-                          )
+                                      ),
+                                    )
+                                  : InkWell(
+                                      onTap: () {},
+                                      child: Container(
+                                        height: 100,
+                                        width: 100,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color: Colors.black12,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        ),
+                                        child: Center(
+                                            child: Image.file(
+                                          File(_pickedImage2!.path.toString()),
+                                        )),
+                                      ),
+                                    )
                               : SizedBox(),
-                          SizedBox(width: 10,),
-
+                          SizedBox(
+                            width: 10,
+                          ),
                           _pickedImage1 == null
                               ? InkWell(
-                            onTap: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  builder: (context) {
-                                    return Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        ListTile(
-                                          leading: new Icon(Icons.photo),
-                                          title: new Text('Gallery'),
-                                          onTap: () {
-                                            Navigator.pop(context);
-                                            _pickImage1("gallery");
-                                          },
-                                        ),
-                                        ListTile(
-                                          leading: new Icon(Icons.videocam),
-                                          title: new Text('Camera'),
-                                          onTap: () {
-                                            Navigator.pop(context);
-                                            _pickImage1("camera");
-                                          },
-                                        ),
-                                      ],
-                                    );
-                                  });
-                            },
-                            child: Container(
-                              height: 100,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.black12,
-                                ),
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              child: Icon(
-                                Icons.camera_alt_outlined,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          )
+                                  onTap: () {
+                                    showModalBottomSheet(
+                                        context: context,
+                                        builder: (context) {
+                                          return Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: <Widget>[
+                                              ListTile(
+                                                leading: new Icon(Icons.photo),
+                                                title: new Text('Gallery'),
+                                                onTap: () {
+                                                  Navigator.pop(context);
+                                                  _pickImage1("gallery");
+                                                },
+                                              ),
+                                              ListTile(
+                                                leading:
+                                                    new Icon(Icons.videocam),
+                                                title: new Text('Camera'),
+                                                onTap: () {
+                                                  Navigator.pop(context);
+                                                  _pickImage1("camera");
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        });
+                                  },
+                                  child: Container(
+                                    height: 100,
+                                    width: 100,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Colors.black12,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    child: Icon(
+                                      Icons.camera_alt_outlined,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                )
                               : InkWell(
-                            onTap: () {},
-                            child: Container(
-                              height: 100,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.black12,
+                                  onTap: () {},
+                                  child: Container(
+                                    height: 100,
+                                    width: 100,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Colors.black12,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    child: Center(
+                                        child: Image.file(
+                                      File(_pickedImage1!.path.toString()),
+                                    )),
+                                  ),
                                 ),
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              child: Center(
-                                  child: Image.file(
-                                    File(_pickedImage1!.path.toString()),
-                                  )),
-                            ),
-                          ),
                           SizedBox(width: 10),
                         ],
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10,),
-                  const Text("You can add 7 images.",
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Text(
+                    "You can add 7 images.",
                     style: TextStyle(color: Colors.black38, fontSize: 16),
                   ),
                   TextFormField(
@@ -972,14 +1109,15 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                           child: Column(
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     categoryname == ""
                                         ? "Select Category"
                                         : catelogName + '/' + categoryname,
-                                    style:
-                                        TextStyle(color: Colors.grey, fontSize: 16),
+                                    style: TextStyle(
+                                        color: Colors.grey, fontSize: 16),
                                   ),
                                   InkWell(
                                       onTap: () async {
@@ -1045,8 +1183,8 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                                   Text('MRP '),
                                   Text(
                                     "*",
-                                    style:
-                                        TextStyle(color: Colors.red, fontSize: 20),
+                                    style: TextStyle(
+                                        color: Colors.red, fontSize: 20),
                                   ),
                                 ],
                               ),
@@ -1079,8 +1217,8 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                                   Text('Discounted Price '),
                                   Text(
                                     "*",
-                                    style:
-                                        TextStyle(color: Colors.red, fontSize: 20),
+                                    style: TextStyle(
+                                        color: Colors.red, fontSize: 20),
                                   ),
                                 ],
                               ),
@@ -1102,14 +1240,15 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                           child: Column(
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     selectedUnit == ""
                                         ? "Select Unit"
                                         : selectedUnit,
-                                    style:
-                                        TextStyle(color: Colors.grey, fontSize: 16),
+                                    style: TextStyle(
+                                        color: Colors.grey, fontSize: 16),
                                   ),
                                   InkWell(
                                       onTap: () {
@@ -1128,10 +1267,11 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: [
                                                   Padding(
-                                                    padding: const EdgeInsets.only(
-                                                        top: 30,
-                                                        left: 100,
-                                                        bottom: 10),
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 30,
+                                                            left: 100,
+                                                            bottom: 10),
                                                     child: Row(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
@@ -1142,11 +1282,13 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                                                           style: TextStyle(
                                                               fontSize: 18,
                                                               fontWeight:
-                                                                  FontWeight.w500),
+                                                                  FontWeight
+                                                                      .w500),
                                                         ),
                                                         InkWell(
                                                             onTap: () {
-                                                              Navigator.of(context)
+                                                              Navigator.of(
+                                                                      context)
                                                                   .pop();
                                                             },
                                                             child: Icon(Icons
@@ -1159,30 +1301,38 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                                                       InkWell(
                                                         onTap: () {
                                                           setState(() {
-                                                            selectedUnit = "piece";
+                                                            selectedUnit =
+                                                                "piece";
                                                           });
                                                           Navigator.of(context)
                                                               .pop();
                                                         },
                                                         child: Container(
-                                                          margin: EdgeInsets.only(
-                                                              top: 10, left: 10),
+                                                          margin:
+                                                              EdgeInsets.only(
+                                                                  top: 10,
+                                                                  left: 10),
                                                           height: 40,
                                                           width: 80,
-                                                          decoration: BoxDecoration(
-                                                            color: Colors.blue[50],
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color:
+                                                                Colors.blue[50],
                                                             border: Border.all(
-                                                              color: Colors.blue,
+                                                              color:
+                                                                  Colors.blue,
                                                             ),
                                                             borderRadius:
                                                                 BorderRadius
-                                                                    .circular(10.0),
+                                                                    .circular(
+                                                                        10.0),
                                                           ),
                                                           child: Center(
                                                               child: Text(
                                                             "piece",
                                                             style: TextStyle(
-                                                                color: Colors.blue),
+                                                                color: Colors
+                                                                    .blue),
                                                           )),
                                                         ),
                                                       ),
@@ -1196,21 +1346,26 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                                                               .pop();
                                                         },
                                                         child: Container(
-                                                          margin: EdgeInsets.only(
+                                                          margin:
+                                                              EdgeInsets.only(
                                                             top: 10,
                                                           ),
                                                           height: 40,
                                                           width: 80,
-                                                          decoration: BoxDecoration(
+                                                          decoration:
+                                                              BoxDecoration(
                                                             border: Border.all(
-                                                              color: Colors.black38,
+                                                              color: Colors
+                                                                  .black38,
                                                             ),
                                                             borderRadius:
                                                                 BorderRadius
-                                                                    .circular(10.0),
+                                                                    .circular(
+                                                                        10.0),
                                                           ),
                                                           child: Center(
-                                                              child: Text("gm")),
+                                                              child:
+                                                                  Text("gm")),
                                                         ),
                                                       ),
                                                       SizedBox(width: 10),
@@ -1223,48 +1378,59 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                                                               .pop();
                                                         },
                                                         child: Container(
-                                                          margin: EdgeInsets.only(
+                                                          margin:
+                                                              EdgeInsets.only(
                                                             top: 10,
                                                           ),
                                                           height: 40,
                                                           width: 80,
-                                                          decoration: BoxDecoration(
+                                                          decoration:
+                                                              BoxDecoration(
                                                             border: Border.all(
-                                                              color: Colors.black38,
+                                                              color: Colors
+                                                                  .black38,
                                                             ),
                                                             borderRadius:
                                                                 BorderRadius
-                                                                    .circular(10.0),
+                                                                    .circular(
+                                                                        10.0),
                                                           ),
                                                           child: Center(
-                                                              child: Text("ml")),
+                                                              child:
+                                                                  Text("ml")),
                                                         ),
                                                       ),
                                                       SizedBox(width: 10),
                                                       InkWell(
                                                         onTap: () {
                                                           setState(() {
-                                                            selectedUnit = "liter";
+                                                            selectedUnit =
+                                                                "liter";
                                                           });
                                                           Navigator.of(context)
                                                               .pop();
                                                         },
                                                         child: Container(
-                                                          margin: EdgeInsets.only(
+                                                          margin:
+                                                              EdgeInsets.only(
                                                             top: 10,
                                                           ),
                                                           height: 40,
                                                           width: 80,
-                                                          decoration: BoxDecoration(
+                                                          decoration:
+                                                              BoxDecoration(
                                                             border: Border.all(
-                                                              color: Colors.black38,
+                                                              color: Colors
+                                                                  .black38,
                                                             ),
                                                             borderRadius:
                                                                 BorderRadius
-                                                                    .circular(10.0),
+                                                                    .circular(
+                                                                        10.0),
                                                           ),
                                                           child: Center(
-                                                              child: Text("liter")),
+                                                              child: Text(
+                                                                  "liter")),
                                                         ),
                                                       ),
                                                     ],
@@ -1281,21 +1447,26 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                                                               .pop();
                                                         },
                                                         child: Container(
-                                                          margin: EdgeInsets.only(
+                                                          margin:
+                                                              EdgeInsets.only(
                                                             left: 10,
                                                           ),
                                                           height: 40,
                                                           width: 80,
-                                                          decoration: BoxDecoration(
+                                                          decoration:
+                                                              BoxDecoration(
                                                             border: Border.all(
-                                                              color: Colors.black38,
+                                                              color: Colors
+                                                                  .black38,
                                                             ),
                                                             borderRadius:
                                                                 BorderRadius
-                                                                    .circular(10.0),
+                                                                    .circular(
+                                                                        10.0),
                                                           ),
                                                           child: Center(
-                                                              child: Text("mm")),
+                                                              child:
+                                                                  Text("mm")),
                                                         ),
                                                       ),
                                                       SizedBox(width: 10),
@@ -1310,16 +1481,20 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                                                         child: Container(
                                                           height: 40,
                                                           width: 80,
-                                                          decoration: BoxDecoration(
+                                                          decoration:
+                                                              BoxDecoration(
                                                             border: Border.all(
-                                                              color: Colors.black38,
+                                                              color: Colors
+                                                                  .black38,
                                                             ),
                                                             borderRadius:
                                                                 BorderRadius
-                                                                    .circular(10.0),
+                                                                    .circular(
+                                                                        10.0),
                                                           ),
                                                           child: Center(
-                                                              child: Text("kg")),
+                                                              child:
+                                                                  Text("kg")),
                                                         ),
                                                       ),
                                                       SizedBox(width: 10),
@@ -1334,23 +1509,28 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                                                         child: Container(
                                                           height: 40,
                                                           width: 80,
-                                                          decoration: BoxDecoration(
+                                                          decoration:
+                                                              BoxDecoration(
                                                             border: Border.all(
-                                                              color: Colors.black38,
+                                                              color: Colors
+                                                                  .black38,
                                                             ),
                                                             borderRadius:
                                                                 BorderRadius
-                                                                    .circular(10.0),
+                                                                    .circular(
+                                                                        10.0),
                                                           ),
                                                           child: Center(
-                                                              child: Text("ft")),
+                                                              child:
+                                                                  Text("ft")),
                                                         ),
                                                       ),
                                                       SizedBox(width: 10),
                                                       InkWell(
                                                         onTap: () {
                                                           setState(() {
-                                                            selectedUnit = "meter";
+                                                            selectedUnit =
+                                                                "meter";
                                                           });
                                                           Navigator.of(context)
                                                               .pop();
@@ -1358,16 +1538,20 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                                                         child: Container(
                                                           height: 40,
                                                           width: 80,
-                                                          decoration: BoxDecoration(
+                                                          decoration:
+                                                              BoxDecoration(
                                                             border: Border.all(
-                                                              color: Colors.black38,
+                                                              color: Colors
+                                                                  .black38,
                                                             ),
                                                             borderRadius:
                                                                 BorderRadius
-                                                                    .circular(10.0),
+                                                                    .circular(
+                                                                        10.0),
                                                           ),
                                                           child: Center(
-                                                              child: Text("meter")),
+                                                              child: Text(
+                                                                  "meter")),
                                                         ),
                                                       ),
                                                     ],
@@ -1378,34 +1562,41 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                                                       InkWell(
                                                         onTap: () {
                                                           setState(() {
-                                                            selectedUnit = "sq.ft";
+                                                            selectedUnit =
+                                                                "sq.ft";
                                                           });
                                                           Navigator.of(context)
                                                               .pop();
                                                         },
                                                         child: Container(
-                                                          margin: EdgeInsets.only(
+                                                          margin:
+                                                              EdgeInsets.only(
                                                             left: 10,
                                                           ),
                                                           height: 40,
                                                           width: 80,
-                                                          decoration: BoxDecoration(
+                                                          decoration:
+                                                              BoxDecoration(
                                                             border: Border.all(
-                                                              color: Colors.black38,
+                                                              color: Colors
+                                                                  .black38,
                                                             ),
                                                             borderRadius:
                                                                 BorderRadius
-                                                                    .circular(10.0),
+                                                                    .circular(
+                                                                        10.0),
                                                           ),
                                                           child: Center(
-                                                              child: Text("sq.ft")),
+                                                              child: Text(
+                                                                  "sq.ft")),
                                                         ),
                                                       ),
                                                       SizedBox(width: 10),
                                                       InkWell(
                                                         onTap: () {
                                                           setState(() {
-                                                            selectedUnit = "set";
+                                                            selectedUnit =
+                                                                "set";
                                                           });
                                                           Navigator.of(context)
                                                               .pop();
@@ -1413,65 +1604,78 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                                                         child: Container(
                                                           height: 40,
                                                           width: 80,
-                                                          decoration: BoxDecoration(
+                                                          decoration:
+                                                              BoxDecoration(
                                                             border: Border.all(
-                                                              color: Colors.black38,
+                                                              color: Colors
+                                                                  .black38,
                                                             ),
                                                             borderRadius:
                                                                 BorderRadius
-                                                                    .circular(10.0),
-                                                          ),
-                                                          child: Center(
-                                                              child: Text("set")),
-                                                        ),
-                                                      ),
-                                                      SizedBox(width: 10),
-                                                      InkWell(
-                                                        onTap: () {
-                                                          setState(() {
-                                                            selectedUnit = "bunch";
-                                                          });
-                                                          Navigator.of(context)
-                                                              .pop();
-                                                        },
-                                                        child: Container(
-                                                          height: 40,
-                                                          width: 80,
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                              color: Colors.black38,
-                                                            ),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(10.0),
-                                                          ),
-                                                          child: Center(
-                                                              child: Text("bunch")),
-                                                        ),
-                                                      ),
-                                                      SizedBox(width: 10),
-                                                      InkWell(
-                                                        onTap: () {
-                                                          setState(() {
-                                                            selectedUnit = "bundle";
-                                                          });
-                                                          Navigator.of(context)
-                                                              .pop();
-                                                        },
-                                                        child: Container(
-                                                          height: 40,
-                                                          width: 80,
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                              color: Colors.black38,
-                                                            ),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(10.0),
+                                                                    .circular(
+                                                                        10.0),
                                                           ),
                                                           child: Center(
                                                               child:
-                                                                  Text("bundle")),
+                                                                  Text("set")),
+                                                        ),
+                                                      ),
+                                                      SizedBox(width: 10),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            selectedUnit =
+                                                                "bunch";
+                                                          });
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child: Container(
+                                                          height: 40,
+                                                          width: 80,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            border: Border.all(
+                                                              color: Colors
+                                                                  .black38,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10.0),
+                                                          ),
+                                                          child: Center(
+                                                              child: Text(
+                                                                  "bunch")),
+                                                        ),
+                                                      ),
+                                                      SizedBox(width: 10),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            selectedUnit =
+                                                                "bundle";
+                                                          });
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child: Container(
+                                                          height: 40,
+                                                          width: 80,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            border: Border.all(
+                                                              color: Colors
+                                                                  .black38,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10.0),
+                                                          ),
+                                                          child: Center(
+                                                              child: Text(
+                                                                  "bundle")),
                                                         ),
                                                       ),
                                                     ],
@@ -1482,35 +1686,70 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                                                       InkWell(
                                                         onTap: () {
                                                           setState(() {
-                                                            selectedUnit = "packet";
+                                                            selectedUnit =
+                                                                "packet";
                                                           });
                                                           Navigator.of(context)
                                                               .pop();
                                                         },
                                                         child: Container(
-                                                          margin: EdgeInsets.only(
+                                                          margin:
+                                                              EdgeInsets.only(
                                                             left: 10,
                                                           ),
                                                           height: 40,
                                                           width: 80,
-                                                          decoration: BoxDecoration(
+                                                          decoration:
+                                                              BoxDecoration(
                                                             border: Border.all(
-                                                              color: Colors.black38,
+                                                              color: Colors
+                                                                  .black38,
                                                             ),
                                                             borderRadius:
                                                                 BorderRadius
-                                                                    .circular(10.0),
+                                                                    .circular(
+                                                                        10.0),
+                                                          ),
+                                                          child: Center(
+                                                              child: Text(
+                                                                  "packet")),
+                                                        ),
+                                                      ),
+                                                      SizedBox(width: 10),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            selectedUnit =
+                                                                "box";
+                                                          });
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child: Container(
+                                                          height: 40,
+                                                          width: 80,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            border: Border.all(
+                                                              color: Colors
+                                                                  .black38,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10.0),
                                                           ),
                                                           child: Center(
                                                               child:
-                                                                  Text("packet")),
+                                                                  Text("box")),
                                                         ),
                                                       ),
                                                       SizedBox(width: 10),
                                                       InkWell(
                                                         onTap: () {
                                                           setState(() {
-                                                            selectedUnit = "box";
+                                                            selectedUnit =
+                                                                "pound";
                                                           });
                                                           Navigator.of(context)
                                                               .pop();
@@ -1518,23 +1757,28 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                                                         child: Container(
                                                           height: 40,
                                                           width: 80,
-                                                          decoration: BoxDecoration(
+                                                          decoration:
+                                                              BoxDecoration(
                                                             border: Border.all(
-                                                              color: Colors.black38,
+                                                              color: Colors
+                                                                  .black38,
                                                             ),
                                                             borderRadius:
                                                                 BorderRadius
-                                                                    .circular(10.0),
+                                                                    .circular(
+                                                                        10.0),
                                                           ),
                                                           child: Center(
-                                                              child: Text("box")),
+                                                              child: Text(
+                                                                  "pound")),
                                                         ),
                                                       ),
                                                       SizedBox(width: 10),
                                                       InkWell(
                                                         onTap: () {
                                                           setState(() {
-                                                            selectedUnit = "pound";
+                                                            selectedUnit =
+                                                                "dozen";
                                                           });
                                                           Navigator.of(context)
                                                               .pop();
@@ -1542,40 +1786,20 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                                                         child: Container(
                                                           height: 40,
                                                           width: 80,
-                                                          decoration: BoxDecoration(
+                                                          decoration:
+                                                              BoxDecoration(
                                                             border: Border.all(
-                                                              color: Colors.black38,
+                                                              color: Colors
+                                                                  .black38,
                                                             ),
                                                             borderRadius:
                                                                 BorderRadius
-                                                                    .circular(10.0),
+                                                                    .circular(
+                                                                        10.0),
                                                           ),
                                                           child: Center(
-                                                              child: Text("pound")),
-                                                        ),
-                                                      ),
-                                                      SizedBox(width: 10),
-                                                      InkWell(
-                                                        onTap: () {
-                                                          setState(() {
-                                                            selectedUnit = "dozen";
-                                                          });
-                                                          Navigator.of(context)
-                                                              .pop();
-                                                        },
-                                                        child: Container(
-                                                          height: 40,
-                                                          width: 80,
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                              color: Colors.black38,
-                                                            ),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(10.0),
-                                                          ),
-                                                          child: Center(
-                                                              child: Text("dozen")),
+                                                              child: Text(
+                                                                  "dozen")),
                                                         ),
                                                       ),
                                                     ],
@@ -1586,53 +1810,66 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                                                       InkWell(
                                                         onTap: () {
                                                           setState(() {
-                                                            selectedUnit = "pair";
+                                                            selectedUnit =
+                                                                "pair";
                                                           });
                                                           Navigator.of(context)
                                                               .pop();
                                                         },
                                                         child: Container(
-                                                          margin: EdgeInsets.only(
-                                                              left: 10, bottom: 10),
+                                                          margin:
+                                                              EdgeInsets.only(
+                                                                  left: 10,
+                                                                  bottom: 10),
                                                           height: 40,
                                                           width: 80,
-                                                          decoration: BoxDecoration(
+                                                          decoration:
+                                                              BoxDecoration(
                                                             border: Border.all(
-                                                              color: Colors.black38,
+                                                              color: Colors
+                                                                  .black38,
                                                             ),
                                                             borderRadius:
                                                                 BorderRadius
-                                                                    .circular(10.0),
+                                                                    .circular(
+                                                                        10.0),
                                                           ),
                                                           child: Center(
-                                                              child: Text("pair")),
+                                                              child:
+                                                                  Text("pair")),
                                                         ),
                                                       ),
                                                       SizedBox(width: 10),
                                                       InkWell(
                                                         onTap: () {
                                                           setState(() {
-                                                            selectedUnit = "inch";
+                                                            selectedUnit =
+                                                                "inch";
                                                           });
                                                           Navigator.of(context)
                                                               .pop();
                                                         },
                                                         child: Container(
-                                                          margin: EdgeInsets.only(
+                                                          margin:
+                                                              EdgeInsets.only(
                                                             bottom: 10,
                                                           ),
                                                           height: 40,
                                                           width: 80,
-                                                          decoration: BoxDecoration(
+                                                          decoration:
+                                                              BoxDecoration(
                                                             border: Border.all(
-                                                              color: Colors.black38,
+                                                              color: Colors
+                                                                  .black38,
                                                             ),
                                                             borderRadius:
                                                                 BorderRadius
-                                                                    .circular(10.0),
+                                                                    .circular(
+                                                                        10.0),
                                                           ),
                                                           child: Center(
-                                                              child: Text("inch")),
+                                                              child:
+                                                                  Text("inch")),
                                                         ),
                                                       ),
                                                     ],
@@ -1757,7 +1994,20 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                                       .toString()
                                       .toUpperCase()),
                                 ),
-                                Text(specifications[index]["value"].toString())
+                                Container(
+                                    width:
+                                        MediaQuery.of(context).size.width - 170,
+                                    child: Text(specifications[index]["value"]
+                                        .toString())),
+                                Container(
+                                    width: 30,
+                                    child: InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            specifications.removeAt(index);
+                                          });
+                                        },
+                                        child: Icon(Icons.delete))),
                               ],
                             ),
                             Divider(
@@ -1771,7 +2021,7 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                     height: 20,
                   ),
                   SizedBox(
-                      height: 50,
+                      height: 40,
                       width: MediaQuery.of(context).size.width,
                       child: ElevatedButton(
                         onPressed: () {
@@ -1783,7 +2033,8 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                         ),
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12), // <-- Radius
+                            borderRadius:
+                                BorderRadius.circular(12), // <-- Radius
                           ),
                         ),
                       ))
